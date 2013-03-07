@@ -1,0 +1,1569 @@
+@import url("reset.css");
+
+/* Set margin and padding to 0 for all elements */
+* {margin: 0; padding: 0;}
+
+html {
+	
+	}
+
+body {
+	font: 13px Helvetica, Arial, Verdana, sans-serif;
+	color:#ffffff;
+	/*background-color: rgb(45,38,79);*/
+	background-color: #202040;
+
+
+	
+	}
+
+html, body {height: 100%;}
+ 
+body > #wrap {height: auto; min-height: 100%;}
+
+/*remove link outlines*/
+a {
+   	outline: none;
+   	font-variant: small-caps;
+	text-transform: capitalize;
+}
+	a:link {
+	color: #FFF;
+	text-decoration: none;
+}
+	a:active {
+	color: #FFFF33;
+	text-decoration: none;
+}
+	a:visited, a:focus {color: #FFF; text-decoration: none; }
+	a:hover {color: #ffff33; text-decoration: none; }
+
+
+/* Remove image outlines*/
+img
+{  
+	border-style: none;
+}
+
+
+
+
+h1,h2,h3,h4,h5,h6 {
+	padding-top:4px;
+	padding-bottom:2px;
+	font:22px Helvetica, Arial, Verdana, sans-serif;
+	font-variant: small-caps;
+	text-transform: capitalize;
+	font-weight:bold;
+
+}
+
+h3{
+	font-size: 18px;
+
+}
+
+h4{
+	font-size: 12px;
+	text-transform:none;
+	font-weight: normal;
+}
+
+textarea{resize: none}
+
+
+#header, #subHead{
+	text-align:center;
+}
+
+#header{
+	position: relative;
+    height: 140px;
+    margin-bottom: 10px;
+    /*background-color: rgb(29,26,54);*/
+    background-color:#06052A;
+    border-bottom: 1px solid #ffffff;
+}
+
+#subHead{
+	clear:both;
+	width:860px;
+	padding: 30px 0 5px 0;
+	margin:0 0 20px 0;
+	text-align: left;
+	border-bottom: 1px solid #ffffff;
+}
+#wrapper{
+
+	min-height: 100%;
+}
+#main{
+	width:960px;
+	margin: 0 auto;
+	overflow: auto;
+	padding-bottom: 150px;
+}
+
+#footer {
+	position: relative;
+    margin-top: -150px; /* negative value of footer height */
+    height: 200px;
+    clear:both;
+    /*background-color: rgb(29,26,54);*/
+    background-color:#06052A;
+    border-top: 1px solid #ffffff;
+} 
+
+#footerWrap{
+	width:960px;
+	margin: 0 auto;
+}
+
+#footerlinks{
+	position:relative;
+	padding-left:100px;
+}
+.footerlinks{
+	float:left;
+	margin-top:15px;
+	width:150px;
+	margin-right:20px;
+}
+
+.footerlinks li{
+	list-style: disc;
+	margin-left:30px;
+	padding:2px;
+	width:auto;
+}
+
+.footerlinks li a{
+	color: #c3c5c3;
+}
+
+.footerlinks li a:hover{
+	color: #ffff00;
+}
+/* ---------------- Header Menu ------------------------ */
+
+#headMenu{
+	position:relative;
+	margin:auto;
+	width:500px;
+	height:30px;
+	padding:10px;
+	top:55px;
+}
+
+
+.menuItem, .menuItemFirst{
+	float:left;
+	width:75px;
+	padding:0 20px 0 20px;
+	border-right:1px solid #ffffff;
+}
+
+.menuItemFirst{
+	border-left:1px solid #ffffff;
+}
+
+#accCont{
+	float:right;
+	right:150px;
+	margin:40px 40px 0 10px;
+	padding:10px;
+}
+
+#accCont #loginEdit{
+	float:left;
+	margin-left:5px;
+}
+
+#accCont #logout{
+	float:right;
+	margin-right:5px;
+}
+
+/* ---------------- Login.php / register.php -------------------------- */
+
+#login, #register, #editaccount{
+	width:200px;
+	margin:auto;
+	border:1px solid #ffffff;
+	padding:30px;
+}
+#login{
+	margin-top:125px;
+	margin-bottom:20px;
+}
+#register, #editaccount{
+	margin-top:90px;
+}
+input.userInput, input.paswInput, input.emalInput{
+	width:180px;
+	margin:5px;
+	padding:5px;
+}
+#login input.submit, #register input.submit, #editaccount input.submit{
+	position:relative;
+	width:100px;
+	left:50px;
+	margin-top:10px;
+}
+
+ 
+/* ---------------- Main Menu/Index -------------------- */
+#mainMenuTop{
+	margin-top: 80px;
+}
+
+#mainMenuBottom{
+	
+}
+
+.menuLeft{
+	float:left;
+	margin-left: 120px;
+	margin-bottom:50px;
+	width:200px;
+	height:150px;
+	text-align: center;
+	border: 1px solid #ffffff;
+}
+
+.menuRight{
+	float:left;
+	margin-left: 220px;
+	margin-bottom:50px;
+	width:200px;
+	height:150px;
+	text-align: center;
+	border: 1px solid #ffffff;
+
+}
+
+.innerMenu{
+	font:22px Helvetica, Arial, Verdana, sans-serif;
+	font-variant: small-caps;
+	text-transform: capitalize;
+	font-weight:bold;
+	position:relative;
+	top:60px;
+}
+
+/* ---------------- New Session ---------------------- */
+
+#newSession, #updateSession{
+	height:700px;
+}
+#sessDet{
+	position:relative;
+	height:120px;
+}
+
+.sessionTitle{
+	margin:20px 0 10px 0;
+}
+#studioSelect{
+	width:250px;
+	height:150px;
+	position:absolute;
+	left:140px;
+	overflow:hidden;
+	font-size: 16px;
+}
+
+#staffSel{
+	position:relative;
+	top:150px;
+}
+#engineerSelect, #assistantSelect, #ssSelect, #dateSelect, #timeSelect {
+	margin-top:20px;
+	position:absolute;
+	overflow: hidden;
+}
+
+#ssSelect{
+	right:130px;
+}
+
+#ssSelect input{
+	padding: 3px;
+
+}
+
+#dateSelect{
+	height:100px;
+	left:385px;
+	text-align: center;
+}
+
+#timeSelect{
+	text-align: center;
+	top:90px;
+	left:325px;
+}
+
+#engineerSelect{
+	left:170px;
+}
+
+#continueSelect{
+	position:relative;
+	top:160px;
+	width:300px;
+	left:140px;
+}
+
+#assistantSelect{
+	left:480px;
+}
+
+#engineerSelect input, #assistantSelect input{
+	padding:3px;
+	width:150px;
+}
+
+#projSelect, #fixSelect, #clientSelect, #cmpSelect {
+	position:absolute;
+	width:300px;
+	padding-left:20px;
+	padding-bottom:20px;
+	overflow: hidden;
+}
+#projSelect {
+	left:460px;
+	bottom:20px;
+	border-right:1px solid #ffffff;
+	border-bottom:1px solid #ffffff;
+}
+
+#fixSelect {
+	left:140px;
+	bottom:20px;
+	border-left:1px solid #ffffff;
+	border-bottom:1px solid #ffffff;
+
+}
+
+#clientSelect {
+	left:140px;
+	bottom:100px;
+	margin-right:10px;
+	border-top:1px solid #ffffff;
+	border-left:1px solid #ffffff;
+	
+}
+#cmpSelect {
+	left:460px;
+	bottom:100px;
+	border-right:1px solid #ffffff;
+	border-top:1px solid #ffffff;
+}
+
+#projSelect input, #cmpSelect input, #clientSelect input, #fixSelect input{
+	position:relative;
+	right:0px;
+	width:150px;
+	padding: 5px;
+	margin-top: 10px;
+}
+
+#cmpSelect input{
+	right:-17px;
+}
+
+#fixSelect input{
+	right:-5px;
+}
+#clientDetails{
+	position:relative;
+	height:240px;
+	top:250px;
+	margin-bottom:100px;
+}
+
+#sessSubmit{
+	position:relative;
+	height:40px;
+	top:140px;
+}
+#newSessSubmit{
+	position:absolute;
+	left:400px;
+}
+/* ---------------- Session Search ------------------- */
+.radio{
+	margin:3px;
+}
+
+.searchGroup{
+	margin-bottom: 200px;
+}
+
+.searchGroup h3, .searchGroup h4{
+	border-bottom: 1px solid #ffffff;
+}
+
+#searchSS, #searchStd, #searchCli, #searchCmp, #searchEng, #searchAst, #searchBakName {
+	float:left;
+	border: 1px solid #ffffff;
+	width: 260px;
+	height:170px;
+	padding-left:20px;
+	padding-right:20px;
+
+}
+
+#searchSS, #searchCli, #searchEng{
+	margin:20px 0 0 130px;
+}
+
+#searchStd, #searchCmp, #searchAst, #searchBakName {
+	margin: 20px 0 0 70px;
+}
+
+#searchCli input#clisearch, #searchCmp input#composersearch, #searchSS input#searchSSNo, #searchBakName input#baksearch{
+	float:left;
+	
+	margin:30px 10px 0 0;
+	padding: 5px;
+}
+
+#searchCli input#clisearch, #searchCmp input#composersearch, #searchBakName input#baksearch{
+	width:230px;
+}
+
+#searchSS input#searchSSNo{
+	width:130px;
+}
+
+#searchAst input#astsearch, #searchEng input#engsearch {
+	float:left;
+	width:230px;
+	margin:20px 10px 10px 0;
+	padding: 5px;
+}
+
+#searchCli input.submit, #searchCmp input.submit, #searchBakName input.submit{
+	position:relative;
+	width:100px;
+	bottom:-45px;
+}
+
+#searchSS input.submit{
+	position:relative;
+	top:110px;
+	width:100px;
+	right:155px;
+}
+
+#searchEng input.submit, #searchAst input.submit, #searchStd input.submit{
+	position:relative;
+	width:100px;
+	bottom:-5px;
+}
+
+#dateStart, #dateEnd{
+	float:left;
+	width:120px;
+	margin-top: 10px;
+}
+#dateEnd{
+	margin-left: 10px;
+}
+
+/* ---------------- Session Search Results ----------- */
+
+#Results{
+	width:900px;
+	height:auto;
+}
+
+#Results .session{
+	float:left;
+	width:150px;
+	height:150px;
+	padding:20px;
+	margin:0 10px 10px 0;
+	border-right:1px dotted #ffffff;
+	border-bottom:1px dotted #ffffff;
+}
+.resDate{
+	position:relative;
+	bottom:20px;
+}
+
+.resSesstime{
+	position:relative;
+	bottom:34px;
+	left:65px;
+	padding-left:10px;
+	border-left:1px dotted #ffffff;
+}
+
+.resClientDet{
+	margin-top:-20px;
+}
+
+.searchError{
+	width:350px;
+	text-align: center;
+	margin: auto
+}
+.resEditLink{
+	position:relative;
+	left:135px;
+	top:115px;
+}
+
+#Results .session a:link{
+	color: #ffff33;
+}
+
+
+#Results .session a:visited{
+	color: #ffff33;
+}
+#Results .session a:hover{
+	color: #ffffff;
+}
+
+.returnLink{
+	position:absolute;
+	top:200px;
+	right:285px;
+}
+
+/* ---------------- Timetable list_timtable.php ------ */
+
+#timetable {
+	height:1250px;
+
+}
+#timetableWrap{
+	position:relative;
+}
+
+#timetableWrap a:link, #timetableWrap a:visited {
+	color:#ffff33;
+}
+
+#timetableWrap a:hover{
+	color:#ffffff;
+}
+
+.newSessLink{
+	width:270px;
+	clear:both;
+	margin:auto;
+	padding-left:120px;
+	margin-bottom:50px;
+	border-bottom:1px solid #ffffff;
+}
+
+.dayTitle{
+	float:left;
+	height:100px;
+	width:238px;
+	border-right: 1px solid #ffffff;
+	text-align: center;
+	padding-top:60px;
+}
+
+.Monday, .Tuesday, .Wednesday, .Thursday, .Friday, .Saturday, .Sunday {
+	position:absolute;
+	font-size:12px;
+	display:block;
+	height:160px;
+	width:958px;
+	overflow:hidden;
+	border:1px solid #ffffff;
+}
+.Monday{
+	top:30px;
+}
+.Tuesday{
+	top:190px;
+}
+.Wednesday{
+	top:350px;
+}
+.Thursday{
+	top:510px;
+}
+.Friday{
+	top:670px;
+}
+.Saturday{
+	top:830px;
+}
+.Sunday{
+	top:990px;
+}
+
+.studio11, .studio12, .studio21, .studio22, .studio31, .studio32{
+	position:absolute;
+	border:1px dotted #ffffff;
+	height:73px;
+	padding-left:10px;
+	padding-top:5px;
+	overflow: hidden;
+}
+
+.studio11, .studio12, .studio21, .studio22{
+	width:229px;
+}
+.studio31, .studio32{
+	width:230px;
+}
+.studio11, .studio12{	
+	left:238px;
+}
+
+.studio12, .studio22, .studio32{
+	top:80px;
+}
+.studio21, .studio22{
+	left:478px;	
+}
+.studio31, .studio32{
+	left:718px;
+}
+
+#timetable .engineer{
+	font-size:14px;
+	position: absolute;
+	top:5px;
+	right:8px;
+}
+#timetable .editLink{
+	position:absolute;
+	right:5px;
+	bottom:2px;
+}
+#timetable .deleteLink{
+	position:absolute;
+	right:5px;
+	bottom:25px;
+}
+.studioHead{
+	float:left;
+	width:229px;
+	height:30px;
+	padding-left: 10px;
+	border-bottom:1px solid #ffffff;
+	border-right: 1px solid #ffffff;
+}
+
+#timetableCurr{
+	float:left;
+	padding-left:70px;
+}
+
+#timetableNext{
+	float:right;
+
+}
+
+#timetableNext, #timetableCurr{
+	width:160px;
+	padding:5px;	
+}
+
+/* ---------------- BACKUP/INDEX.PHP ----------------- */
+.backupTitle{
+	clear:both;
+	text-align: left;
+	width:800px;
+	margin: 0 0 0 60px;
+	border-bottom: 1px solid #ffffff;
+}
+
+.stuLinkWrap {
+	position: relative;
+	clear: both;
+
+}
+#stuMainLinkInnerWrap{
+	float: left;
+	height: 180px; 
+}
+
+.MOne{
+	margin: 2.5em 0 0 11.5em; 
+}
+.MTwo, .MThree {margin: 2.5em 0 0 2em; }
+
+.stuMainLinkPic {
+	width: 200px;
+	height: 120px;
+	padding:2px;
+	border:1px solid #c3c3c2;
+	overflow: hidden;
+
+	}
+
+
+.studioMainLink {
+	position: relative;
+	top: 0em;
+	width: 200px;
+	height: 2.2em;
+	text-align: right;
+
+}
+
+#stuLinkInnerWrap{
+	float: left;
+	height: 120px; 
+}
+
+.One{
+	margin: 2.5em 0 0 20.5em; 
+}
+.Two, .Three {margin: 2.5em 0 0 6em; }
+
+.stuLinkPic {
+	width: 64px;
+	height: 64px;
+
+	}
+
+
+.studioLink {
+	position: relative;
+	left:-32px;
+	top: 1.3em;
+	width: 128px;
+	height: 2.2em;
+	text-align: center;
+}
+
+.backupSearchLink{
+	position:relative;
+	width:960px;
+	height:150px;
+	clear: both;
+
+}
+
+#backupSearchDate, #backupSearchDel{
+	position:absolute;
+	width:250px;
+	height:40px;
+	margin-top: 20px;
+	text-align: center;
+	padding:20px;
+	border:1px solid #ffffff;
+
+}
+#backupSearchDate{
+	right:170px;
+}
+
+#backupSearchDel{
+	left:170px;
+}
+
+/* ---------------- backup.php ---------------------------- */
+#backupSess{
+	width:850px;
+	height:400px;
+	margin:auto;
+	margin-top:60px;
+	font-size: 16px;
+	font-variant: small-caps;
+}
+
+#backupSess h1{
+	border-bottom:1px solid #ffffff;
+}
+
+#backupSess .session {
+	float:left;
+	width:200px;
+	height:250px;
+	padding:10px 25px 10px 10px;
+	margin:0 10px 25px 0;
+	border-left:1px dotted #ffffff;
+	border-bottom:1px dotted #ffffff;
+}
+
+.session .newBk{
+	position:relative;
+	top:200px;
+}
+.session .newBk a:link{
+	color: #ffff33;
+}
+
+.session .newBk a:hover{
+	color: #ffffff;
+}
+
+.session .newBk a:visited{
+	color: #ffff33;
+}
+.session .sessDetails{
+	position:relative;
+	bottom:50px;
+}
+
+.session .engineer{
+	position:relative;
+	font-size:18px;
+	left:170px;
+	bottom:20px;
+}
+
+.session .projectDetails{
+	position:relative;
+	bottom:20px;
+}
+
+/* ---------------- new_backup.php -------------------------------------- */
+.session-backup-details{
+	position:relative;
+	left:0px;
+	font-size: 16px;
+	font-variant: small-caps;
+	height:530px;
+	width:300px;
+	padding:10px;
+	border: 1px solid #ffffff;
+}
+
+
+
+#newbackup{
+	position:relative;
+	left:330px;
+	width:500px;
+	height:530px;
+	bottom:552px;
+	padding:10px;
+	border: 1px solid #ffffff;
+	margin-bottom:-450px;
+}
+
+#BackupName input{
+	padding:3px;
+}
+#driveLocation{
+	position:absolute;
+	width:400px;
+	right:120px;
+	margin:10px 50px 0 0;
+	clear:both;
+}
+
+#driveLocation input{
+	margin:2px;
+}
+
+#driveLocation{
+	position:relative;
+	left:0px;
+	top:10px;
+	margin:2px;
+}
+
+#bakLocSelect{
+	float:left;
+}
+
+
+
+#backupType{
+	position:absolute;
+	top:160px;
+}
+
+#backuptaken, #backupcupboard, #backupkeep, #deleted{
+	padding:5px 5px 10px 5px;
+	border-top:1px dotted #ffffff;
+	width:227px;
+}
+
+#backupType input{
+	margin:5px;
+}
+
+#backupNotes{
+	position:absolute;
+	bottom:90px;
+	right:10px;
+}
+
+#roomMove{
+	position:absolute;
+	bottom:95px;
+	border-top:1px dotted #ffffff;
+	padding:5px 0 10px 0;
+	width:232px;
+}
+
+#newbackup #submit{
+	position:absolute;
+	top:525px;
+	left:180px;
+}
+
+#newbackup #cancel{
+	position:absolute;
+	top:530px;
+	right:10px;
+}
+
+#deleted{
+	position:absolute;
+	top:48px;
+	right:10px;
+	height:50px;
+	text-align:center;
+	padding-top:10px;
+	border:2px solid #ff0000;
+}
+
+#savedMics{
+	position:relative;
+	left:0px;
+	top:-110px;
+	font-size: 16px;
+	font-variant: small-caps;
+	width:300px;
+	padding:10px;
+	border: 1px solid #ffffff;
+	clear:both;
+}
+
+#savedMics table{
+	position:relative;
+	width:280px;
+	margin:auto;
+	font-size: 14px;
+	text-align:left;
+	margin-bottom:80px;
+}
+ #micList th{
+ 	
+ 	border-bottom: 1px solid #ffffff;
+ 	border-left:1px solid #ffffff;
+ 	padding-left:3px;
+	text-transform: capitalize;
+	font-variant: small-caps;
+}
+
+#micList td{
+	padding:4px;
+	border-bottom:1px solid #ffffff;
+}
+
+#showMics{
+	height:25px;
+	outline: none;
+	border-bottom:1px solid #ffffff;
+}
+
+#newMicBak{
+	position:absolute;
+	bottom:20px;
+}
+/* ---------------- BackupDrive.php / deletion.php----------------------- */
+
+.backupDrive{
+	float:left;
+	font-size: 12px;
+	width:460px;
+	margin: 0 10px 40px 10px;
+}
+.backupDriveTitle{
+	border-bottom:1px solid #ffffff;
+	margin-bottom:10px;
+}
+
+.backupDrive th{
+	border-bottom: 1px solid #ffffff;
+	text-transform: capitalize;
+	font-variant: small-caps;
+	text-align: left;
+}
+
+.backupDrive td{
+	border-bottom: 1px solid #CCC;
+	padding: 0 5px;
+}
+
+.backupDrive td:first-child{
+	width:310px;
+}
+.backupDrive td:nth-child(2){
+	width:100px;
+}
+.backupDrive td:nth-child(3){
+	width:70px;
+}
+.backupDrive tr{
+	padding:4px;
+}
+
+.ReqBackupRecords{
+	clear:both;
+	width:850px;
+	padding:10px;
+	border:3px solid #ff0000;
+}
+
+.ReqBackupRecords th{
+	border-bottom: 1px solid #ffffff;
+	text-transform: capitalize;
+	font-variant: small-caps;
+	text-align: left;
+	padding:0 5px;
+}
+.ReqBackupRecords td{
+
+	border-bottom: 1px solid #CCC;
+	padding: 0 5px;
+}
+.ReqBackupRecords td:nth-child(2){
+	width:150px;
+	overflow: hidden;
+}
+.ReqBackupRecords td:nth-child(3){
+	width:250px;
+	overflow:hidden;
+}
+.ReqBackupRecords td:nth-child(4){
+	border:1px solid #000000;
+	background-color: #ff0000;
+	color: #ddffff;
+	}
+
+.backupDrive a:link, .ReqBackupRecords a:link{
+	color: #ffff33;
+}
+
+.backupDrive a:visited, .ReqBackupRecords a:visited, .ReqBackupRecords a:focus, .backupDrive a:focus{
+	color: #ffff33;
+}
+.backupDrive a:hover, .ReqBackupRecords a:hover{
+	color: #ffffff;
+}
+
+tr.bakKeep {
+	color: #ff0000;
+}
+
+#resultTable, #cliResultTable{
+	font: 12px/20px Helvetica, Arial, Verdana, sans-serif;
+	font-variant: small-caps;
+	text-transform: capitalize;
+	border-collapse: collapse;
+	margin-top:40px;
+	margin-bottom:30px;
+	width: 950px;
+	}
+
+#resultTable th{
+	padding: 0 0.5em;
+	text-align: left;
+	border-right:1px dotted #ffffff;
+	border-bottom:1px dotted #ffffff;
+	}
+
+#resultTable td{
+	border-bottom: 1px solid #CCC;
+	border-right:1px dotted #CCC;
+	padding: 0 0.5em;
+	}
+
+#resultTable td:first-child{
+	width:70px;
+	text-align: center;
+
+}
+#resultTable td:nth-child(2){
+	width:20px;
+	text-align:center;
+
+}
+
+#resultTable td:nth-child(3){
+	width:250px;
+}
+
+#resultTable td:nth-child(4){
+	width:150px;
+	text-align: center;
+}
+
+#resultTable td:nth-child(5){
+	width:60px;
+	text-align:center;
+}
+
+#resultTable td:nth-child(6){
+	width:60px;
+	text-align:center;
+}
+#resultTable td:nth-child(7){
+	width:50px;
+	text-align:center;
+}
+#resultTable td:last-child{
+	width:120px;
+	text-align:center;
+}
+
+/* ---------------- Tables/List eng/ast ------------------- */
+
+#astTable{
+	position:relative;
+	float:right;
+	right:150px;
+}
+
+#engTable{
+	position:relative;
+	float:left;
+	left:150px;
+}
+
+#engTable table, #astTable table{
+	font: 14px/30px Helvetica, Arial, Verdana, sans-serif;
+	font-variant: small-caps;
+	text-transform: capitalize;
+	border-collapse: collapse;
+	width: 220px;
+	}
+
+#astTable th, #engTable th {
+	padding: 0 0.5em;
+	text-align: left;
+	}
+
+#astTable td, #engTable td {
+	border-bottom: 1px solid #CCC;
+	padding: 0 0.5em;
+	}
+
+#astTable td:first-child, #engTable td:first-child {
+	width: 190px;
+	}
+
+#astTable td+td, #engTable td+td {
+	text-align: right;
+	}
+
+.newLink{
+	text-align: center;
+	font:14px Helvetica, Arial, Verdana, sans-serif;
+	position: relative;
+	bottom: -20px;
+}
+
+/* ---------------- Update/New Staff ---------------------- */
+
+#editEng, #newEng, #newAst, #editAst{
+	margin-left:200px;
+}
+
+
+.staffLink{
+	position:absolute;
+	top:300px;
+}
+
+#editAst input, #newAst input, #newEng input, #editEng input{
+	width:150px;
+	padding:5px;
+	margin-left:20px;
+}
+
+#editEng input#update, #newEng input#insert, #editAst input#update, #newAst input#insert{
+	width:167px;
+	margin-top:10px;
+	margin-left:75px;
+	}
+
+
+/* -=-=-=-=-=-=-=-= edit Microphones =-=-=-=-=-=-=-=-=-=-=-=-=-=- */
+
+
+#micNo{
+	width:300px;
+	font-size: 40px;
+	padding:20px;
+	text-align: center;
+	margin:30px 0px 50px 140px;
+	outline:none;
+}
+
+.micNo{
+	padding:1px 1px 1px 25px;
+}
+
+#micWarning{
+	text-align: center;
+	border:10px;
+}
+#micWarning{
+	padding:5px;
+	background-color: #FF0000;
+	border:1px solid #000000;
+	margin-bottom:10px;
+	clear:both;
+}
+
+select#transferSession{
+	width:300px;
+	margin-left:160px;
+	margin-bottom:10px;
+	outline:none;
+}
+
+input#transferMic{
+	width:200px;
+	margin-left:215px;
+	margin-bottom:10px;
+}
+
+input#repairMic{
+	width:200px;
+	margin-left:215px;
+	margin-bottom:10px;
+}
+
+
+#session-mic-details{
+	float:left;
+	font-size: 16px;
+	font-variant: small-caps;
+	height:130px;
+	width:600px;
+	margin:auto;
+	padding:10px;
+}
+
+.microphoneAssigned{
+	float:right;
+	font-size:14px;
+	padding:10px 0 20px 40px;
+	margin-bottom:40px;
+	width:295px;
+}
+
+#micFormContainer{
+	float:left;
+	width:600px;
+	padding:9px;
+}
+
+.micSessDet, .micSessStaff, .micSessClient{
+	float:left;
+	width:180px;
+	padding-left:20px;
+}
+
+#micResults #resultTable th{
+	padding: 0 0.5em;
+	text-align: left;
+	border-right:1px dotted #ffffff;
+	border-bottom:1px dotted #ffffff;
+	}
+
+#micResults #resultTable td{
+	border-bottom: 1px solid #CCC;
+	border-right:1px dotted #CCC;
+	padding: 0 0.5em;
+	}
+
+#micResults #resultTable td:first-child{
+	width:50px;
+}
+#micResults #resultTable td:nth-child(2){
+	width:70px;
+	text-align: left;
+
+}
+
+#micResults #resultTable td:nth-child(3){
+	width:100px;
+}
+
+#micResults #resultTable td:nth-child(4){
+	width:50px;
+	text-align: center;
+}
+
+#micResults #resultTable td:nth-child(5){
+	width:60px;
+	text-align:center;
+}
+
+#micResults #resultTable td:nth-child(6){
+	width:60px;
+	text-align:center;
+}
+#micResults #resultTable td:nth-child(7){
+	width:50px;
+	text-align:center;
+}
+#micResults #resultTable td:last-child{
+	width:120px;
+	text-align:center;
+}
+
+.micLinks{
+	width:270px;
+	clear:both;
+	margin:auto;
+	text-align: center;
+	padding-left:40px;
+	padding-right:40px;
+	margin-bottom:50px;
+	border-bottom:1px solid #ffffff;
+}
+
+#micResultsSess #resultTable td:first-child{
+	width:30px;
+}
+#micResultsSess #resultTable td:nth-child(2){
+	width:50px;
+	text-align: left;
+
+}
+
+#micResultsSess #resultTable td:nth-child(3){
+	width:70px;
+}
+
+#micResultsSess #resultTable td:nth-child(4){
+	width:8px;
+	text-align: center;
+}
+
+#micResultsSess #resultTable td:nth-child(5){
+	width:80px;
+	text-align:center;
+}
+
+#micResultsSess #resultTable td:nth-child(6){
+	width:60px;
+	text-align:center;
+	overflow:hidden;
+}
+#micResultsSess #resultTable td:nth-child(7){
+	width:50px;
+	text-align:center;
+}
+#micResultsSess #resultTable td:nth-child(8){
+	width:120px;
+	text-align:center;
+}
+#micResultsSess #resultTable td:last-child{
+	width:30px;
+	text-align:center;
+}
+
+#micFilterLinks{
+	position:relative;
+	margin:auto;
+	width:608px;
+	margin-bottom:100px;
+	text-align:center;
+}
+
+.filterMic{
+	float:left;
+	border-left:1px dotted #ffffff;
+	margin-top:30px;
+	width:150px;
+	left:20px;
+	
+}
+
+.filterMic:last-child{
+	border-right:1px dotted #ffffff;
+}
+
+#micList{
+	position:relative;
+	top:40px;
+	margin:auto;
+	height:100px;
+	margin-bottom:10px;
+}
+
+#micList.prev{
+	left:170px;
+}
+
+.micList-item{
+	float:left;
+	padding:0 30px 0 30px;
+	text-decoration: underline;
+}
+
+.micList-item:first-child{
+	border-right:1px dotted #ffffff;
+}
+.micList-item:last-child{
+	border-left:1px dotted #ffffff;
+}
+
+#micFormContainer textarea{
+	position:relative;
+	left:160px;
+	padding:5px;
+}
+
+/* ---------------- Mic Faults ---------------------------- */
+
+.faultDetails{
+	width:900px;
+	margin:auto;
+	clear:both;
+	margin-bottom:40px;
+}
+
+.faultDesc{
+	position:relative;
+}
+label[for="fault"], label[for="solution"] {
+	float:left;
+	top:5px;
+	margin-right:15px;
+}
+textarea#solution, textarea#fault{
+	float:left;
+	margin-right:30px;
+}
+
+.faultUser{
+	float:left;
+
+}
+
+.submitFault input.submit{
+	position:relative;
+	left:350px;
+	margin-top:20px;
+	text-align: center;
+	width:120px;
+	clear:both;
+}
+
+.faultTable{
+	width:900px;
+	margin:auto;
+	margin-bottom:40px;
+}
+.faultTable th{
+	padding: 0 0.5em;
+	text-align: left;
+	border-right:1px dotted #ffffff;
+	border-bottom:1px dotted #ffffff;
+}
+
+.faultTable td:first-child, .faultTable td:nth-child(2){
+	border-right:1px dotted #ffffff;
+	border-bottom:1px dotted #ffffff;
+	padding:4px 4px 4px 10px;
+	width:330px;
+}
+
+.faultTable td:last-child{
+	border-right:1px dotted #ffffff;
+	border-bottom:1px dotted #ffffff;
+	padding:4px 4px 4px 10px;
+	width:200px;
+}
+
+/* ---------------- Channel Faults ------------------------ */
+
+#channelPositions{
+	float:left;
+	width:250px;
+	height:auto;
+	padding:10px;
+	margin-bottom:30px;
+	border:1px dotted #ffffff;
+}
+#channelPositions #resultTable{
+	position:relative;
+	margin:auto;
+	width:230px;
+}
+#channelPositions #resultTable td:first-child{
+	width:150px;
+}
+
+#chanFaults, #faultForm, #swapChannel{
+	float:left;
+	margin:0 0 20px 20px;
+	width:645px;
+	padding:10px;
+	border:1px dotted #ffffff;
+
+}
+
+.channelSelect{
+	float:left;
+	margin-right:70px;
+}
+
+.channelSelect select{
+	width:100px;
+}
+
+#chanFaults #resultTable{
+	position:relative;
+	width:625px;
+	margin:auto;
+}
+
+#chanFaults #resultTable td:first-child{
+	width:40px;
+}
+
+#chanFaults #resultTable td:nth-child(2){
+	width:490px;
+	text-align:left;
+}
+
+#faultText{
+	float:left;
+}
+.submitChanFault{
+	float:right;
+	margin-right:10px;
+}
+
+.submitChanFault .faultButton{
+	background-color: #ffffff;
+	cursor:pointer;
+border:1px solid #ffffff;
+padding:20px 20px 20px 20px;
+text-align:center;
+
+}
+
+.submitChanFault .swapButton{
+	background-color: #ffffff;
+	cursor:pointer;
+	border:1px solid #ffffff;
+	padding:20px 12px 20px 12px;
+	text-align:center;
+}
+.selectPush{
+	float:left;
+	width:100px !important;
+	height:40px;
+	margin-right:60px;
+}
+
+
+

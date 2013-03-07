@@ -1,0 +1,140 @@
+body {													/*Background Image + Position*/
+	background-image: url(Reception%20Screen%20New.jpg);
+	background-repeat: no-repeat;
+	background-position: top center;
+}
+DIV.s1time												/*CSS setup of each box on the page*/
+{
+  FONT-WEIGHT: bolder;
+  FONT-SIZE: 30px;
+  position:absolute;
+  Left: 370px;
+  Top: 165px;
+  COLOR: #ffffff;
+  FONT-FAMILY: Helvetica;
+  TEXT-ALIGN: left;
+  text-shadow: black 0.12em 0.12em 0.12em;
+  }
+ 
+DIV.s1client
+{
+  FONT-WEIGHT: bolder;
+  FONT-SIZE: 30px;
+  position:absolute;
+  Left: 370px;
+  Top: 219px;
+  COLOR: #ffffff;
+  FONT-FAMILY: Helvetica;
+  TEXT-ALIGN: left;
+  text-shadow: black 0.12em 0.12em 0.12em;
+  }
+  
+DIV.s1project
+{
+  FONT-WEIGHT: bolder;
+  FONT-SIZE: 30px;
+  position:absolute;
+  Left: 370px;
+  Top: 272px;
+  COLOR: #ffffff;
+  FONT-FAMILY: Helvetica;
+  TEXT-ALIGN: left;
+  text-shadow: black 0.12em 0.12em 0.12em;
+  }
+
+DIV.s2time
+{
+  FONT-WEIGHT: bolder;
+  FONT-SIZE: 30px;
+  position:absolute;
+  Left: 370px;
+  Top: 368px;
+  COLOR: #ffffff;
+  FONT-FAMILY: Helvetica;
+  TEXT-ALIGN: left;
+  text-shadow: black 0.12em 0.12em 0.12em;
+  }
+ 
+DIV.s2client
+{
+  FONT-WEIGHT: bolder;
+  FONT-SIZE: 30px;
+  position:absolute;
+  Left: 370px;
+  Top: 421px;
+  COLOR: #ffffff;
+  FONT-FAMILY: Helvetica;
+  TEXT-ALIGN: left;
+  text-shadow: black 0.12em 0.12em 0.12em;
+  }
+  
+DIV.s2project
+{
+  FONT-WEIGHT: bolder;
+  FONT-SIZE: 30px;
+  position:absolute;
+  Left: 370px;
+  Top: 475px;
+  COLOR: #ffffff;
+  FONT-FAMILY: Helvetica;
+  TEXT-ALIGN: left;
+  text-shadow: black 0.12em 0.12em 0.12em;
+  }
+  
+ DIV.s3time
+{
+  FONT-WEIGHT: bolder;
+  FONT-SIZE: 30px;
+  position:absolute;
+  Left: 370px;
+  Top: 565px;
+  COLOR: #ffffff;
+  FONT-FAMILY: Helvetica;
+  TEXT-ALIGN: left;
+  text-shadow: black 0.12em 0.12em 0.12em;
+  }
+ 
+DIV.s3client
+{
+  FONT-WEIGHT: bolder;
+  FONT-SIZE: 30px;
+  position:absolute;
+  Left: 370px;
+  Top: 619px;
+  COLOR: #ffffff;
+  FONT-FAMILY: Helvetica;
+  TEXT-ALIGN: left;
+  text-shadow: black 0.12em 0.12em 0.12em;
+  }
+  
+DIV.s3project
+{
+  FONT-WEIGHT: bolder;
+  FONT-SIZE: 30px;
+  position:absolute;
+  Left: 370px;
+  Top: 672px;
+  COLOR: #ffffff;
+  FONT-FAMILY: Helvetica;
+  TEXT-ALIGN: left;
+  text-shadow: black 0.12em 0.12em 0.12em;
+  }
+   
+DIV.wrapper {									/*Css Wrapper to constrain site to 1280 with auto height*/
+width:1268px; 
+margin:0 auto; 
+text-align:center; 
+}
+
+ DIV.DateTime
+{
+  FONT-WEIGHT: bolder;
+  FONT-SIZE: 36px;
+  position:absolute;
+  Right: 40px;
+  Bottom:30px;
+  COLOR: #ffffff;
+  FONT-FAMILY: Helvetica;
+  TEXT-ALIGN: left;
+  text-shadow: black 0.12em 0.12em 0.12em;
+}
