@@ -9,14 +9,6 @@ includes/pdoconnection.php
 
 includes/connection.php
 
-includes/jquery/css/smoothness/jquery-ui-1.9.2.custom.css
-
-includes/jquery/css/smoothness/jquery-ui-1.9.2.custom.min.css
-
-includes/jquery/js/jquery-1.8.3.min.js
-
-includes/jquery/js/jquery-ui-1.9.2.custom.min.js
-
 test.php
 
 test_1.php
