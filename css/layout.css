@@ -121,7 +121,7 @@ textarea{resize: none}
 
 #footerlinks{
 	position:relative;
-	padding-left:100px;
+	padding-left:150px;
 }
 .footerlinks{
 	float:left;
@@ -193,8 +193,8 @@ textarea{resize: none}
 	padding:30px;
 }
 #login{
-	margin-top:125px;
-	margin-bottom:20px;
+	margin-top:90px;
+	margin-bottom:40px;
 }
 #register, #editaccount{
 	margin-top:90px;
