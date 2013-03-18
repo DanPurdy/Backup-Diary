@@ -30,12 +30,12 @@ require('header.php');
 ?>
 <div id="subHead"><h1>Faults For Channel ARS<?php echo $result[0]['channelID'];?></h1></div>
 <div class="backupDriveTitle"><h3>Current Faults</h3></div>
-<form id="micFault" action="updateChannelFault.php" method="post">
+
     <?php
-    
+    $i=0;
     foreach($result as $fault){
         if(empty($fault['faultOutcome'])){?>
-    
+<form id="micFault-<?= $i ?>" action="updateChannelFault.php" method="post">
             <div class="faultDetails">
                 <input type="text" name="chID" value="<?=htmlentities($_GET['chID']);?>" hidden/>
                 <input type="text" name="faultID" value="<?=$fault['faultID']; ?>" hidden/>
@@ -51,12 +51,13 @@ require('header.php');
                 <div class="faultUser">Submitted by: <br /><?=$fault['username']." <br /> ".date('G:i',strtotime($fault['faultDate']))." |  ".date('d-M-y',strtotime($fault['faultDate']))?></div>
                 <div class="submitFault"><input type ="submit" class="submit" name="updateFault" value ="Save"/></div>
             </div>
-        
+        </form>
     
    <?php
+   $i++;
         }
     }?>
-</form>
+
 <div class="backupDriveTitle"><h3>Previous Faults</h3></div>
 <div class="faultTable">
     
