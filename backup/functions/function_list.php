@@ -22,7 +22,7 @@ try{
                         INNER JOIN composer ON session.cmpID=composer.cmpID
                         INNER JOIN fixer ON session.fixID=fixer.fixID
                         LEFT JOIN backup ON session.bakID=backup.bakID
-                        WHERE session.stdID = :stdID AND backup.bakLastDate <= sessDate AND sessDate < CURRENT_DATE()
+                        WHERE session.stdID = :stdID AND (backup.bakLastDate <= sessDate OR ISNULL(backup.bakName)) AND sessDate < CURRENT_DATE()
                         ORDER BY session.stdID,sessDate DESC; ");
     
     $sth->bindParam(':stdID', $_GET['studio'], PDO::PARAM_INT);
