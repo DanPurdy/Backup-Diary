@@ -108,6 +108,7 @@ try{
                         INNER JOIN fixer ON session.fixID=fixer.fixID
                         LEFT JOIN backup ON session.bakID=backup.bakID
                         WHERE session.stdID = :stdID AND (ISNULL(backup.bakDeleted) OR backup.bakDeleted =0) AND bakLoc= :bakLoc
+                        GROUP BY backup.bakID
                         ORDER BY backup.bakLoc,sessDate DESC; ");
     
     $sth->bindParam(':stdID', $_GET['studio'], PDO::PARAM_INT);
