@@ -1,0 +1,36 @@
+#header, #footer, a, #micFilterLinks{
+	display: none;
+}
+
+@page {
+margin: 0.5cm;
+}
+
+body{
+	background-color: #ffffff;
+	color:#000000;
+	width: 100%; 
+	margin: 0; 
+	padding:0;
+	float: none;
+	font-size: 12pt;
+	font-family: Georgia, ‘Times New Roman’, serif;
+	text-transform: none;
+	text-decoration: none; 
+}
+
+table{
+	position:relative;
+}
+tr{ 
+  	position:relative;
+  	page-break-inside:avoid; 
+ }
+
+td{ 
+  	position:relative;
+  	page-break-inside:avoid; 
+  }
+
+
+

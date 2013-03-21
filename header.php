@@ -20,7 +20,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <LINK REL=StyleSheet HREF="/css/layout.css" TYPE="text/css">
+        <LINK REL=StyleSheet HREF="/css/layout.css" TYPE="text/css" media="all">
+        <LINK REL=StyleSheet HREF="/css/print.css" TYPE="text/css" media="print">
         <script type="text/javascript" src="/includes/jquery/js/jquery-1.8.3.min.js"></script>
 	<script type="text/javascript" src="/includes/jquery/js/jquery-ui-1.9.2.custom.min.js"></script>
 	<script type="text/javascript" src="/includes/scripts/js/autcomplete.js"></script>
