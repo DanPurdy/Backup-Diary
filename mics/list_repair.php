@@ -38,7 +38,7 @@ require('header.php');
                     <th scope="col">Make</th>
                     <th scope="col">Model</th>
                     <th scope="col">Submitted By</th>
-                    <?php if($_SESSION['user']['username'] == 'alex' || $_SESSION['user']['username'] == 'dan'){ ?><th scope="col">Mic Faults</th>
+                    <?php if($_SESSION['user']['usrGroup'] == 'admin'){ ?><th scope="col">Mic Faults</th>
                     <th scope="col">Return to Cupboard</th><?php } ?>
                 </tr>
            <?php while($row=$sth->fetch(PDO::FETCH_ASSOC)){ ?>
@@ -47,7 +47,7 @@ require('header.php');
                     <td><?=$row['micMake'];?></td>
                     <td><?=$row['micModel'];?></td>
                     <td><?=$row['username']." &nbsp;&nbsp;".date('h:i a  - d/m/y', strtotime($row['micTime']))?></td>
-                    <?php if($_SESSION['user']['username'] == 'alex' || $_SESSION['user']['username'] == 'dan'){ ?><td><a href="list_micfaults.php?micID=<?=$row['micID'];?>">View Faults</a>
+                    <?php if($_SESSION['user']['usrGroup'] == 'admin'){ ?><td><a href="list_micfaults.php?micID=<?=$row['micID'];?>">View Faults</a>
                     <td><a href="fixed_Mic.php?micID=<?=$row['micID'];?>">Return</a><?php } ?>
                    
                     

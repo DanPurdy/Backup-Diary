@@ -98,7 +98,7 @@ require('header.php');
                 <div class="fixer"><?php echo $row['fixName']?></div>
                 <div class="project"><?php echo $row['prjName']?></div>
                 <div class="editLink"><a href="edit_session.php?sesID=<?php echo $row['sesID'];?>">Edit</a></div>
-                <?php if($_SESSION['user']['username'] == 'alex' || $_SESSION['user']['username'] == 'dan'){ ?> <div class="deleteLink"><a href="delete_session.php?sesID=<?=$row['sesID'];?>">Delete</a></div> <?php }; ?>
+                <?php if($_SESSION['user']['usrGroup'] == 'admin'){ ?> <div class="deleteLink"><a href="delete_session.php?sesID=<?=$row['sesID'];?>">Delete</a></div> <?php }; ?>
                 </div>
                 
                     

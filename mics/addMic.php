@@ -26,8 +26,8 @@ try{
     
 }
 
-$row = $st1->fetch(PDO::FETCH_ASSOC);
-$resCount = $st1->rowCount();
+    $row = $st1->fetch(PDO::FETCH_ASSOC);
+    $resCount = $st1->rowCount();
 
 if($row['micSession'] == 0 && $resCount !=0 && $row['micRepair'] ==0){
  try{

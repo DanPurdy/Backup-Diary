@@ -30,7 +30,7 @@ catch (PDOException $e) {
 require('header.php');
 ?>
 <div id="subHead"><h1>Channel Overview for Studio <?=htmlentities($_GET['studio']);?></h1></div>
-<?php if($_SESSION['user']['username'] == 'alex' ||  $_SESSION['user']['username'] == 'dan'){ ?>
+<?php if($_SESSION['user']['usrGroup'] == 'admin'){ ?>
         <div id="channelPositions">
             <div class="backupDriveTitle"><h3>Current Positions</h3></div>
             <table id="resultTable">
@@ -129,7 +129,7 @@ require('header.php');
    </form>
 </div>
 
-<?php if($_SESSION['user']['username'] == 'alex' ||  $_SESSION['user']['username'] == 'dan'){ ?>
+<?php if($_SESSION['user']['usrGroup'] == 'admin'){ ?>
 <div id ="swapChannel">
     <div class="backupDriveTitle"><h3>Swap Channels</h3></div>
     <form id ="moveChannels" action="addChanFault.php" method="post">
@@ -278,7 +278,7 @@ require('header.php');
                    
                     <th scope="col">Channel</th>
                     <th scope="col">Fault</th>
-                    <?php if($_SESSION['user']['username'] == 'alex' ||  $_SESSION['user']['username'] == 'dan'){?><th scope="col">View Faults</th> <? } ?>
+                    <?php if($_SESSION['user']['usrGroup'] == 'admin'){?><th scope="col">View Faults</th> <? } ?>
                 </tr>
            <?php while($row=$st1->fetch(PDO::FETCH_ASSOC)){ ?>
                 
@@ -287,7 +287,7 @@ require('header.php');
                     
                     <td><?=$row['currentPos'];?></td>
                     <td><?=$row['faultDesc'];?></td>
-                    <?php if($_SESSION['user']['username'] == 'alex' ||  $_SESSION['user']['username'] == 'dan'){ ?><td><a href="list_channel_faults.php?chID=<?=$row['channelID']?>">View</a></td> <? } ?>
+                    <?php if($_SESSION['user']['usrGroup'] == 'admin'){ ?><td><a href="list_channel_faults.php?chID=<?=$row['channelID']?>">View</a></td> <? } ?>
                     
                 </tr>
                   <?php } ?>

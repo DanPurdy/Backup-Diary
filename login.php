@@ -22,7 +22,8 @@
                 username, 
                 password, 
                 salt, 
-                email 
+                email,
+                usrGroup
             FROM users 
             WHERE 
                 username = :username 

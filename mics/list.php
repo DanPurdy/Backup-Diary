@@ -40,7 +40,7 @@ require('header.php');
                     <td><?=$row['micMake'];?></td>
                     <td><?=$row['micModel'];?></td>
                     <td><?php if($row['micCupboard'] == 1){echo "&gt;&lt;";} ?></td>
-                    <td><?php if($row['micSession'] !=0){echo "<a href='list_session.php'>&gt;&lt;</a>";} ?></td>
+                    <td><?php if($row['micSession'] !=0){echo "&gt;&lt;";} ?></td>
                     <td><?php if($row['micRepair'] == 1){echo "&gt;&lt;";} ?></td>
                     <td><?php if(!empty($row['username'])){ echo $row['username']." ".date('h:i a  - d/m/y', strtotime($row['micTime'])); } ?></td>
                     

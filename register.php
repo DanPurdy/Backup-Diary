@@ -98,12 +98,14 @@
                 username, 
                 password, 
                 salt, 
-                email 
+                email,
+                usrGroup
             ) VALUES ( 
                 :username, 
                 :password, 
                 :salt, 
-                :email 
+                :email,
+                'studio'
             ) 
         "; 
          

@@ -22,6 +22,13 @@ body{
 table{
 	position:relative;
 }
+
+table a{
+	display: block;
+	color: #000000;
+	text-decoration: none;
+	text-transform: none;
+}
 tr{ 
   	position:relative;
   	page-break-inside:avoid; 
