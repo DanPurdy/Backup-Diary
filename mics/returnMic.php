@@ -136,7 +136,7 @@ elseif($_POST['transferMic_button'] && !empty($_POST['micNo_check'])){ //Trigger
             $st4->bindParam(':bakID', $_POST['transferSession'], PDO::PARAM_INT);
             $st4->execute();
             
-            $result = $st4->fetch();
+            $result = $st4->fetch(PDO::FETCH_ASSOC);
             
             
             
