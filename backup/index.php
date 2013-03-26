@@ -86,7 +86,7 @@
                 <h3>Search &amp; Delete </h3>
             </div>
                 <div id="backupSearchDate"><h3><a href="searchstudio.php">Search by Studio & Date </a></h3></div>
-                <div id="backupSearchDel"><h3><a href="selectstudio.php">Due For Deletion </a></h3></div>
+                <?php if($_SESSION['user']['usrGroup'] == 'admin'){ ?> <div id="backupSearchDel"><h3><a href="selectstudio.php">Due For Deletion </a></h3></div><?php }; ?>
             </div>
 
             <?php require_once('footer.php') ?>
