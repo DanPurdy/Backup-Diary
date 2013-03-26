@@ -1,6 +1,9 @@
 <?php
+session_start();
 
-require('includes/pdoconnection.php');
+require_once 'includes/pdoconnection.php';
+require_once 'functions/functions.php';
+
     $dbh = dbConn::getConnection();
     
     $link =$_SERVER['HTTP_REFERER'];
@@ -33,6 +36,14 @@ require('includes/pdoconnection.php');
     $sth->bindParam(':micID', $mic, PDO::PARAM_INT);
 
   $sth->execute();
+  
+  $st1=$dbh->prepare("SELECT sesID FROM session WHERE bakID = (SELECT micTransfer FROM microphones WHERE micID = :micID) ORDER BY sessDate ASC LIMIT 1;");
+  $st1->bindParam(':micID',$mic, PDO::PARAM_INT);
+  $st1->execute();
+  
+  $result = $st1->fetch(PDO::FETCH_ASSOC);
+  
+  micLog($mic, $_SESSION['user']['usrID'], $result['sesID'] ,'cupboard');
         
 }catch (PDOException $e){
     print $e ->getMessage();

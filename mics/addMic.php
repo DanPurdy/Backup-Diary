@@ -2,6 +2,7 @@
 session_start();
 
 require_once 'includes/pdoconnection.php';
+require_once 'functions/functions.php';
 
 $dbh = dbConn::getConnection();
 
@@ -9,7 +10,6 @@ $dbh = dbConn::getConnection();
     $link =$_SERVER['HTTP_REFERER'];
     $linkParts = explode('&', $link);
     $link = $linkParts[0];
-    
     $message = $_GET['micNo'];
     
     
@@ -63,6 +63,7 @@ if($row['micSession'] == 0 && $resCount !=0 && $row['micRepair'] ==0){
         
         $st2->execute();
         
+        micLog($_POST['micNo'], $_SESSION['user']['usrID'], $_POST['sesID'], 'session'); 
         
     } else{
         
@@ -91,6 +92,9 @@ if($row['micSession'] == 0 && $resCount !=0 && $row['micRepair'] ==0){
         $st2->bindParam(':mic', $mics, PDO::PARAM_STR);
         
         $st2->execute();
+        
+        
+        micLog($_POST['micNo'], $_SESSION['user']['usrID'], $_POST['sesID'], 'session');
     }
     
     

@@ -2,6 +2,7 @@
 session_start();
 
 require_once 'includes/pdoconnection.php';
+require_once 'functions/functions.php';
 
 $dbh = dbConn::getConnection();
 
@@ -23,7 +24,7 @@ if($_POST['returnMic_button']){  // Checks to see if mics are being returned or 
         print $e->getMessage();
     }
     $row = $st1->fetch(PDO::FETCH_ASSOC); //set $row with the results of query
-    if($_POST['bakID'] === $row['micSession']){ // checks to see if you are returning a mic from this session by checking session number with saved session number
+    if($_POST['bakID'] === $row['micSession']){ // checks to see if you are returning a mic from this session by checking backup number with saved backup number
         try{
             $sth = $dbh->prepare('UPDATE microphones
                                 SET micSession=null, micCupboard=1, micTransfer=:bakID, usrID=:user
@@ -35,11 +36,16 @@ if($_POST['returnMic_button']){  // Checks to see if mics are being returned or 
             $sth->execute();
     
             header('Location: '.$link ); //update the microphone table to reflect mic going into cupboard
+            
+            micLog($_POST['micNo'], $_SESSION['user']['usrID'], $_POST['sesID'], 'cupboard');
+            
             }
         catch(PDOException $e){
             print $e->getMessage();
     
-        }   
+        }
+        
+        
         
     }elseif ($_POST['bakID'] != $row['micSession'] && $row['micCupboard'] == 1){ // if a mic is returned that isnt assigned to the current session but is already in the cupboard
     
@@ -94,6 +100,8 @@ elseif($_POST['transferMic_button'] && !empty($_POST['micNo_check'])){ //Trigger
             $st3->bindParam(':mic', $mics, PDO::PARAM_STR); 
         
             $st3->execute();
+            
+            micLog($_POST['micNo'], $_SESSION['user']['usrID'], $_POST['sesID'], 'transfer');
         
         
         }else{
@@ -122,6 +130,17 @@ elseif($_POST['transferMic_button'] && !empty($_POST['micNo_check'])){ //Trigger
             $st3->bindParam(':mic', $mics, PDO::PARAM_STR);
         
             $st3->execute();
+            
+            $st4 = $dbh->prepare('SELECT sesID FROM session WHERE bakID = :bakID ORDER BY sessDate ASC LIMIT 1');
+            
+            $st4->bindParam(':bakID', $_POST['transferSession'], PDO::PARAM_INT);
+            $st4->execute();
+            
+            $result = $st4->fetch();
+            
+            
+            
+            micLog($transferMic, $_SESSION['user']['usrID'], $result['sesID'], 'transfer');
             }
     
     }catch(PDOException $e){
@@ -156,6 +175,8 @@ elseif ($_POST['repairMic_button']){
         $st2->bindParam(':userID', $_SESSION['user']['usrID'], PDO::PARAM_INT);
         $st2->bindParam(':faultDesc', $_POST['fault'], PDO::PARAM_INT);
         $st2->execute();
+        
+        micLog($repairMic, $_SESSION['user']['usrID'], $_POST['sesID'], 'workshop');
         }
         catch (PDOException $e){
             print $e->getMessage();

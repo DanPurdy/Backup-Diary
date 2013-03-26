@@ -1,7 +1,7 @@
 <?php
 
 require_once '../includes/pdoconnection.php';
-require_once 'functions/function_getPrevSess.php';
+require_once 'functions/functions.php';
 
 $dbh = dbConn::getConnection();
 
@@ -25,6 +25,7 @@ try{
     $row = $sth->fetch(PDO::FETCH_ASSOC); 
         
         $stdID = $row['stdID'];
+        $sesID = $row['sesID'];
         $date = strtotime($row['sessDate']);
         $engIn = strpos($row['engName']," ",1);
         $bakMicID = $row['bakID'];
@@ -159,17 +160,18 @@ catch (PDOException $e) {
      <div id="micFormContainer">
          <div class="backupDriveTitle"><h1>Assign Microphones</h1></div>
     <input type="number" name="bakID" value="<?= $bakMicID ?>" hidden/>
+    <input type="number" name="sesID" value="<?=$sesID ?>" hidden/>
     <input type="number" id="micNo" name="micNo" min="1000" max="1350"/>
     <input type="submit" id="submitMic" hidden/>
-</form>
+    
  
-</div>
-
+    </div>
+    </form>
 
 <?php }else{ ?>
 
              
-    <form id="micForm" action="returnMic.php" method="post"> 
+<form id="micForm" action="returnMic.php" method="post"> 
         
     <div class="microphoneAssigned">
         <div class="backupDriveTitle"><h3>Microphones</h3></div>
@@ -194,6 +196,7 @@ catch (PDOException $e) {
   <div id="micFormContainer">  
                  <div class="backupDriveTitle"><h1>Return Microphones</h1></div>
         <input type="number" name="bakID" value="<?= $bakMicID ?>" hidden/>
+      <input type="number" name="sesID" value="<?=$sesID ?>" hidden/>
     <input type="number" id="micNo" name="micNo" min="1000" max="1350" />
     <input type="submit" id="submitMic" name="returnMic_button" value="Return"hidden/>
     <div class="backupDriveTitle"><h1>Transfer Mics</h1></div>
