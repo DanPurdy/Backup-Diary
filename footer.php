@@ -2,6 +2,9 @@
         </div> 
         <div id="footer">
             <div id="footerWrap">
+              <?php  if(empty($_SESSION['user'])){
+                  
+              }else{?>
                 <div id="footerlinks">
                 <div class="footerlinks">
                     <div class="backupDriveTitle"><h3><a href="/session/">Sessions &raquo;</a></h3></div>
@@ -38,6 +41,7 @@
                         </ul>
                 </div>
                 </div>
+                <?php } ?>
             </div>
         </div>
         
