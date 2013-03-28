@@ -101,7 +101,7 @@ elseif($_POST['transferMic_button'] && !empty($_POST['micNo_check'])){ //Trigger
         
             $st3->execute();
             
-            micLog($_POST['micNo'], $_SESSION['user']['usrID'], $_POST['sesID'], 'transfer');
+            micLog($transferMic, $_SESSION['user']['usrID'], $_POST['sesID'], 'transfer');
         
         
         }else{
