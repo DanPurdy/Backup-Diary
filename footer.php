@@ -48,102 +48,109 @@
         
     </body>
     <script>
-$(document).ready(function(){
+$(document).ready(function () {
 
-$('textarea.mic').each(function() {
-    // Stores the default value for each textarea within each textarea
-    $.data(this, 'default', this.value);
-}).focus(function() {
-    // If the user has NOT edited the text clear it when they gain focus
-    if (!$.data(this, 'edited')) {
-        this.value = "";
-    }
-}).change(function() {
-    // Fires on blur if the content has been changed by the user
-    $.data(this, 'edited', this.value != "");
-}).blur(function() {
-    // Put the default text back in the textarea if its not been edited
-    if (!$.data(this, 'edited')) {
-        this.value = $.data(this, 'default');
-    }
-});
-
-
+    $('textarea.mic').each(function () {
+        // Stores the default value for each textarea within each textarea
+        $.data(this, 'default', this.value);
+    }).focus(function () {
+        // If the user has NOT edited the text clear it when they gain focus
+        if (!$.data(this, 'edited')) {
+            this.value = "";
+        }
+    }).change(function () {
+        // Fires on blur if the content has been changed by the user
+        $.data(this, 'edited', this.value != "");
+    }).blur(function () {
+        // Put the default text back in the textarea if its not been edited
+        if (!$.data(this, 'edited')) {
+            this.value = $.data(this, 'default');
+        }
+    });
 
 
-$(function(){
-    $('#navList ul').css({
-        display: "none"
-    }); //Fix Opera
 
-    $('#navList li').hover(function () {
-        $this = $(this);
-        $this.addClass('addPosition');
-        $('#menu-info').stop().animate({width:"400px"},400);
-        $this.find('ul:first').css({
-            visibility: "visible",
+
+    $(function () {
+        $('#navList ul').css({
             display: "none"
-        }).show("slide",{direction:"up"},400);
+        }); //Fix Opera
+
+        $('#navList li').hover(function () {
+            $this = $(this);
+            $this.addClass('addPosition');
+            $('#menu-info').stop().animate({
+                width: "400px"
+            }, 400);
+            $this.find('ul:first').css({
+                visibility: "visible",
+                display: "none"
+            }).show("slide", {
+                direction: "up"
+            }, 400);
 
 
-    }, function () {
+        }, function () {
 
-        $this.find('ul:first').css({
-            visibility: "hidden"
-        }).hide("slide",{direction:"right"},400, function(){
-            $('#menu-info').stop().animate({width:"700px"}, 400);
+            $this.find('ul:first').css({
+                visibility: "hidden"
+            }).hide("slide", {
+                direction: "right"
+            }, 400);
+            $this.removeClass('addPosition');
+            $('#menu-info').stop().animate({
+                width: "700px"
+            }, 400);
+
         });
-        $this.removeClass('addPosition');
-        
     });
-});
 
-$(function() {
-  $("#micNo").focus();
-});
-
-$(function () {
-    $('.checkall').click(function () {
-        $(this).parents('#micForm').find(':checkbox').attr('checked', this.checked);
+    $(function () {
+        $("#micNo").focus();
     });
-});
 
-$("#savedMics").hide();
-        $("#showMics").show();
- 
-    $('#showMics').click(function(){
-    $("#savedMics").slideToggle();
+    $(function () {
+        $('.checkall').click(function () {
+            $(this).parents('#micForm').find(':checkbox').attr('checked', this.checked);
+        });
+    });
+
+    $("#savedMics").hide();
+    $("#showMics").show();
+
+    $('#showMics').click(function () {
+        $("#savedMics").slideToggle();
     });
 
 
-$('#micNo').keyup(function(){
-    if(this.value.length ==4){
-    $('#submitMic').click();
-    }
-});
+    $('#micNo').keyup(function () {
+        if (this.value.length == 4) {
+            $('#submitMic').click();
+        }
+    });
 
-$('#sessCont option').each(function() {
-    if ($(this).text() == 'Parent') {
-        $('#sessCont').hide();
-    }
-});
+    $('#sessCont option').each(function () {
+        if ($(this).text() == 'Parent') {
+            $('#sessCont').hide();
+        }
+    });
 
 
-$(".Eassigned").each( function() {
-    alert("This mic is already assigned to a session Please follow the link to correct this.");
-});
-$(".REassigned").each( function() {
-    alert("This mic must be returned to the correct session Please follow the link.");
-}); 
+    $(".Eassigned").each(function () {
+        alert("This mic is already assigned to a session Please follow the link to correct this.");
+    });
+    $(".REassigned").each(function () {
+        alert("This mic must be returned to the correct session Please follow the link.");
+    });
 
-$('#form1').submit(function() {
-    if ($('input:radio[name=bakLoc]', this).is(':checked')) {
-        // everything's fine...
-    } else {
-        alert('Please select a backup drive!');
-        return false;
-    }
-});
+    $('#form1').submit(function () {
+        if ($('input:radio[name=bakLoc]', this).is(':checked')) {
+            // everything's fine...
+        } else {
+            alert('Please select a backup drive!');
+            return false;
+        }
+    });
 });
 </script>
 </html>

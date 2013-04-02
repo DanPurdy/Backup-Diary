@@ -20,6 +20,7 @@
           <li><a href="#">Mics In Workshop</a></li>
         </ul>
       </li>
+      <li><a href="#">Faults</a></li>
       <li><a href="#">Backup</a>
         <!-- sub nav -->
         <ul class="listTab">
@@ -38,7 +39,7 @@
                 <li><a href="#">Studio Three</a></li>
             </ul>
           </li>
-          <li><a href="#">Due For Deletion</a></li>
+          <?php if($_SESSION['user']['usrGroup'] == 'admin'){ ?><li><a href="#">Due For Deletion</a></li><?php }; ?>
           <li><a href="#">Search Backups</a></li>
           
         </ul>
@@ -46,7 +47,7 @@
       <?php if($_SESSION['user']['usrGroup'] == 'admin'){ ?>
       <li><a href="#">Admin</a>
       <ul class="listTab">
-                <li><a href="#">User Management</a>
+                <li><a href="#">Users</a>
                     <ul class="listTab">
                         <li><a href="#">Member List</a></li>
                         <li><a href="#">Register New User</a></li>
@@ -59,10 +60,10 @@
                 <li><a href="#">Studio Three</a></li>
             </ul>
                 </li>
-                <li><a href="#">Studio Three</a></li>
+                <li><a href="#">Manage Backups</a></li>
         </ul>
       </li>
-          <?php }; ?>
+      <?php }; ?>
     </ul>
   </div>
         <div id="menu-info">
