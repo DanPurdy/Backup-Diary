@@ -213,63 +213,74 @@ input.userInput, input.paswInput, input.emalInput{
 
  
 /* ---------------- Main Menu/Index -------------------- */
-ul#menu-screen li a{
-	padding-top:40px;
+ul {
+	margin: 0;
+	padding: 0;
+}
+#nav {
+	width: 150px;
+	float: left;
+	margin: 10px 0 0;
+}
+#navList li {
+	list-style: none;
+	margin: 0 0 10px 0;
+	float: left;
+	border-bottom:1px solid #ffffff;
+}
+ 
+.addPosition {
+position:relative;
+}
+ 
+#navList a {
+	font-size: 16px;
+	text-decoration: none;
+	color: #ffffff;
+	padding-top: 15px;
+	display: block;
+	width: 150px;
+}
+#navList a:hover {
 }
 
-ul#menu-screen{
-	float:left;
+#navList ul, #navList ul ul {
+	display: none;
+	border:none;
+	position: absolute;
+	top:0;
+	left: 130px;
 }
-ul#menu-screen li{
-	font:18px Helvetica, Arial, Verdana, sans-serif;
-	font-variant: small-caps;
-	text-transform: capitalize;
-	font-weight:bold;
-	border-bottom: 2px solid #ffffff;
-	border-top: 1px solid #666666;
+#navList ul a, #navList ul ul a{
+	margin-left:40px;
+}
+
+.listTab {
+	z-index: 100;
+}
+#navList .listTab li {
+	margin: 0;
+	border:none;
+}
+#navList .listTab a, #navList .listTab a:hover {
 	width: 150px;
 }
 
-ul#menu-screen li:first-child{
-border-top:none;
-	}
-
-ul#menu-screen li:last-child{
-	border-bottom: none;
+#navList li:hover ul ul, #navList li:hover ul ul ul, #navList li:hover ul ul ul ul {
+	display: none;
+}
+#navList li:hover ul, #navList li li:hover ul, #navList li li li:hover ul, #navList li li li li:hover ul {
+	display: block;
 }
 
 #menu-info{
-	float: right;
-	margin:0 0 20px 50px;
-	width:500px;
+	float:right;
+	position:relative;
+	right:60px;
+	width:700px;
 	height:400px;
 	border:1px solid #ffffff;
 }
-
-#menu{
-	float:left;
-	width:200px;
-	height:400px;
-}
-
-ul.sessMenu, ul.staffMenu, ul.bakMenu, ul.micMenu{
-	position:absolute;
-	width:200px;
-	margin:30px 0 0 40px;
-	display:none;
-}
-
-ul.sessMenu li, ul.staffMenu li, ul.bakMenu li, ul.micMenu li{
-	border:none;
-	font:18px Helvetica, Arial, Verdana, sans-serif;
-	font-variant: small-caps;
-	text-transform: capitalize;
-	padding:5px 0 5px 20px;
-	font-weight:bold;
-
-}
-
-
 
 
 
