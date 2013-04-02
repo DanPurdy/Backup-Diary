@@ -69,6 +69,20 @@ $('textarea.mic').each(function() {
 });
 
 
+
+
+$(function(){
+    var $link;
+    $("#menu-screen li").on("mouseenter",function(e){
+        e.preventDefault();
+        $(this).find("a").css("padding-left:50px")
+        $("ul."+$link).hide(0);
+        $link = $(this).data("menu");
+        $("ul."+$link).show("slide", {direction: "left"}, 300)
+        });
+
+});
+
 $(function() {
   $("#micNo").focus();
 });

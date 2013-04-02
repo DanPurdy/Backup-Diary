@@ -98,7 +98,7 @@ textarea{resize: none}
 	min-height: 100%;
 }
 #main{
-	width:960px;
+	width: 960px;
 	margin: 0 auto;
 	overflow: auto;
 	padding-bottom: 150px;
@@ -213,43 +213,65 @@ input.userInput, input.paswInput, input.emalInput{
 
  
 /* ---------------- Main Menu/Index -------------------- */
-#mainMenuTop{
-	margin-top: 80px;
+ul#menu-screen li a{
+	padding-top:40px;
 }
 
-#mainMenuBottom{
-	
-}
-
-.menuLeft{
+ul#menu-screen{
 	float:left;
-	margin-left: 120px;
-	margin-bottom:50px;
-	width:200px;
-	height:150px;
-	text-align: center;
-	border: 1px solid #ffffff;
 }
-
-.menuRight{
-	float:left;
-	margin-left: 220px;
-	margin-bottom:50px;
-	width:200px;
-	height:150px;
-	text-align: center;
-	border: 1px solid #ffffff;
-
-}
-
-.innerMenu{
-	font:22px Helvetica, Arial, Verdana, sans-serif;
+ul#menu-screen li{
+	font:18px Helvetica, Arial, Verdana, sans-serif;
 	font-variant: small-caps;
 	text-transform: capitalize;
 	font-weight:bold;
-	position:relative;
-	top:60px;
+	border-bottom: 2px solid #ffffff;
+	border-top: 1px solid #666666;
+	width: 150px;
 }
+
+ul#menu-screen li:first-child{
+border-top:none;
+	}
+
+ul#menu-screen li:last-child{
+	border-bottom: none;
+}
+
+#menu-info{
+	float: right;
+	margin:0 0 20px 50px;
+	width:500px;
+	height:400px;
+	border:1px solid #ffffff;
+}
+
+#menu{
+	float:left;
+	width:200px;
+	height:400px;
+}
+
+ul.sessMenu, ul.staffMenu, ul.bakMenu, ul.micMenu{
+	position:absolute;
+	width:200px;
+	margin:30px 0 0 40px;
+	display:none;
+}
+
+ul.sessMenu li, ul.staffMenu li, ul.bakMenu li, ul.micMenu li{
+	border:none;
+	font:18px Helvetica, Arial, Verdana, sans-serif;
+	font-variant: small-caps;
+	text-transform: capitalize;
+	padding:5px 0 5px 20px;
+	font-weight:bold;
+
+}
+
+
+
+
 
 /* ---------------- New Session ---------------------- */
 
@@ -1123,12 +1145,14 @@ tr.bakKeep {
 	position:relative;
 	float:right;
 	right:150px;
+	margin-bottom:40px;
 }
 
 #engTable{
 	position:relative;
 	float:left;
 	left:150px;
+	margin-bottom:40px;
 }
 
 #engTable table, #astTable table{
