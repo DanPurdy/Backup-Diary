@@ -1,11 +1,7 @@
 
 .DS_Store
 
-*.png
-
 includes/pdoconnection.php
-
-*.jpg
 
 includes/connection.php
 
