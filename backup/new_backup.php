@@ -44,6 +44,14 @@ catch (PDOException $e) {
     
 <div class="session-backup-details">
     <div class="backupDriveTitle"><h3>Session Details</h3></div>
+    <?php if($row['ssNo'] != 0){?>
+        <div class="sessNum"><h3>#<?=$row['ssNo'];?></h3></div>
+    <?php }else{?> 
+        <form id="sheetNumber" method="post" action="session/sessNum.php" enctype="multipart/form-data">
+            <input type="number" id="ssNo" name="ssNo" min="7000"/>
+            <input type="text" name="sesID" value="<?= $_GET['sesID'];?>" hidden />
+            <input type="submit" id="ssNoSub" name="ssNoSub" value="Save"/>
+        </form><?} ?>
     <div class="studio">Studio <?php echo $row['stdID'];?></div>
     <div class="sessdate"><?php echo date('d-m-Y', $date);?></div>
     <div class="sesstime"><?php echo substr($row['startTime'],0,5) . " - " . substr($row['endTime'],0,5); ?></div>
@@ -122,7 +130,7 @@ catch (PDOException $e) {
         <div id="backupNotes">
             <div id="section-Notes">    
                 <h3>Notes:</h3>
-                <textarea name="bakNotes" rows="15" cols="30"></textarea>
+                <textarea name="bakNotes" rows="20" cols="30"></textarea>
             </div>
         </div>
         

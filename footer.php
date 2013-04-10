@@ -79,6 +79,31 @@ $(function () {
     });
 });
 
+$('#sheetNumber').submit(function(){
+    var url="/session/sessNum.php";
+    var text=$('#ssNo').val();
+
+    $.ajax({
+           type: "POST",
+           url: url,
+           data: $("#sheetNumber").serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+               $('<div>')
+                .attr('class', 'sessNum')
+                .html('<h3>#'+text+'<h3>')
+                .fadeIn('fast')
+                .insertBefore($('.studio'))
+                .animate({opacity: 1.0}, 1000);
+
+               $('#sheetNumber').hide();
+           }
+         });
+
+
+    return false;
+});
+
 $("#savedMics").hide();
         $("#showMics").show();
  
