@@ -49,6 +49,15 @@
     </body>
     <script>
 $(document).ready(function(){
+    
+    $('li.main').hover(
+			function() {
+                            $('ul', this).stop().animate({'opacity':'1'},300); 
+                        
+                        },
+			function() { $('ul', this).stop().animate({'opacity': '0'},300); 
+                        });
+
 
 $('textarea.mic').each(function() {
     // Stores the default value for each textarea within each textarea

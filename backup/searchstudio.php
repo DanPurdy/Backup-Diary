@@ -11,7 +11,7 @@ require_once ('../header.php');
 
 
 
-<h1>Search by Studio</h1>
+<div class="backupDriveTitle"><h1>Search Backups</h1></div>
     
     <div id="searchStd">
         <h3>Search By Studio</h3>

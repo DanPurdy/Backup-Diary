@@ -37,21 +37,64 @@
     </head>
     <body>
         <div id="wrapper">
-            <div id="header"><h1><a href="/">Angel Backup Diary</a></h1>
+            <div id="header">
+                <div id="mainHead"><h1><a href="/">Angel Backup Diary</a></h1></div>
                 <div id="accCont">
                     <div class="backupDriveTitle"><h3>Logged in as:  <?php echo htmlentities($_SESSION['user']['username'], ENT_QUOTES, 'UTF-8'); ?></h3></div>
                     <div id="loginEdit"><a href="/edit_account.php">Edit Account</a></div>
                     <div id="logout"><a href="/logout.php">Logout</a></div>
                 </div>
                 
-                    <div id="headMenu">
-                        
-                        <a style="display:block" href="/session/list_timetable.php"><div class="menuItemFirst"><h3>Timetable</h3></div></a>
-                        <a style="display:block" href="/channels/"><div class="menuItem"><h3>Faults</h3></div></a>
-                        <a style="display:block" href="/mics/"><div class="menuItem"><h3>Mics</h3></div></a>
-                        <a style="display:block" href="/backup/"><div class="menuItem"><h3>Backups</h3></div></a>
+                    <nav>
+                        <ul>
+                            <li class="main">
+                                <a href=""><h3>Sessions</h3></a>
+                                <ul>
+                                   
+                                    <li><a href="/session/list_timetable.php">Timetable</a></li>
+                                    <li><a href="/session/new_session.php">Add a Session</a></li>
+                                    <li><a href="/session/search_session.php">Search Sessions</a></li>
+                                    <li><a href="/screen/">Reception Screen</a></li>
+                                    <li><a href="/session/session_sheet.php">Session Sheets</a></li>
+                                
+                                </ul>
+                            </li>
+                            <li class="main">
+                                <a href="/channels/"><h3>Faults</h3></a>
+                            <ul>
+                                   
+                                    <li><a href="/channels/list_channels.php?studio=1">Studio One</a></li>
+                                    <li><a href="/channels/list_channels.php?studio=3">Studio Three</a></li>
+                                
+                                </ul>
+                            </li>
+                            <li class="main">
+                                <a href="/mics/"><h3>Microphones</h3></a>
+                                <ul>
+                                   
+                                    <li><a href="/mics/">In / Out</a></li>
+                                    <li><a href="/mics/list.php">Mic List</a></li>
+                                    <li><a href="/mics/list_session.php">Mics In Session</a></li>
+                                    <li><a href="/mics/list_repair.php">Repair List</a></li>
+                                    
+                                
+                                </ul>
+                            
+                            </li>
+                            <li class="main">
+                                <a href="/backup/"><h3>Backups</h3></a>
+                                <ul>
+                                   
+                                    <li><a href="/backup/">Backup Menu</a></li>
+                                    <li><a href="/backup/searchstudio.php">Search Backups</a></li>
+                                    <li><a href="/backup/selectstudio.php">Due For Deletion</a></li>
+                                    
+                                
+                                </ul>
+                            </li>
+                        </ul>
                    </div>  
             
             
-            </div>
+            </nav>
             <div id="main">
