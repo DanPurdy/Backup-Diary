@@ -49,8 +49,14 @@ while($row = $sth->fetch(PDO::FETCH_BOUND)){
     print $e->getMessage();
   }
 
+if(date('I') == 1){     // check if daylight savings is active
+    $dst=3600;          // if it is active then set dst to 1 hour 
+}else{
+    $dst=0;             //if not set time offset to 0
+}
  //assign the current time in unix timestamp format to the now variable
-  $now = time();
+  $now = time() + $dst; //add the time offset if daylight savings is active to allow the start and end times to be calculated correctly.
+  
 if(!empty($sT[0])){                                            //if studio numbers first array result is empty there are no sessions so do nothing
     if(!empty($sT[1])){                                         //if studio numbers first result is present but second isnt there is only one session
         if ($now < (strtotime($tSs[1])-(60*60*1.5))){           // if second session start time is 1.5 hours away then it should be displayed
