@@ -54,7 +54,7 @@
                                     <li><a href="/session/list_timetable.php">Timetable</a></li>
                                     <li><a href="/session/new_session.php">Add a Session</a></li>
                                     <li><a href="/session/search_session.php">Search Sessions</a></li>
-                                    <?php if ($_SESSION['user']['usrGroup']=='admin' || $_SESSION['user']['usrGroup']=='office'){?><li><a href="/screen/">Reception Screen</a></li><?}?>
+                                    <?php if ($_SESSION['user']['usrGroup']=='admin' || $_SESSION['user']['usrGroup']=='default'){?><li><a href="/screen/">Reception Screen</a></li><?}?>
                                     <?php if ($_SESSION['user']['usrGroup']=='admin' || $_SESSION['user']['usrGroup']=='office'){?><li><a href="/session/session_sheet.php">Session Sheets</a></li><?}?>
                                 
                                 </ul>
@@ -69,10 +69,10 @@
                                 </ul>
                             </li>
                             <li class="main">
-                                <?php if ($_SESSION['user']['usrGroup']!='office' || $_SESSION['user']['usrGroup']!='office'){?><a href="/mics/"><?}else{?><a href=""><?}?><h3>Microphones</h3></a>
+                                <?php if ($_SESSION['user']['usrGroup']!='office' && $_SESSION['user']['usrGroup']!='default'){?><a href="/mics/"><?}else{?><a href=""><?}?><h3>Microphones</h3></a>
                                 <ul>
                                    
-                                    <?php if ($_SESSION['user']['usrGroup']!='office'){?><li><a href="/mics/">In / Out</a></li><?}?>
+                                    <?php if ($_SESSION['user']['usrGroup']!='office' && $_SESSION['user']['usrGroup']!='default'){?><li><a href="/mics/">In / Out</a></li><?}?>
                                     <li><a href="/mics/list.php">Mic List</a></li>
                                     <li><a href="/mics/list_session.php">Mics In Session</a></li>
                                     <li><a href="/mics/list_repair.php">Repair List</a></li>
