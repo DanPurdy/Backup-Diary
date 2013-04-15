@@ -2,46 +2,7 @@
         </div> 
         <div id="footer">
             <div id="footerWrap">
-              <?php  if(empty($_SESSION['user'])){
-                  
-              }else{?>
-                <div id="footerlinks">
-                <div class="footerlinks">
-                    <div class="backupDriveTitle"><h3><a href="/session/">Sessions &raquo;</a></h3></div>
-                    <ul>
-                        <li><a href="/session/list_timetable.php">Timetable</a></li>
-                        <li><a href="/session/new_session.php">New Session</a></li>
-                        <li><a href="/session/search_session.php">Search Sessions</a></li>
-                        <li><a href="/staff/">Manage Staff</a></li>
-                        <li><a href="/screen/">Reception Screen</a></li>
-                    </ul>
-                </div>
-                <div class="footerlinks">
-                    <div class="backupDriveTitle"><h3><a href="/channels/">Faults &raquo;</a></h3></div>
-                    <ul>
-                        <li><a href="/channels/list_channels.php?studio=1">One</a></li>
-                        <li><a href="/channels/list_channels.php?studio=3">Three</a></li>
-                    </ul>
-                </div>
-                <div class="footerlinks">
-                    <div class="backupDriveTitle"><h3><a href="/mics/">Microphones &raquo;</a></h3></div>
-                    <ul>
-                        <li><a href="/mics/list_session.php">In Session</a></li>
-                        <li><a href="/mics/list.php">Microphone List</a></li>
-                        <li><a href="/mics/list_repair.php">For repair</a></li>
-                    </ul>
-                </div>
-                <div class="footerlinks">
-                    <div class="backupDriveTitle"><h3><a href="/backup/">Backups &raquo;</a></h3></div>
-                    <ul>
-                        <li><a href="/backup/">Active Backups</a></li>
-                        <li><a href="/backup/#stuLinkInnerWrap">Backup Drives</a></li>
-                        <li><a href="/backup/selectstudio.php">Due for Deletion</a></li>
-                        <li><a href="/backup/searchstudio.php">Search Backups</a></li>
-                        </ul>
-                </div>
-                </div>
-                <?php } ?>
+              
             </div>
         </div>
         
@@ -49,6 +10,15 @@
     </body>
     <script>
 $(document).ready(function(){
+    
+    $('li.main').hover(
+			function() {
+                            $('ul', this).stop().animate({'opacity':'1'},300); 
+                        
+                        },
+			function() { $('ul', this).stop().animate({'opacity': '0'},300); 
+                        });
+
 
 $('textarea.mic').each(function() {
     // Stores the default value for each textarea within each textarea
