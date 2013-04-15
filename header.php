@@ -54,8 +54,8 @@
                                     <li><a href="/session/list_timetable.php">Timetable</a></li>
                                     <li><a href="/session/new_session.php">Add a Session</a></li>
                                     <li><a href="/session/search_session.php">Search Sessions</a></li>
-                                    <li><a href="/screen/">Reception Screen</a></li>
-                                    <li><a href="/session/session_sheet.php">Session Sheets</a></li>
+                                    <?php if ($_SESSION['user']['usrGroup']=='admin' || $_SESSION['user']['usrGroup']=='office'){?><li><a href="/screen/">Reception Screen</a></li><?}?>
+                                    <?php if ($_SESSION['user']['usrGroup']=='admin' || $_SESSION['user']['usrGroup']=='office'){?><li><a href="/session/session_sheet.php">Session Sheets</a></li><?}?>
                                 
                                 </ul>
                             </li>
@@ -69,10 +69,10 @@
                                 </ul>
                             </li>
                             <li class="main">
-                                <a href="/mics/"><h3>Microphones</h3></a>
+                                <?php if ($_SESSION['user']['usrGroup']!='office' || $_SESSION['user']['usrGroup']!='office'){?><a href="/mics/"><?}else{?><a href=""><?}?><h3>Microphones</h3></a>
                                 <ul>
                                    
-                                    <li><a href="/mics/">In / Out</a></li>
+                                    <?php if ($_SESSION['user']['usrGroup']!='office'){?><li><a href="/mics/">In / Out</a></li><?}?>
                                     <li><a href="/mics/list.php">Mic List</a></li>
                                     <li><a href="/mics/list_session.php">Mics In Session</a></li>
                                     <li><a href="/mics/list_repair.php">Repair List</a></li>
@@ -87,7 +87,7 @@
                                    
                                     <li><a href="/backup/">Backup Menu</a></li>
                                     <li><a href="/backup/searchstudio.php">Search Backups</a></li>
-                                    <li><a href="/backup/selectstudio.php">Due For Deletion</a></li>
+                                    <?php if ($_SESSION['user']['usrGroup']=='admin'){?> <li><a href="/backup/selectstudio.php">Due For Deletion</a></li><?}?>
                                     
                                 
                                 </ul>
