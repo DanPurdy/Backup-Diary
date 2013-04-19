@@ -144,7 +144,7 @@
         
         die("Redirecting to login.php"); 
     } 
-    require_once('header.php');
+    require_once('header-admin.php');
 ?> 
 <div id="subHead"><h1>Register</h1></div>
 <form id="register" action="register.php" method="post"> 

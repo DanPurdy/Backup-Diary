@@ -228,6 +228,7 @@ li.main ul li a{
 #login, #register, #editaccount{
 	width:200px;
 	margin:auto;
+	margin-bottom:100px;
 	border:1px solid #ffffff;
 	padding:30px;
 }
@@ -1240,6 +1241,10 @@ tr.bakKeep {
 	position:relative;
 	float:left;
 	left:150px;
+}
+
+#astTable, #engTable{
+	margin-bottom:40px;
 }
 
 #engTable table, #astTable table{

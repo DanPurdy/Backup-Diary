@@ -88,7 +88,7 @@ require('header.php');
                             <input type="input" name="sesID" value="<?=$row['sesID'];?>" hidden/>
                         </td>
                         <td>    
-                            <input type ="submit" />
+                            <input type ="submit" value="Submit"/>
                  
                         </form>
                     </td>

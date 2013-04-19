@@ -1,18 +1,7 @@
 <?php 
-    session_start();
     require('includes/pdoconnection.php');
     $dbh = dbConn::getConnection();
-     
-    // At the top of the page we check to see whether the user is logged in or not 
-    if(empty($_SESSION['user'])) 
-    { 
-        // If they are not, we redirect them to the login page. 
-        header("Location: login.php"); 
-         
-        // Remember that this die statement is absolutely critical.  Without it, 
-        // people can view your members-only content without logging in. 
-        die("Redirecting to login.php"); 
-    } 
+   require_once 'header-admin.php';
      
     // Everything below this point in the file is secured by the login system 
      
@@ -43,7 +32,7 @@
     // Finally, we can retrieve all of the found rows into an array using fetchAll 
     $rows = $stmt->fetchAll(); 
     
-    require_once 'header.php';
+    
 ?> 
 <h1>Memberlist</h1> 
 <table> 
