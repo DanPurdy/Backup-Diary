@@ -71,6 +71,9 @@ h4{
 
 textarea{resize: none}
 
+.hidden{
+	display:none;
+}
 
 #header, #subHead{
 	text-align:center;

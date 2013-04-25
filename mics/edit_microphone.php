@@ -159,10 +159,10 @@ catch (PDOException $e) {
     </div>
      <div id="micFormContainer">
          <div class="backupDriveTitle"><h1>Assign Microphones</h1></div>
-    <input type="number" name="bakID" value="<?= $bakMicID ?>" hidden/>
-    <input type="number" name="sesID" value="<?=$sesID ?>" hidden/>
-    <input type="number" id="micNo" name="micNo" min="1000" max="1350"/>
-    <input type="submit" id="submitMic" hidden/>
+    <input type="number" name="bakID" class="hidden" value="<?= $bakMicID ?>"  />
+    <input type="number" name="sesID" class="hidden" value="<?=$sesID ?>"  />
+    <input type="number" id="micNo" name="micNo" min="1000" max="1350" />
+    <input type="submit" id="submitMic" class="hidden"/>
     
  
     </div>
@@ -195,10 +195,10 @@ catch (PDOException $e) {
 </div>
   <div id="micFormContainer">  
                  <div class="backupDriveTitle"><h1>Return Microphones</h1></div>
-        <input type="number" name="bakID" value="<?= $bakMicID ?>" hidden/>
-      <input type="number" name="sesID" value="<?=$sesID ?>" hidden/>
+        <input type="number" name="bakID" class="hidden" value="<?= $bakMicID ?>"  />
+      <input type="number" name="sesID" value="<?=$sesID ?>" class="hidden" />
     <input type="number" id="micNo" name="micNo" min="1000" max="1350" />
-    <input type="submit" id="submitMic" name="returnMic_button" value="Return"hidden/>
+    <input type="submit" id="submitMic" name="returnMic_button" value="Return" class="hidden" />
     <div class="backupDriveTitle"><h1>Transfer Mics</h1></div>
     <select name="transferSession" id="transferSession">
         <option value="0">Choose Session To Transfer To</option>

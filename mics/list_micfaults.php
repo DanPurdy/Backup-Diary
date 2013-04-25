@@ -37,8 +37,8 @@ require('header.php');
         if(empty($fault['faultOutcome'])){?>
     
             <div class="faultDetails">
-                <input type="text" name="micID" value="<?=htmlentities($_GET['micID']);?>" hidden/>
-                <input type="text" name="faultID" value="<?=$fault['faultID']; ?>" hidden/>
+                <input type="text" class="hidden" name="micID" value="<?=htmlentities($_GET['micID']);?>" />
+                <input type="text" class="hidden" name="faultID" value="<?=$fault['faultID']; ?>"/>
                 <div class="faultDesc"><label for="fault">Fault Description</label>
                 <textarea id="fault" name="fault" rows="3" cols="30"><?=$fault['faultDesc'];?></textarea>
                 </div>

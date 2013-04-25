@@ -113,7 +113,7 @@ require_once 'header.php'
 
             ?>
             
-            <input id="sessionID" name="sessionID" value="<?php echo $row['sesID'];?>" hidden />
+            <input id="sessionID" name="sessionID" value="<?php echo $row['sesID'];?>" class="hidden" />
             <div id="sessDet">
                 <div class="backupTitle"><h3>Session Details</h3></div>
             <div id="studioSelect">
@@ -146,7 +146,7 @@ require_once 'header.php'
             </div>
                 <div id="continueSelect">
                     <h3>Session Continuation</h3>
-                    <input id="backupID" name="backupID" value="<?php echo $row['bakID'];?>" hidden />
+                    <input id="backupID" name="backupID" value="<?php echo $row['bakID'];?>" class="hidden" />
                     <select name="sessCont" id="sessCont">
                         <?php 
                         $initEng = explode(" ",$result['engName']); //split string into two seperate strings and seperate array values
@@ -187,13 +187,13 @@ require_once 'header.php'
                 <h2>Engineer</h2>
                 Select Engineer:
                 <input id="engsearch" name="engN" type="text" value="<?php echo $row['engName'];?>" />
-                <input id="engineerID" name="engineerID" value="<?php echo $row['engID'];?>"  hidden />
+                <input id="engineerID" name="engineerID" value="<?php echo $row['engID'];?>"  class="hidden" />
             </div>
             <div id ="assistantSelect">
                 <h2>Assistant</h2>
                 Select Assistant:
                 <input id="astsearch" name="astN" type="text" value="<?php echo $row['astName'];?>" />
-                <input id="assistantID" name="assistantID" value="<?php echo $row['astID'];?>" hidden />
+                <input id="assistantID" name="assistantID" value="<?php echo $row['astID'];?>" class="hidden" />
             </div>
                 </div>
             <div id="clientDetails">
@@ -202,28 +202,28 @@ require_once 'header.php'
                 <h2>Client</h2>
                 Enter Client Name:
                 <input id="clisearch" name="cliN" type="text" value="<?php echo $row['cliName'];?>" />
-                <input id="clientID" name="clientID" value="<?php echo $row['cliID'];?>" hidden />
+                <input id="clientID" name="clientID" value="<?php echo $row['cliID'];?>" class="hidden" />
             </div>
             
             <div id="cmpSelect">
                 <h2>Composer</h2>
                 Enter Composer:
                 <input id="composersearch" name="compN" type="text" value="<?php echo $row['cmpName'];?>"/>
-                <input id="composerID" name="composerID" value="<?php echo $row['cmpID'];?>" hidden />
+                <input id="composerID" name="composerID" value="<?php echo $row['cmpID'];?>" class="hidden" />
             </div>
             
             <div id="fixSelect">
                 <h2>Fixer</h2>
                 Enter Fixer Name:
                 <input id="fixsearch" name="fixN" type="text" value="<?php echo $row['fixName'];?>" />
-                <input id="fixerID" name="fixerID" value="<?php echo $row['fixID'];?>" hidden />
+                <input id="fixerID" name="fixerID" value="<?php echo $row['fixID'];?>" class="hidden" />
             </div>
             
             <div id="projSelect">
                 <h2>Project</h2>
                 Enter Project Name:
                 <input id="projsearch" name="projN" type="text" value="<?php echo $row['prjName'];?>" />
-                <input id="projectID" name="projectID" value="<?php echo $row['prjID'];?>" hidden />
+                <input id="projectID" name="projectID" value="<?php echo $row['prjID'];?>" class="hidden" />
             </div>
             </div>
             <div id="sessSubmit"><input type="submit" name="submit" value="Update Session" id="newSessSubmit"/></div>

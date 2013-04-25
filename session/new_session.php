@@ -91,13 +91,13 @@ require_once ('header.php');
                 <h3>Select Engineer</h3>
                 Select Engineer:
                 <input id="engsearch" name="engN" type="text" />
-                <input id="engineerID" name="engineerID" value="0" hidden />
+                <input id="engineerID" name="engineerID" value="0" class="hidden" />
             </div>
             <div id ="assistantSelect">
                 <h3>Select Assistant</h3>
                 Select Assistant:
                 <input id="astsearch" name="astN" type="text" />
-                <input id="assistantID" name="assistantID" value="0" hidden />
+                <input id="assistantID" name="assistantID" value="0" class="hidden" />
             </div>
                 </div>  
             <div id="clientDetails">
@@ -106,28 +106,28 @@ require_once ('header.php');
                 <h3>Select Client</h3>
                 Enter Client Name:
                 <input id="clisearch" name="cliN" type="text" required />
-                <input id="clientID" name="clientID" value="0" hidden />
+                <input id="clientID" name="clientID" value="0" class="hidden" />
             </div>
             
             <div id="cmpSelect">
                 <h3>Select Composer</h3>
                 Enter Composer:
                 <input id="composersearch" name="compN" type="text" />
-                <input id="composerID" name="composerID" value="0" hidden />
+                <input id="composerID" name="composerID" value="0" class="hidden" />
             </div>
             
             <div id="fixSelect"> 
                 <h3>Select Fixer</h3>
                 Enter Fixer Name:
                 <input id="fixsearch" name="fixN" type="text" />
-                <input id="fixerID" name="fixerID" value="0" hidden />
+                <input id="fixerID" name="fixerID" value="0" class="hidden" />
             </div>
             
             <div id="projSelect">
                 <h3>Select Project</h3>
                 Enter Project Name:
                 <input id="projsearch" name="projN" type="text" />
-                <input id="projectID" name="projectID" value="0" hidden />
+                <input id="projectID" name="projectID" value="0" class="hidden" />
             </div>
                 </div>
             <div id="sessSubmit"><input type="submit" name="submit" value="Add New Session" id="newSessSubmit"/></div>

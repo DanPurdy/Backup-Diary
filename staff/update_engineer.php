@@ -59,7 +59,7 @@ if($engID == 0) { ?>
     <input name="name" type="text" id="name" value="<?php echo $name; ?>"></div>
   
     <input type="submit" name="update" value="Update Engineer" id="update">
-  <input name="engID" type="hidden" value="<?php echo $engID; ?>">
+  <input name="engID" class="hidden" value="<?php echo $engID; ?>">
 </form>
 <?php 
 

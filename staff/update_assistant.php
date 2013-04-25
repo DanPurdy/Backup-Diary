@@ -61,7 +61,7 @@ if($astID == 0) { ?>
  
 
     <input type="submit" name="update" value="Update Entry" id="update" />
-  <input name="astID" type="hidden" value="<?php echo $astID; ?>">
+  <input name="astID" class="hidden" value="<?php echo $astID; ?>">
 </form>
 <?php 
 

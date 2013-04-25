@@ -37,8 +37,8 @@ require('header.php');
         if(empty($fault['faultOutcome'])){?>
 <form id="micFault-<?= $i ?>" action="updateChannelFault.php" method="post">
             <div class="faultDetails">
-                <input type="text" name="chID" value="<?=htmlentities($_GET['chID']);?>" hidden/>
-                <input type="text" name="faultID" value="<?=$fault['faultID']; ?>" hidden/>
+                <input type="text" name="chID" value="<?=htmlentities($_GET['chID']);?>" class="hidden"/>
+                <input type="text" name="faultID" value="<?=$fault['faultID']; ?>" class="hidden"/>
                 <div class="faultDesc"><label for="fault">Fault Description</label>
                 <textarea id="fault" name="fault" rows="3" cols="30"><?=$fault['faultDesc'];?></textarea>
                 </div>

@@ -49,7 +49,7 @@ catch (PDOException $e) {
     <?php }else{?> 
         <form id="sheetNumber" method="post" action="session/sessNum.php" enctype="multipart/form-data">
             <input type="number" id="ssNo" name="ssNo" min="7000"/>
-            <input type="text" name="sesID" value="<?= $_GET['sesID'];?>" hidden />
+            <input type="text" name="sesID" value="<?= $_GET['sesID'];?>" class="hidden" />
             <input type="submit" id="ssNoSub" name="ssNoSub" value="Save"/>
         </form><?} ?>
     <div class="studio">Studio <?php echo $row['stdID'];?></div>
@@ -73,9 +73,9 @@ catch (PDOException $e) {
         <div id="BackupName">
                 Backup Name:
                 <input id="backName" name="backName" type="text" size="75" required/>
-                <input id="bakID" name="bakID" value="<?= $row['bakID']?>" hidden/>
-                <input id="sesID" name="sesID" value="<?php echo $_GET['sesID']; ?>" hidden/>
-                <input id="editBool" name="editBool" value="0" hidden />
+                <input id="bakID" name="bakID" value="<?= $row['bakID']?>" class="hidden"/>
+                <input id="sesID" name="sesID" value="<?php echo $_GET['sesID']; ?>" class="hidden"/>
+                <input id="editBool" name="editBool" value="0" class="hidden" />
             </div>
         
         <div id="driveLocation">
@@ -139,7 +139,7 @@ catch (PDOException $e) {
             ?>
         <div id="roomMove">
                 <h3>Moving to Studio:</h3>
-                <input type="radio" value="0" name="bakMov" checked hidden/>
+                <input type="radio" value="0" name="bakMov" checked class="hidden"/>
                 <input type="radio" value="2" name="bakMov"/>2<br />
                 <input type="radio" value="3" name="bakMov"/>3<br />
             </div>
@@ -149,7 +149,7 @@ catch (PDOException $e) {
             <div id="roomMove">
                 <h3>Moving to Studio:</h3>
                 <input type="radio" value="1" name="bakMov"/>1<br />
-                <input type="radio" value="0" name="bakMov" checked hidden/>
+                <input type="radio" value="0" name="bakMov" checked class="hidden"/>
                 <input type="radio" value="3" name="bakMov"/>3<br />
             </div>
           <?php  
@@ -159,7 +159,7 @@ catch (PDOException $e) {
                 <h3>Moving to Studio</h3>
                 <input type="radio" value="1" name="bakMov"/>1<br />
                 <input type="radio" value="2" name="bakMov"/>2<br />
-                <input type="radio" value="0" name="bakMov" checked hidden/>
+                <input type="radio" value="0" name="bakMov" checked class="hidden"/>
             </div>
         <?php
         }
