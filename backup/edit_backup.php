@@ -62,7 +62,7 @@ catch (PDOException $e) {
     <?php }else{?> 
         <form id="sheetNumber" method="post" action="session/sessNum.php" enctype="multipart/form-data">
             <input type="number" id="ssNo" name="ssNo" min="7000"/>
-            <input type="text" name="sesID" value="<?= $_GET['sesID'];?>" hidden />
+            <input type="text" name="sesID" value="<?= $_GET['sesID'];?>" class="hidden" />
             <input type="submit" id="ssNoSub" name="ssNoSub" value="Save"/>
         </form><?} ?>
     <div class="studio">Studio <?php echo $row['stdID'];?></div>
@@ -91,9 +91,9 @@ if(!empty($row['bakLastDate'])){echo date('D d F Y H:i:s', strtotime($row['bakLa
         <div id="BackupName">
                 Backup Name:
                 <input id="backName" name="backName" type="text" value="<?php echo $row['bakName']; ?>" size="75" required/>
-                <input id="bakID" name="bakID" value="<?php echo $row['bakID']; ?>" hidden />
-                <input id="sesID" name="sesID" value="<?php echo $_GET['sesID']; ?>" hidden />
-                <input id="editBool" name="editBool" value="1" hidden />
+                <input id="bakID" name="bakID" class="hidden" value="<?php echo $row['bakID']; ?>"  />
+                <input id="sesID" name="sesID" class="hidden" value="<?php echo $_GET['sesID']; ?>"  />
+                <input id="editBool" name="editBool" value="1" class="hidden" />
             </div>
         <div id="driveLocation">
         
