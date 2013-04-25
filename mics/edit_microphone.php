@@ -195,8 +195,8 @@ catch (PDOException $e) {
 </div>
   <div id="micFormContainer">  
                  <div class="backupDriveTitle"><h1>Return Microphones</h1></div>
-        <input type="number" name="bakID" class="hidden" value="<?= $bakMicID ?>"  />
-      <input type="number" name="sesID" value="<?=$sesID ?>" class="hidden" />
+        <input type="number" name="bakID" class="hidden" value="<?= $bakMicID ?>" />
+      <input type="number" name="sesID" class="hidden" value="<?=$sesID ?>" />
     <input type="number" id="micNo" name="micNo" min="1000" max="1350" />
     <input type="submit" id="submitMic" name="returnMic_button" value="Return" class="hidden" />
     <div class="backupDriveTitle"><h1>Transfer Mics</h1></div>

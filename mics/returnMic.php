@@ -67,6 +67,15 @@ if($_POST['returnMic_button']){  // Checks to see if mics are being returned or 
 
 elseif($_POST['transferMic_button'] && !empty($_POST['micNo_check'])){ //Triggers if mics are being transferred via transfer button
     if( $_POST['transferSession'] >=1){
+        
+        $st4 = $dbh->prepare('SELECT sesID FROM session WHERE bakID = :bakID ORDER BY sessDate ASC LIMIT 1');
+            
+            $st4->bindParam(':bakID', $_POST['transferSession'], PDO::PARAM_INT);
+            $st4->execute();
+            
+            $result = $st4->fetch(PDO::FETCH_ASSOC);
+            
+            
     foreach($_POST['micNo_check'] as $transferMic) { //for each of the checkbox values selected
             
 
@@ -101,7 +110,7 @@ elseif($_POST['transferMic_button'] && !empty($_POST['micNo_check'])){ //Trigger
         
             $st3->execute();
             
-            micLog($transferMic, $_SESSION['user']['usrID'], $_POST['sesID'], 'transfer');
+            micLog($transferMic, $_SESSION['user']['usrID'], $result['sesID'], 'transfer');
         
         
         }else{
@@ -130,15 +139,6 @@ elseif($_POST['transferMic_button'] && !empty($_POST['micNo_check'])){ //Trigger
             $st3->bindParam(':mic', $mics, PDO::PARAM_STR);
         
             $st3->execute();
-            
-            $st4 = $dbh->prepare('SELECT sesID FROM session WHERE bakID = :bakID ORDER BY sessDate ASC LIMIT 1');
-            
-            $st4->bindParam(':bakID', $_POST['transferSession'], PDO::PARAM_INT);
-            $st4->execute();
-            
-            $result = $st4->fetch(PDO::FETCH_ASSOC);
-            
-            
             
             micLog($transferMic, $_SESSION['user']['usrID'], $result['sesID'], 'transfer');
             }
