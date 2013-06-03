@@ -10,7 +10,7 @@
         header("Location: /login.php"); 
          
         die("Redirecting to /login.php"); 
-    }elseif($_SESSION['user']['usGroup'] != 'admin') {
+    }elseif($_SESSION['user']['usrGroup'] != 'admin') {
         
         header("Location: /");
         
