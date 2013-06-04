@@ -1679,5 +1679,136 @@ text-align:center;
 	margin-right:60px;
 }
 
+/*------------- Tape Store Drive Pages ---------------- */
 
+#clientDriveDetails{
+	position:relative;
+	width:840px;
+	border:1px solid #ffffff;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	padding:10px;
+}
+
+#driveName{
+	position:relative;
+	float:left;
+	height:90px;
+	width:65%;
+}
+
+
+#driveName label, #driveNameInput {
+	position:absolute;
+	left:20px;
+	
+}
+#driveName label{
+	bottom:45px;
+}
+
+
+#driveNameInput{
+	bottom:15px;
+	height:8px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding:8px;
+	outline:none;
+	border:none;
+	
+}
+
+#ownerDetails{
+	float:right;
+	width:35%;
+}
+
+#ownerDetails #cmpOwnerSelect, #ownerDetails #clientOwnerSelect{
+position:relative;
+margin-bottom:10px;
+}
+
+#ownerDetails input{
+	height:8px;
+	width:200px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	padding:8px;
+	outline:none;
+	border:none;
+}
+#driveSubmit{
+	clear:both;
+	border:none;
+	margin:10px 0px 5px 350px;
+}
+
+#driveSubmit input{
+	width:140px;
+	border:none;
+	outline:none;
+	background-color: #ffffff;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding:8px;
+}
+
+#driveList{
+	font: 12px/20px Helvetica, Arial, Verdana, sans-serif;
+	font-variant: small-caps;
+	text-transform: capitalize;
+	border-collapse: collapse;
+	margin-top:40px;
+	margin-bottom:30px;
+	width: 950px;
+	}
+#driveList tr{
+	text-align: left;
+}
+#driveList th{
+	padding: 0 0.5em;
+	text-align: left;
+	border-right:1px solid #ffffff;
+	border-bottom:3px solid #ffffff;
+	}
+
+#driveList td{
+	border-bottom: 3px solid #CCC;
+	border-right:1px solid #CCC;
+	padding: 0.3em 0.5em;
+	}
+
+#driveList td:first-child{
+	width:80px;
+	text-align: center;
+
+}
+#driveList td:nth-child(2){
+	width:300px;
+
+}
+
+#driveList td:nth-child(3){
+	width:250px;
+}
+
+#driveList td:nth-child(4){
+	width:200px;
+	
+}
+
+#driveList td:nth-child(5){
+	width:50px;
+	text-align: center;
+}
+
+#driveList td:last-child{
+	width:150px;
+	text-align:center;
+}
 
