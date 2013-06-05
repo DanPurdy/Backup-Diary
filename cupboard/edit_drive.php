@@ -10,22 +10,6 @@ if(isset($_POST['submit'])){
     $cliID =    $_POST['clientID'];
     $cmpID =    $_POST['composerID'];
     
-    try{
-       $sth = $dbh->prepare('INSERT INTO cupboardDrive (cupbName) VALUES (:driveName)');
-       
-       $sth->bindParam(':driveName', $_POST['driveNameInput'] , PDO::PARAM_STR);
-       
-       $sth->execute();
-        
-       $driveID = $dbh->lastInsertId('cupbID');
-       
-    }
-    catch (PDOException $e) {
-        print $e->getMessage();
-    }
-    
-    
-    
     if(empty($_POST['cliN'])){
         
         $cliID = 1; 
@@ -75,11 +59,29 @@ if(isset($_POST['submit'])){
     //Do nothing
 }
 
+$date=date("Y-m-d", strtotime($_POST['bakDate']));
 try{
-    $st1=$dbh->prepare('INSERT INTO driveOwnerCli (cliID, cupbID) VALUES (:clientID, :driveID)');
+    $st1=$dbh->prepare('INSERT INTO legacySess (legacyName,bakDate,cliID,cmpID) VALUES (:name, :date, :clientID, :composerID);');
     
+    $st1->bindParam(':name', $_POST['driveNameInput'],PDO::PARAM_STR);
+    $st1->bindParam(':date',$date);
     $st1->bindParam(':clientID', $cliID, PDO::PARAM_INT);
-    $st1->bindParam(':driveID', $driveID, PDO::PARAM_INT);
+    $st1->bindParam(':composerID', $cmpID, PDO::PARAM_INT);
+    
+    $st1->execute();
+    
+    $legacyID=$dbh->lastInsertID('legacyID');
+}
+    catch (PDOException $e) {
+        print $e->getMessage();
+    }
+    
+    try{
+    $st1=$dbh->prepare('INSERT INTO legacyDriveSess (legacyID,cupbID) VALUES (:legacyID, :cupbID);');
+    
+   
+    $st1->bindParam(':legacyID',$legacyID, PDO::PARAM_INT);
+    $st1->bindParam(':cupbID', $_POST['driveID'], PDO::PARAM_INT);
     
     $st1->execute();
 }
@@ -87,27 +89,18 @@ try{
         print $e->getMessage();
     }
     
-    try{
-        $st1=$dbh->prepare('INSERT INTO driveOwnerCmp (cmpID, cupbID) VALUES (:composerID, :driveID)');
-    
-        $st1->bindParam(':composerID', $cmpID, PDO::PARAM_INT);
-        $st1->bindParam(':driveID', $driveID, PDO::PARAM_INT);
-    
-        $st1->execute();
-}
-    catch (PDOException $e) {
-        print $e->getMessage();
-    }
+    header('Location: /cupboard/edit_drive.php?driveID='.$_POST['driveID']);
 }
 
 try{
-    $res=$dbh->prepare('SELECT cupboardDrive.*, client.cliName, composer.cmpName
-                        FROM cupboardDrive
-                        LEFT JOIN driveOwnerCli ON (cupboardDrive.cupbID = driveOwnerCli.cupbID)
-                        LEFT JOIN driveOwnerCmp ON (cupboardDrive.cupbID = driveOwnerCmp.cupbID)
-                        LEFT JOIN client ON (driveOwnerCli.cliID=client.cliID)
-                        LEFT JOIN composer ON (driveOwnerCmp.cmpID=composer.cmpID)
-                        GROUP BY cupboardDrive.cupbID;');
+    
+    $res=$dbh->prepare('SELECT * FROM legacySess
+                        LEFT JOIN client ON (legacySess.cliID=client.cliID)
+                        LEFT JOIN composer ON (legacySess.cmpID=composer.cmpID)
+                        INNER JOIN legacyDriveSess ON (legacySess.legacyID=legacyDriveSess.legacyID) 
+                        WHERE cupbID = :drive AND legacySess.deleted=0;');
+    
+    $res->bindParam(':drive',$_GET['driveID'],PDO::PARAM_INT);
     
     $res->execute();
 }
@@ -115,16 +108,43 @@ catch (PDOException $e) {
         print $e->getMessage();
     }
     
+try{
+    $d=$dbh->prepare('SELECT cupbName FROM cupboardDrive WHERE cupbID = :cupbID');
     
+    $d->bindParam(':cupbID', $_GET['driveID'],PDO::PARAM_INT);
+    
+    $d->execute();
+    
+    $result = $d->fetch(PDO::FETCH_ASSOC);
+    
+    $driveName=$result['cupbName'];
+    
+}
+catch (PDOException $e) {
+    print $e->getMessage();
+   }  
+$driveID=  htmlentities($_GET['driveID']); 
+
+
 require_once ('header.php');
 ?>
 
-<div id="subHead"><h1>Create New Tape Store Drive</h1></div>
+<div class="returnLink">
+    <a href="http://localhost/cupboard/new_drive.php"> &laquo Back to Drives</a>
+</div>
+<div id="subHead"><h1><?=$driveName ?></h1></div>
     <div id="clientDriveDetails">
-    <form id="newDrive" method="post" action="new_drive.php" enctype="multipart/form-data">
+    <form id="newDriveSess" method="post" action="edit_drive.php" enctype="multipart/form-data">
+   
+        <input id="driveID" name="driveID" value="<?=$driveID?>" class="hidden" />
         <div id="driveName">
-            <h3><label for="driveNameInput">Drive Name</label></h3>
+            <h3><label for="driveNameInput">Session Name</label></h3>
                 <input id="driveNameInput" name="driveNameInput" type="text" size="75" required/>
+                
+        </div>
+        <div id="legacyDate">
+            <h3><label for ="bakDate">Session Date</label></h3>
+            <input id="legacyDateInput" type="date" name="bakDate" required>
         </div>
         
         <div id="ownerDetails">
@@ -141,35 +161,39 @@ require_once ('header.php');
             </div>
             </div>
        
-        <div id="driveSubmit"><input type="submit" name="submit" value="Add New Drive" id="newDriveSubmit"/></div>
+        <div id="driveSubmit"><input type="submit" name="submit" value="Add Backup" id="newDriveSubmit"/></div>
         </div>
     </form>
 
-        <div id="subHead"><h1>Drive Cupboard List</h1></div>
-        <table id="driveList" class="newDrive">
+        <div id="subHead"><h1>Drive Contents</h1></div>
+        
+        <?php if($res->rowCount()>0){?>
+        <table id="driveList">
             <tr>
-                <th>Drive ID</th>
-                <th>Drive Name</th>
-                <th>Drive Client</th>
-                <th>Drive Composer</th>
-                <th>On Site</th>
+                <th>Date</th>
+                <th>Backup Name</th>
+                <th>Client</th>
+                <th>Composer</th>
+                <th>Deleted</th>
                 <th> </th>
             </tr>
         <?php while($row=$res->fetch(PDO::FETCH_ASSOC)){ ?>
                 <tr>
-                    <td>ATS-<?=$row['cupbID']?></td>
-                    <td><?=$row['cupbName']?></td>
+                    <td><?=date('d-m-y', strtotime($row['bakDate']))?></td>
+                    <td><?=$row['legacyName']?></td>
                     <td><?=$row['cliName'];?></td>
                     <td><?=$row['cmpName'] ?></td>
-                    <td><?php if($row['cupbStored']==1){echo '&#10004';}?></td>
-                    <td><a href="edit_drive.php?driveID=<?=$row['cupbID']?>">View / Edit  &raquo;</a></td>
+                    <td><?php if($row['deleted']==1){echo '&#10004';}?></td>
+                    <td><a href="edit_drive_session.php?sesID=<?=$row['legacyID']?>&driveID=<?= htmlentities($_GET['driveID']); ?>">View / Edit  &raquo;</a></td>
                     
                     
                     
                   </tr>
                   <?php } ?>
             </table>
-    
+    <?php } else {?>
+        <h1 style="text-align: center">This Drive is empty</h1>
+        <?php } ?>
 <?php
 
     require_once ('footer.php');

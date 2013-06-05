@@ -88,6 +88,7 @@
                                     <li><a href="/backup/">Backup Menu</a></li>
                                     <li><a href="/backup/searchstudio.php">Search Backups</a></li>
                                     <?php if ($_SESSION['user']['usrGroup']=='admin'){?> <li><a href="/backup/selectstudio.php">Due For Deletion</a></li><?}?>
+                                    <li><a href="/cupboard/new_drive.php">Tape Store</a></li>
                                     
                                 
                                 </ul>

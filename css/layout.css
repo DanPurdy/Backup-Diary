@@ -1698,6 +1698,13 @@ text-align:center;
 	width:65%;
 }
 
+#newDriveSess #driveName{
+	position:relative;
+	float:left;
+	height:65px;
+	width:65%;
+}
+
 
 #driveName label, #driveNameInput {
 	position:absolute;
@@ -1767,9 +1774,9 @@ margin-bottom:10px;
 	margin-bottom:30px;
 	width: 950px;
 	}
-#driveList tr{
-	text-align: left;
-}
+
+/*-----------Backup Cupboard Drive Table -----------*/
+#driveList tr{text-align: left;}
 #driveList th{
 	padding: 0 0.5em;
 	text-align: left;
@@ -1783,32 +1790,34 @@ margin-bottom:10px;
 	padding: 0.3em 0.5em;
 	}
 
-#driveList td:first-child{
-	width:80px;
-	text-align: center;
+#driveList td:first-child{width:80px; text-align: center;}
+#driveList td:nth-child(2){width:300px;}
+#driveList td:nth-child(3){width:250px;}
+#driveList td:nth-child(4){width:200px;}
+#driveList td:nth-child(5){width:50px; text-align: center;}
+#driveList td:last-child{width:150px; text-align:center;}
+/*----------- Edit Backup Drive Contents -----------*/
 
+#legacyDate{
+	position:absolute;
+	float:left;
+	clear:left;
+	top:70px;
+	left:30px;
 }
-#driveList td:nth-child(2){
-	width:300px;
 
-}
-
-#driveList td:nth-child(3){
-	width:250px;
-}
-
-#driveList td:nth-child(4){
+#legacyDate input{
+	height:8px;
 	width:200px;
-	
-}
-
-#driveList td:nth-child(5){
-	width:50px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	padding:8px;
+	outline:none;
+	border:none;
 	text-align: center;
-}
-
-#driveList td:last-child{
-	width:150px;
-	text-align:center;
+	font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+	font-variant: small-caps;
+	font-size: 14px;
 }
 
