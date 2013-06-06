@@ -221,7 +221,9 @@ if(!empty($row['bakLastDate'])){echo date('D d F Y H:i:s', strtotime($row['bakLa
         <div id="submit"><input type="submit" value="Save Backup Record"/></div><div id="cancel"><a href="/backup/">Cancel</a></div>
         
                 
-
+        <div id="cupboard-drive-panel">
+            <h3>Tape Store Options</h3>
+        </div>
         
     </form>
     

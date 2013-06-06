@@ -11,6 +11,21 @@
     <script>
 $(document).ready(function(){
     
+    function evaluate(){                //evaluate checkbox for display panel
+    
+    var item = $('#backupcupboard :input');
+    var relatedItem = $('#cupboard-drive-panel');
+
+    if(item.is(":checked")){
+        relatedItem.slideDown();
+    }else{
+        relatedItem.slideUp();   
+    }
+    }
+
+$('#backupcupboard :input').click(evaluate).each(evaluate);
+//end
+   
     $('li.main').hover(
 			function() {
                             $('ul', this).stop().animate({'opacity':'1'},300); 
