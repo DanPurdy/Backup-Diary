@@ -122,6 +122,8 @@ try{
                         GROUP BY cupboardDrive.cupbID;');
     
     $res->execute();
+    
+    $count=$res->rowCount();
 }
 catch (PDOException $e) {
         print $e->getMessage();
@@ -158,10 +160,13 @@ require_once ('header.php');
         </div>
         <div id="driveSubmit"><input type="submit" name="submit" value="Add New Drive" id="newDriveSubmit"/></div>
         
-        </div>
+        
         </form>
-    
+    </div>
+
+
         <div class="backupDriveTitle"><h1>Drive Cupboard List</h1></div>
+        <?php if($count){?>
         <table id="driveList" class="newDrive">
             <tr>
                 <th>Drive ID</th>
@@ -178,15 +183,15 @@ require_once ('header.php');
                     <td><?=$row['cliName'];?></td>
                     <td><?=$row['cmpName'] ?></td>
                     <td><?php if($row['cupbStored']==1){echo '&#10004';}?></td>
-                    <td><a href="edit_drive.php?driveID=<?=$row['cupbID']?>">View /</a><a href="edit_drive.php?driveID=<?=$row['cupbID']?>"> Edit  &raquo;</a></td>
+                    <td><a href="view_drive.php?driveID=<?=$row['cupbID']?>">View /</a><a href="edit_drive.php?driveID=<?=$row['cupbID']?>"> Edit  &raquo;</a></td>
                     
                     
                     
                   </tr>
                   <?php } ?>
-            </table>
-    
-<?php
-
+        </table>
+    <?php } else {?>
+        <h1 style="text-align: center">There are no drives</h1>
+        <?php } 
     require_once ('footer.php');
 ?>

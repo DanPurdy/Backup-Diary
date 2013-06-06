@@ -56,7 +56,7 @@
                                     <li><a href="/session/search_session.php">Search Sessions</a></li>
                                     <?php if ($_SESSION['user']['usrGroup']=='admin' || $_SESSION['user']['usrGroup']=='default'){?><li><a href="/screen/">Reception Screen</a></li><?}?>
                                     <?php if ($_SESSION['user']['usrGroup']=='admin' || $_SESSION['user']['usrGroup']=='office'){?><li><a href="/session/session_sheet.php">Session Sheets</a></li><?}?>
-                                
+                                    
                                 </ul>
                             </li>
                             <li class="main">

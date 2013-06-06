@@ -80,7 +80,7 @@ try{
         print $e->getMessage();
     }
     
-    header('Location: /cupboard/edit_drive.php?driveID='.$_POST['driveID']);
+    header('Location: /cupboard/view_drive.php?driveID='.$_POST['driveID']);
 }
 
 
