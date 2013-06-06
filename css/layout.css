@@ -95,7 +95,7 @@ textarea{resize: none}
     border-bottom: 1px solid #ffffff;
 }
 
-#subHead, .subHead{
+#subHead{
 	clear:both;
 	width:860px;
 	padding: 30px 0 5px 0;
