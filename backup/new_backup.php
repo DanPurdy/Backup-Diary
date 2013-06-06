@@ -167,13 +167,12 @@ catch (PDOException $e) {
         
         
         <div id="submit"><input type="submit" value="Save Backup Record"/></div><div id="cancel"><a href="/backup/">Cancel</a></div>
-        
-                
-
-        
+   
+    <div id="cupboard-drive-panel">
+            <h3>Moving to Studio</h3>
+        </div>
     </form>
-    
-</div>
+    </div>
 <div id="savedMics">
     <div class="backupDriveTitle">
          <h3>Microphones</h3>
