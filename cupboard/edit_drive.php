@@ -4,6 +4,39 @@ require_once 'includes/pdoconnection.php';
 
 $dbh = dbConn::getConnection();
 
+
+$driveID=$_GET['driveID'];
+
+if(isset($_POST['modifyNotes'])){
+    if(empty($_POST['noteID'])){
+    try{
+    $st1=$dbh->prepare('INSERT INTO cupboardDriveNotes (cupbID, cupbNote) VALUES (:cupbID,:notes);');
+    
+    $st1->bindParam(':notes', $_POST['driveNotes'],PDO::PARAM_STR);
+    $st1->bindParam(':cupbID',$driveID,PDO::PARAM_INT);
+    
+    $st1->execute();
+}
+ catch (PDOException $e) {
+        print $e->getMessage();
+    }
+}else{
+        try{
+    $st1=$dbh->prepare('UPDATE cupboardDriveNotes
+                        SET cupbNote=:cupbNote
+                        WHERE cupbID=:cupbID;');
+    
+    $st1->bindParam(':cupbID',$driveID);
+    $st1->bindParam(':cupbNote', $_POST['driveNotes'],PDO::PARAM_STR);
+    
+    
+    $st1->execute();
+}
+ catch (PDOException $e) {
+        print $e->getMessage();
+    }
+}
+}
 if(isset($_POST['submit'])){
     
     
@@ -100,7 +133,7 @@ try{
                         INNER JOIN legacyDriveSess ON (legacySess.legacyID=legacyDriveSess.legacyID) 
                         WHERE cupbID = :drive AND legacySess.deleted=0;');
     
-    $res->bindParam(':drive',$_GET['driveID'],PDO::PARAM_INT);
+    $res->bindParam(':drive',$driveID,PDO::PARAM_INT);
     
     $res->execute();
 }
@@ -111,7 +144,7 @@ catch (PDOException $e) {
 try{
     $d=$dbh->prepare('SELECT cupbName FROM cupboardDrive WHERE cupbID = :cupbID');
     
-    $d->bindParam(':cupbID', $_GET['driveID'],PDO::PARAM_INT);
+    $d->bindParam(':cupbID', $driveID,PDO::PARAM_INT);
     
     $d->execute();
     
@@ -122,8 +155,24 @@ try{
 }
 catch (PDOException $e) {
     print $e->getMessage();
+   }
+   
+   try{
+    $notes=$dbh->prepare('SELECT * FROM cupboardDriveNotes WHERE cupbID = :cupbID');
+    
+    $notes->bindParam(':cupbID', $driveID,PDO::PARAM_INT);
+    
+    $notes->execute();
+    
+    $noteResult = $notes->fetch(PDO::FETCH_ASSOC);
+    
+    
+    
+}
+catch (PDOException $e) {
+    print $e->getMessage();
    }  
-$driveID=  htmlentities($_GET['driveID']); 
+$driveIDText=  htmlentities($driveID); 
 
 
 require_once ('header.php');
@@ -133,10 +182,11 @@ require_once ('header.php');
     <a href="http://localhost/cupboard/new_drive.php"> &laquo Back to Drives</a>
 </div>
 <div id="subHead"><h1><?=$driveName ?></h1></div>
+
     <div id="clientDriveDetails">
     <form id="newDriveSess" method="post" action="edit_drive.php" enctype="multipart/form-data">
    
-        <input id="driveID" name="driveID" value="<?=$driveID?>" class="hidden" />
+        <input id="driveID" name="driveID" value="<?=$driveIDText?>" class="hidden" />
         <div id="driveName">
             <h3><label for="driveNameInput">Session Name</label></h3>
                 <input id="driveNameInput" name="driveNameInput" type="text" size="75" required/>
@@ -164,8 +214,19 @@ require_once ('header.php');
         <div id="driveSubmit"><input type="submit" name="submit" value="Add Backup" id="newDriveSubmit"/></div>
         </div>
     </form>
-
-        <div id="subHead"><h1>Drive Contents</h1></div>
+        <div class="backupDriveTitle"><h1>Drive Notes</h1></div>
+         <form id="newDriveSess" method="post" action="edit_drive.php?driveID=<?=$driveIDText;?>" enctype="multipart/form-data">
+             <div id="editDriveNotes">
+        <div class="editDriveNotes">
+            <h3>Notes</h3>
+                <textarea name="driveNotes" rows="5" cols="82"><?=$noteResult['cupbNote'];?></textarea>
+                <input class="hidden" name="noteID" value="<?=$noteResult['cupbNoteID'];?>"/>
+        </div>
+             <div id="modifyNotes"><input type="submit" name="modifyNotes" value="Update Notes" id="modifyNotesSubmit"/></div>
+             </div>
+    </form>
+        
+        <div class="backupDriveTitle"><h1>Drive Contents</h1></div>
         
         <?php if($res->rowCount()>0){?>
         <table id="driveList">

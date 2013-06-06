@@ -24,7 +24,19 @@ if(isset($_POST['submit'])){
         print $e->getMessage();
     }
     
-    
+    try{
+       $notes = $dbh->prepare('INSERT INTO cupboardDriveNotes (cupbID, cupbNote) VALUES (:cupbID,:notes)');
+       
+       $notes->bindParam(':cupbID',$driveID, PDO::PARAM_INT);
+       $notes->bindParam(':notes', $_POST['driveNotes'] , PDO::PARAM_STR);
+       
+       $notes->execute();
+        
+       
+    }
+    catch (PDOException $e) {
+        print $e->getMessage();
+    }
     
     if(empty($_POST['cliN'])){
         
@@ -140,12 +152,16 @@ require_once ('header.php');
                 <input id="composerID" name="composerID" value="0" class="hidden" />
             </div>
             </div>
-       
-        <div id="driveSubmit"><input type="submit" name="submit" value="Add New Drive" id="newDriveSubmit"/></div>
+        <div class="driveNotes">
+            <h3>Notes</h3>
+                <textarea name="driveNotes" rows="5" cols="52"></textarea>
         </div>
-    </form>
-
-        <div id="subHead"><h1>Drive Cupboard List</h1></div>
+        <div id="driveSubmit"><input type="submit" name="submit" value="Add New Drive" id="newDriveSubmit"/></div>
+        
+        </div>
+        </form>
+    
+        <div class="backupDriveTitle"><h1>Drive Cupboard List</h1></div>
         <table id="driveList" class="newDrive">
             <tr>
                 <th>Drive ID</th>
@@ -162,7 +178,7 @@ require_once ('header.php');
                     <td><?=$row['cliName'];?></td>
                     <td><?=$row['cmpName'] ?></td>
                     <td><?php if($row['cupbStored']==1){echo '&#10004';}?></td>
-                    <td><a href="edit_drive.php?driveID=<?=$row['cupbID']?>">View / Edit  &raquo;</a></td>
+                    <td><a href="edit_drive.php?driveID=<?=$row['cupbID']?>">View /</a><a href="edit_drive.php?driveID=<?=$row['cupbID']?>"> Edit  &raquo;</a></td>
                     
                     
                     

@@ -4,6 +4,9 @@ require_once 'includes/pdoconnection.php';
 
 $dbh = dbConn::getConnection();
 
+$driveID= htmlentities($_GET['driveID']);
+$sesID= htmlentities($_GET['sesID']);
+
 if(isset($_POST['submit'])){
     
     
@@ -61,27 +64,15 @@ if(isset($_POST['submit'])){
 
 $date=date("Y-m-d", strtotime($_POST['bakDate']));
 try{
-    $st1=$dbh->prepare('INSERT INTO legacySess (legacyName,bakDate,cliID,cmpID) VALUES (:name, :date, :clientID, :composerID);');
+    $st1=$dbh->prepare('UPDATE legacySess 
+        SET legacyName=:name, bakDate=:date, cliID=:clientID, cmpID=:composerID
+        WHERE legacyID=:legacyID;');
     
     $st1->bindParam(':name', $_POST['driveNameInput'],PDO::PARAM_STR);
     $st1->bindParam(':date',$date);
     $st1->bindParam(':clientID', $cliID, PDO::PARAM_INT);
     $st1->bindParam(':composerID', $cmpID, PDO::PARAM_INT);
-    
-    $st1->execute();
-    
-    $legacyID=$dbh->lastInsertID('legacyID');
-}
-    catch (PDOException $e) {
-        print $e->getMessage();
-    }
-    
-    try{
-    $st1=$dbh->prepare('INSERT INTO legacyDriveSess (legacyID,cupbID) VALUES (:legacyID, :cupbID);');
-    
-   
-    $st1->bindParam(':legacyID',$legacyID, PDO::PARAM_INT);
-    $st1->bindParam(':cupbID', $_POST['driveID'], PDO::PARAM_INT);
+    $st1->bindParam(':legacyID', $_POST['sessID'], PDO::PARAM_INT);
     
     $st1->execute();
 }
@@ -92,15 +83,17 @@ try{
     header('Location: /cupboard/edit_drive.php?driveID='.$_POST['driveID']);
 }
 
+
+
 try{
     
     $res=$dbh->prepare('SELECT * FROM legacySess
                         LEFT JOIN client ON (legacySess.cliID=client.cliID)
                         LEFT JOIN composer ON (legacySess.cmpID=composer.cmpID)
                         INNER JOIN legacyDriveSess ON (legacySess.legacyID=legacyDriveSess.legacyID) 
-                        WHERE cupbID = :drive AND legacySess.deleted=0;');
+                        WHERE legacySess.legacyID=:sessID');
     
-    $res->bindParam(':drive',$_GET['driveID'],PDO::PARAM_INT);
+    $res->bindParam(':sessID',$sesID,PDO::PARAM_INT);
     
     $res->execute();
     
@@ -114,21 +107,21 @@ catch (PDOException $e) {
 catch (PDOException $e) {
     print $e->getMessage();
    }  
-$driveID=  htmlentities($_GET['driveID']);
-$sesID=  htmlentities($_GET['sesID']);
+
 $date = strtotime($result['bakDate']);
 
 require_once ('header.php');
 ?>
 
 <div class="returnLink">
-    <a href="http://localhost/cupboard/edit_drive.php?driveID=<?=$driveID?>"> &laquo Back to Drives</a>
+    <a href="http://localhost/cupboard/edit_drive.php?driveID=<?=$driveID?>"> &laquo Back to Drive</a>
 </div>
 <div id="subHead"><h1>Edit Tape Store Backup</h1></div>
     <div id="clientDriveDetails">
-    <form id="newDriveSess" method="post" action="edit_drive.php" enctype="multipart/form-data">
-   
-        <input id="driveID" name="sessID" value="<?=$sesID?>" class="hidden" />
+    <form id="newDriveSess" method="post" action="edit_drive_session.php" enctype="multipart/form-data">
+        
+        <input class="driveID hidden" name="driveID" value="<?=$result['cupbID'];?>"/>
+        <input class="driveID hidden" name="sessID" value="<?=$sesID?>" class="hidden" />
         <div id="driveName">
             <h3><label for="driveNameInput">Session Name</label></h3>
                 <input id="driveNameInput" name="driveNameInput" type="text" size="75" value="<?=$result['legacyName'] ?>" required/>
@@ -143,17 +136,17 @@ require_once ('header.php');
             <div id="clientOwnerSelect">
                 <h3>Select Client</h3>
                 <input id="clisearch" name="cliN" type="text" value="<?=$result['cliName'] ?>" />
-                <input id="clientID" name="clientID" value="<?=$result['cliID'] ?>"  />
+                <input id="clientID" name="clientID" value="<?=$result['cliID'] ?>" class="hidden" />
             </div>
             
             <div id="cmpOwnerSelect">
                 <h3>Select Composer</h3>
                 <input id="composersearch" name="compN" type="text" value="<?=$result['cmpName'] ?>" />
-                <input id="composerID" name="composerID" value="<?=$result['cmpID'] ?>"  />
+                <input id="composerID" name="composerID" value="<?=$result['cmpID'] ?>" class="hidden" />
             </div>
             </div>
        
-        <div id="driveSubmit"><input type="submit" name="submit" value="Add Backup" id="newDriveSubmit"/></div>
+        <div id="driveSubmit"><input type="submit" name="submit" value="Modify Backup" id="newDriveSubmit"/></div>
         </div>
     </form>
 
