@@ -1,30 +1,15 @@
 <?php
-if (isset($_POST['insert'])) {
-  require_once('../includes/connection.php');
-  // initialize flag
-  $OK = false;
-  // create database connection
-  $conn = dbConnect('write');
-  // initialize prepared statement
-  $stmt = $conn->stmt_init();
-  // create SQL
-  $sql = 'INSERT INTO assistant (astName) VALUES(?)';
-  if ($stmt->prepare($sql)) {
-	// bind parameters and execute statement
-	$stmt->bind_param('s', $_POST['name']);
-    // execute and get number of affected rows
-	$stmt->execute();
-	if ($stmt->affected_rows > 0) {
-	  $OK = true;
-	}
-  }
-  // redirect if successful or display error
-  if ($OK) {
-	header('Location: /staff/');
-	exit;
-  } else {
-	$error = $stmt->error;
-  }
+
+require('includes/pdoconnection.php');
+require('class_staff.php');
+$dbh = dbConn::getConnection();
+
+$assistant = new staff($dbh, 'ast');
+if(isset($_POST['insert'])){
+    
+    $assistant->addStaff($_POST);
+    
+    header('Location: /staff/');
 }
 require_once ('header.php');
 ?>

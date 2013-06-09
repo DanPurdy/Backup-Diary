@@ -1237,12 +1237,15 @@ tr.bakKeep {
 	position:relative;
 	float:right;
 	right:150px;
+	margin-bottom:50px;
 }
 
 #engTable{
 	position:relative;
 	float:left;
 	left:150px;
+	margin-bottom:50px;
+
 }
 
 #engTable table, #astTable table{
