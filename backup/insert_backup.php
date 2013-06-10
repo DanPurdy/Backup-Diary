@@ -12,6 +12,10 @@ $fullcopy = (isset($_POST['fullcopy'])) ? 1 : 0;
 $bakCupboard = (isset($_POST['bakCupboard'])) ? 1 : 0;
 $bakKeep =(isset($_POST['keep'])) ? 1 : 0;
 $deleted = (isset($_POST['deleted'])) ? 1 : 0;
+
+if($bakCupboard == 1){
+    $cupbID = $_POST['cupbDrive'];
+}
     
 if($bakMovOpt != 0){
     $bakMov = $bakMovOpt;
@@ -77,6 +81,13 @@ $sth->bindParam(':bakDeleted', $deleted , PDO::PARAM_INT);
 
 $sth->execute();
 
+if($bakCupboard == 1){
+    $st1 = $dbh->prepare('INSERT INTO driveContent (bakID, cupbID) VALUES (:bakID, :cupbID);');
+    $st1->bindParam(':bakID', $bakID, PDO::PARAM_INT);
+    $st1->bindParam(':cupbID', $cupbID, PDO::PARAM_INT);
+    
+    $st1->execute();
+}
 
 
 }
@@ -102,10 +113,38 @@ $sth->bindParam(':bakMov', $bakMov , PDO::PARAM_INT);
 $sth->bindParam(':bakID', $bakID , PDO::PARAM_INT);
 $sth->bindParam(':bakDeleted', $deleted , PDO::PARAM_INT);
 
-
 $sth->execute();
 
-
+if($bakCupboard == 1){
+    
+    $sth=$dbh->prepare('SELECT cupbID FROM driveContent WHERE bakID=:bakID;');
+    $sth->bindParam(':bakID',$bakID, PDO::PARAM_INT);
+    $sth->execute();
+    
+    $testCount = $sth->rowCount();
+    if($cupbID ==='new'){
+        $st1=$dbh->prepare('INSERT INTO cupboardDrive (cupbName) VALUES (:name);');
+        $st1->bindParam(':name',$_POST['newDrive'], PDO::PARAM_STR);
+        $st1->execute();
+        
+        $cupbID = $st1=$dbh->lastInsertID('cupbID');
+    }
+        if($testCount){
+    
+            $st1 = $dbh->prepare('UPDATE driveContent SET bakID = :bakID, cupbID=:cupbID WHERE bakID=:bakID;');
+            $st1->bindParam(':bakID', $bakID, PDO::PARAM_INT);
+            $st1->bindParam(':cupbID', $cupbID, PDO::PARAM_INT);
+    
+            $st1->execute();
+    
+        }else{
+            $st1 = $dbh->prepare('INSERT INTO driveContent (bakID, cupbID) VALUES (:bakID, :cupbID);');
+            $st1->bindParam(':bakID', $bakID, PDO::PARAM_INT);
+            $st1->bindParam(':cupbID', $cupbID, PDO::PARAM_INT);
+    
+            $st1->execute();
+        }
+    }
 
 }
 catch (PDOException $e) {

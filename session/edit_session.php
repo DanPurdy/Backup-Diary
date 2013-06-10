@@ -152,7 +152,18 @@ require_once 'header.php'
                         $initEng = explode(" ",$result['engName']); //split string into two seperate strings and seperate array values
                         $initAst = explode(" ",$result['astName']);
                         
-                        if($count ==1 && $result['sesID'] == $row['sesID']){ echo '<option value="'.$result['bakID'].'" selected>N/A</option>'; }else{ if($result['sesID']!=$row['sesID']) {echo '<option value ="0">N/A</option><option value="'.$result['bakID'].'" selected >'.$result['stdID'].' | '.date('d-m-Y', strtotime($result['sessDate']))." | ".substr($initEng[0],0,1).substr($initEng[1],0,1).substr($initAst[0],0,1).substr($initAst[1],0,1)." | ".$result['cliName'].' | '.$result['prjName'].'</option>'; }else{ echo '<option value="'.$result['bakID'].'" selected>Parent</option>'; }}
+                        if($count ==1 && $result['sesID'] == $row['sesID']){ 
+                            echo '<option value="'.$result['bakID'].'" selected>N/A</option>'; 
+                            
+                            }else{ 
+                                if($result['sesID']!=$row['sesID']) {
+                                    echo '<option value ="0">N/A</option><option value="'.$result['bakID'].'" selected >'.$result['stdID'].' | '.date('d-m-Y', strtotime($result['sessDate']))." | ".substr($initEng[0],0,1).substr($initEng[1],0,1).substr($initAst[0],0,1).substr($initAst[1],0,1)." | ".$result['cliName'].' | '.$result['prjName'].'</option>'; 
+                                    
+                                    }else{ 
+                                        echo '<option value="'.$result['bakID'].'" selected>Parent</option>'; 
+                                        
+                                        }
+                                  }
                         
                         
                         
