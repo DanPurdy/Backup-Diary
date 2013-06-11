@@ -35,6 +35,8 @@ try{
    $st1->bindParam(':composer', $row['cmpID'], PDO::PARAM_INT);
    
    $st1->execute();
+   
+   $count = $st1->rowcount();
     
        
 }
@@ -184,6 +186,7 @@ catch (PDOException $e) {
         <div id="submit"><input type="submit" value="Save Backup Record"/></div><div id="cancel"><a href="/backup/">Cancel</a></div>
    
     <div id="cupboard-drive-panel">
+        <div id="cupbDriveSelect">
             <h3>Tape Store Options</h3>
             <select name="cupbDrive" id="cupbDrive">
                 <option value='' <?php if(!($backupDrive)){echo 'selected';}?>>Please Select A Drive</option>
@@ -203,7 +206,11 @@ catch (PDOException $e) {
             ?>
                         <option value="new">Create New Backup Drive</option>
             </select>
-            <input id="newDrive" name="newDrive"/>
+            </div>
+            <div id="addDrive">
+            <label for="newDrive"><h3>New Drive Name</h3></label>
+            <input id="newDrive" name="newDrive" />                     <!-- value="<?php echo $row['cliName'].' '.($count + 1); ?>" possible value -->
+            </div>
         </div>
     </form>
     </div>
