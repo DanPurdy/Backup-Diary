@@ -21,7 +21,20 @@ try{
     
     $sth->execute();
     
+    $row = $sth->fetch(PDO::FETCH_ASSOC);
     
+     $st1=$dbh->prepare('SELECT cupboardDrive.*, client.*, composer.*
+                      FROM cupboardDrive
+                      LEFT JOIN driveOwnerCli ON (cupboardDrive.cupbID = driveOwnerCli.cupbID)
+                      LEFT JOIN driveOwnerCmp ON (cupboardDrive.cupbID = driveOwnerCmp.cupbID)
+                      LEFT JOIN client ON (driveOwnerCli.cliID=client.cliID)
+                      LEFT JOIN composer ON (driveOwnerCmp.cmpID=composer.cmpID)
+                      WHERE (driveOwnerCli.cliID = :client AND driveOwnerCli.cliID > 1)  OR (driveOwnerCmp.cmpID = :composer AND driveOwnerCmp.cmpID >1);');
+    
+   $st1->bindParam(':client', $row['cliID'], PDO::PARAM_INT);
+   $st1->bindParam(':composer', $row['cmpID'], PDO::PARAM_INT);
+   
+   $st1->execute();
     
        
 }
@@ -33,7 +46,7 @@ catch (PDOException $e) {
 
 <div id="subHead"><h1>Add New Backup</h1></div>
 
-    <?php $row = $sth->fetch(PDO::FETCH_ASSOC); 
+    <?php  
         
         $stdID = $row['stdID'];
         $date = strtotime($row['sessDate']);
@@ -75,6 +88,8 @@ catch (PDOException $e) {
                 <input id="backName" name="backName" type="text" size="75" required/>
                 <input id="bakID" name="bakID" value="<?= $row['bakID']?>" class="hidden"/>
                 <input id="sesID" name="sesID" value="<?php echo $_GET['sesID']; ?>" class="hidden"/>
+                <input id="cliID" name="cliID" class="hidden" value="<?php echo $row['cliID']; ?>" />
+                <input id="cmpID" name="cmpID" class="hidden" value="<?php echo $row['cmpID']; ?>" />
                 <input id="editBool" name="editBool" value="0" class="hidden" />
             </div>
         
@@ -169,7 +184,26 @@ catch (PDOException $e) {
         <div id="submit"><input type="submit" value="Save Backup Record"/></div><div id="cancel"><a href="/backup/">Cancel</a></div>
    
     <div id="cupboard-drive-panel">
-             <h3>Tape Store Options</h3>
+            <h3>Tape Store Options</h3>
+            <select name="cupbDrive" id="cupbDrive">
+                <option value='' <?php if(!($backupDrive)){echo 'selected';}?>>Please Select A Drive</option>
+                <?php 
+                    while($driveList = $st1->fetch(PDO::FETCH_ASSOC)){
+                        if($backupDrive['cupbID']==$driveList['cupbID']){
+                            ?>
+                            <option value="<?php echo $driveList['cupbID'];?> " selected><?php echo 'ATS-'.$driveList['cupbID'].' | '.$driveList['cupbName'].' | '.$driveList['cliName'].' | '.$driveList['cmpName'];?></option>
+                        <?php }else{ ?>
+                        ?>
+                        <option value="<?php echo $driveList['cupbID'];?> "><?php echo 'ATS-'.$driveList['cupbID'].' | '.$driveList['cupbName'].' | '.$driveList['cliName'].' | '.$driveList['cmpName'];?></option>
+                   <?php }
+                    }
+                    
+                    
+            
+            ?>
+                        <option value="new">Create New Backup Drive</option>
+            </select>
+            <input id="newDrive" name="newDrive"/>
         </div>
     </form>
     </div>
