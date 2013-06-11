@@ -13,18 +13,31 @@ $(document).ready(function(){
     
     function evaluate(){                //evaluate checkbox for display panel
     
-    var item = $('#backupcupboard :input');
-    var relatedItem = $('#cupboard-drive-panel');
+        var item = $('#backupcupboard :input');
+        var relatedItem = $('#cupboard-drive-panel');
 
-    if(item.is(":checked")){
-        relatedItem.slideDown();
-    }else{
-        relatedItem.slideUp();   
+        if(item.is(":checked")){
+            relatedItem.slideDown();
+        }else{
+            relatedItem.slideUp();
+            $('#cupbDrive').val('');
+        }
     }
-    }
+    
 
 $('#backupcupboard :input').click(evaluate).each(evaluate);
 //end
+
+    $(function() {
+  $('#cupbDrive').change(function() {
+    if ($(this).val() == 'new')
+      $('#addDrive').show();
+    else
+      $('#addDrive').hide();
+  });
+});
+
+
    
     $('li.main').hover(
 			function() {

@@ -59,6 +59,8 @@ try{
    
    $sth->execute();
    
+   $count = $sth->rowcount();
+   
    
        
 }
@@ -252,6 +254,7 @@ if(!empty($row['bakLastDate'])){echo date('D d F Y H:i:s', strtotime($row['bakLa
         
                 
         <div id="cupboard-drive-panel">
+            <div id="cupbDriveSelect">
             <h3>Tape Store Options</h3>
             <select name="cupbDrive" id="cupbDrive">
                 <option value='' <?php if(!($backupDrive)){echo 'selected';}?>>Please Select A Drive</option>
@@ -271,7 +274,11 @@ if(!empty($row['bakLastDate'])){echo date('D d F Y H:i:s', strtotime($row['bakLa
             ?>
                         <option value="new">Create New Backup Drive</option>
             </select>
-            <input id="newDrive" name="newDrive"/>
+            </div>
+            <div id="addDrive">
+            <label for="newDrive"><h3>New Drive Name</h3></label>
+            <input id="newDrive" name="newDrive" />                     <!-- value="<?php echo $row['cliName'].' '.($count + 1); ?>" possible value -->
+            </div>
         </div>
         
     </form>
