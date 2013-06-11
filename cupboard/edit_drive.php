@@ -176,7 +176,7 @@ require_once ('header.php');
 ?>
 
 <div class="returnLink">
-    <a href="http://localhost/cupboard/new_drive.php"> &laquo Back to Drives</a>
+    <a href="/cupboard/new_drive.php"> &laquo Back to Drives</a>
 </div>
 <div id="subHead"><h1><?=$driveName ?></h1></div>
 <div id="clientDriveDetails">

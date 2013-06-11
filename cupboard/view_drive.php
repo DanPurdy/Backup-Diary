@@ -126,6 +126,18 @@ try{
 }
 
 try{
+    $bak=$dbh->prepare('SELECT * FROM backup
+                        LEFT JOIN driveContent ON driveContent.bakID = backup.bakID
+                        LEFT JOIN session ON session.bakID = backup.bakID
+                        LEFT JOIN client ON client.cliID = session.cliID
+                        LEFT JOIN composer ON composer.cmpID = session.cmpID
+                        WHERE driveContent.cupbID = :drive AND driveContent.deleted=0
+                        GROUP BY backup.bakID;');
+    
+    $bak->bindParam(':drive',$driveID,PDO::PARAM_INT);
+    
+    $bak->execute();
+    
     
     $res=$dbh->prepare('SELECT * FROM legacySess
                         LEFT JOIN client ON (legacySess.cliID=client.cliID)
@@ -179,7 +191,7 @@ require_once ('header.php');
 ?>
 
 <div class="returnLink">
-    <a href="http://localhost/cupboard/new_drive.php"> &laquo Back to Drives</a>
+    <a href="/cupboard/new_drive.php"> &laquo Back to Drives</a>
 </div>
 <div id="subHead"><h1><?=$driveName ?></h1></div>
 
@@ -228,7 +240,7 @@ require_once ('header.php');
         
         <div class="backupDriveTitle"><h1>Drive Contents</h1></div>
         
-        <?php if($res->rowCount()>0){?>
+        <?php if($res->rowCount()>0 || $bak->rowCount()>0){?>
         <table id="driveList">
             <tr>
                 <th>Date</th>
@@ -238,6 +250,19 @@ require_once ('header.php');
                 <th>Deleted</th>
                 <th> </th>
             </tr>
+        <?php while($row=$bak->fetch(PDO::FETCH_ASSOC)){ ?>
+                <tr>
+                    <td><?=date('d-m-y', strtotime($row['sessDate']))?></td>
+                    <td><?=$row['bakName']?></td>
+                    <td><?=$row['cliName'];?></td>
+                    <td><?=$row['cmpName'] ?></td>
+                    <td><?php if($row['deleted']==1){echo '&#10004';}?></td>
+                    <td><a href="/backup/edit_backup.php?sesID=<?=$row['sesID']?>"> Edit  &raquo;</a></td>
+                    
+                    
+                    
+                  </tr>
+                  <?php } ?>
         <?php while($row=$res->fetch(PDO::FETCH_ASSOC)){ ?>
                 <tr>
                     <td><?=date('d-m-y', strtotime($row['bakDate']))?></td>

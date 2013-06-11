@@ -13,7 +13,7 @@ require_once 'functions/function_mics.php';
 $dbh = dbConn::getConnection();
 
 try{
-    $sth = $dbh->prepare("SELECT session.sesID, session.stdID, session.sessDate, session.startTime, session.endTime,session.ssNo, studio.stdName, engineer.engName, assistant.astName, client.cliName, client.cliID, composer.cmpName, composer.cmpID, fixer.fixName, project.prjName, session.bakID,
+    $sth = $dbh->prepare("SELECT session.*, engineer.engName, assistant.astName, client.cliName, composer.cmpName, fixer.fixName, project.prjName, session.bakID,
                             backup.*
                             FROM session
                             INNER JOIN studio ON session.stdID=studio.stdID
@@ -52,7 +52,7 @@ try{
                       LEFT JOIN driveOwnerCmp ON (cupboardDrive.cupbID = driveOwnerCmp.cupbID)
                       LEFT JOIN client ON (driveOwnerCli.cliID=client.cliID)
                       LEFT JOIN composer ON (driveOwnerCmp.cmpID=composer.cmpID)
-                      WHERE driveOwnerCli.cliID = :client OR driveOwnerCmp.cmpID = :composer');
+                      WHERE (driveOwnerCli.cliID = :client AND driveOwnerCli.cliID > 1)  OR (driveOwnerCmp.cmpID = :composer AND driveOwnerCmp.cmpID >1);');
     
    $sth->bindParam(':client', $row['cliID'], PDO::PARAM_INT);
    $sth->bindParam(':composer', $row['cmpID'], PDO::PARAM_INT);
@@ -121,6 +121,8 @@ if(!empty($row['bakLastDate'])){echo date('D d F Y H:i:s', strtotime($row['bakLa
                 <input id="backName" name="backName" type="text" value="<?php echo $row['bakName']; ?>" size="75" required/>
                 <input id="bakID" name="bakID" class="hidden" value="<?php echo $row['bakID']; ?>"  />
                 <input id="sesID" name="sesID" class="hidden" value="<?php echo $_GET['sesID']; ?>"  />
+                <input id="cliID" name="cliID" class="hidden" value="<?php echo $row['cliID']; ?>" />
+                <input id="cmpID" name="cmpID" class="hidden" value="<?php echo $row['cmpID']; ?>" />
                 <input id="editBool" name="editBool" value="1" class="hidden" />
             </div>
         <div id="driveLocation">
