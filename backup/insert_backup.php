@@ -69,7 +69,7 @@ if((!empty($_POST['bakID'])) && ($_POST['editBool'] == 0)){
     
                     $st1->execute();
                     
-                }else{
+                }elseif($cupbID>=1){
                     $st1 = $dbh->prepare('INSERT INTO driveContent (bakID, cupbID) VALUES (:bakID, :cupbID);');
                     $st1->bindParam(':bakID', $bakID, PDO::PARAM_INT);
                     $st1->bindParam(':cupbID', $cupbID, PDO::PARAM_INT);
@@ -117,38 +117,39 @@ elseif((!empty($_POST['bakID'])) && ($_POST['editBool'] == 1)){
             $sth->execute();
     
             $testCount = $sth->rowCount();
-            
-            if($cupbID ==='new'){
-                $st1=$dbh->prepare('INSERT INTO cupboardDrive (cupbName) VALUES (:name);');
-                $st1->bindParam(':name',$_POST['newDrive'], PDO::PARAM_STR);
-                $st1->execute();
+            if($cupbID>=1 || $cupbID === 'new'){
+                if($cupbID ==='new'){
+                    $st1=$dbh->prepare('INSERT INTO cupboardDrive (cupbName) VALUES (:name);');
+                    $st1->bindParam(':name',$_POST['newDrive'], PDO::PARAM_STR);
+                    $st1->execute();
         
-                $cupbID = $st1=$dbh->lastInsertID('cupbID');
+                    $cupbID = $st1=$dbh->lastInsertID('cupbID');
                 
-                $st1=$dbh->prepare('INSERT INTO driveOwnerCli (cliID,cupbID) VALUES (:clientID,:driveID);');
-                $st1->bindParam(':clientID',$_POST['cliID'], PDO::PARAM_INT);
-                $st1->bindParam(':driveID',$cupbID, PDO::PARAM_INT);
-                $st1->execute();
+                    $st1=$dbh->prepare('INSERT INTO driveOwnerCli (cliID,cupbID) VALUES (:clientID,:driveID);');
+                    $st1->bindParam(':clientID',$_POST['cliID'], PDO::PARAM_INT);
+                    $st1->bindParam(':driveID',$cupbID, PDO::PARAM_INT);
+                    $st1->execute();
                 
-                $st1=$dbh->prepare('INSERT INTO driveOwnerCmp (cmpID,cupbID) VALUES (:composerID,:driveID);');
-                $st1->bindParam(':composerID',$_POST['cmpID'], PDO::PARAM_INT);
-                $st1->bindParam(':driveID',$cupbID, PDO::PARAM_INT);
-                $st1->execute();
-            }
-            if($testCount){
+                    $st1=$dbh->prepare('INSERT INTO driveOwnerCmp (cmpID,cupbID) VALUES (:composerID,:driveID);');
+                    $st1->bindParam(':composerID',$_POST['cmpID'], PDO::PARAM_INT);
+                    $st1->bindParam(':driveID',$cupbID, PDO::PARAM_INT);
+                    $st1->execute();
+                }
+                if($testCount){
     
-                $st1 = $dbh->prepare('UPDATE driveContent SET bakID = :bakID, cupbID=:cupbID WHERE bakID=:bakID;');
-                $st1->bindParam(':bakID', $bakID, PDO::PARAM_INT);
-                $st1->bindParam(':cupbID', $cupbID, PDO::PARAM_INT);
+                    $st1 = $dbh->prepare('UPDATE driveContent SET bakID = :bakID, cupbID=:cupbID WHERE bakID=:bakID;');
+                    $st1->bindParam(':bakID', $bakID, PDO::PARAM_INT);
+                    $st1->bindParam(':cupbID', $cupbID, PDO::PARAM_INT);
     
-                $st1->execute();
+                    $st1->execute();
     
-            }else{
-                $st1 = $dbh->prepare('INSERT INTO driveContent (bakID, cupbID) VALUES (:bakID, :cupbID);');
-                $st1->bindParam(':bakID', $bakID, PDO::PARAM_INT);
-                $st1->bindParam(':cupbID', $cupbID, PDO::PARAM_INT);
+                }else{
+                    $st1 = $dbh->prepare('INSERT INTO driveContent (bakID, cupbID) VALUES (:bakID, :cupbID);');
+                    $st1->bindParam(':bakID', $bakID, PDO::PARAM_INT);
+                    $st1->bindParam(':cupbID', $cupbID, PDO::PARAM_INT);
     
-                $st1->execute();
+                    $st1->execute();
+                }
             }
         }
 
