@@ -114,7 +114,7 @@ require_once ('header.php');
 ?>
 
 <div class="returnLink">
-    <a href="http://localhost/cupboard/edit_drive.php?driveID=<?=$driveID?>"> &laquo Back to Drive</a>
+    <a href="/cupboard/edit_drive.php?driveID=<?=$driveID?>"> &laquo Back to Drive</a>
 </div>
 <div id="subHead"><h1>Edit Tape Store Backup</h1></div>
     <div id="clientDriveDetails">

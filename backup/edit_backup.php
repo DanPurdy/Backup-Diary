@@ -13,7 +13,7 @@ require_once 'functions/function_mics.php';
 $dbh = dbConn::getConnection();
 
 try{
-    $sth = $dbh->prepare("SELECT session.sesID, session.stdID, session.sessDate, session.startTime, session.endTime,session.ssNo, studio.stdName, engineer.engName, assistant.astName, client.cliName, composer.cmpName, fixer.fixName, project.prjName, session.bakID,
+    $sth = $dbh->prepare("SELECT session.*, engineer.engName, assistant.astName, client.cliName, composer.cmpName, fixer.fixName, project.prjName, session.bakID,
                             backup.*
                             FROM session
                             INNER JOIN studio ON session.stdID=studio.stdID
@@ -34,11 +34,41 @@ try{
     
     $bakID = $row['bakID'];
     
+    if($row['bakCupboard'] == 1){
+        $st1 = $dbh->prepare("SELECT * FROM sessions.cupboardDrive
+                                LEFT JOIN driveContent ON cupboardDrive.cupbID = driveContent.cupbID
+                                WHERE driveContent.bakID=:bakID;");
+        $st1->bindParam(':bakID', $bakID, PDO::PARAM_INT);
+        $st1->execute();
+        
+        $backupDrive=$st1->fetch(PDO::FETCH_ASSOC);
+    }else{ 
+        $backupDrive=0;
+    }
+    
+    $sth=$dbh->prepare('SELECT cupboardDrive.*, client.*, composer.*
+                      FROM cupboardDrive
+                      LEFT JOIN driveOwnerCli ON (cupboardDrive.cupbID = driveOwnerCli.cupbID)
+                      LEFT JOIN driveOwnerCmp ON (cupboardDrive.cupbID = driveOwnerCmp.cupbID)
+                      LEFT JOIN client ON (driveOwnerCli.cliID=client.cliID)
+                      LEFT JOIN composer ON (driveOwnerCmp.cmpID=composer.cmpID)
+                      WHERE (driveOwnerCli.cliID = :client AND driveOwnerCli.cliID > 1)  OR (driveOwnerCmp.cmpID = :composer AND driveOwnerCmp.cmpID >1);');
+    
+   $sth->bindParam(':client', $row['cliID'], PDO::PARAM_INT);
+   $sth->bindParam(':composer', $row['cmpID'], PDO::PARAM_INT);
+   
+   $sth->execute();
+   
+   $count = $sth->rowcount();
+   
+   
        
 }
 catch (PDOException $e) {
     print $e->getMessage();
   }
+  
+
   
  require_once('header.php');
  
@@ -93,6 +123,8 @@ if(!empty($row['bakLastDate'])){echo date('D d F Y H:i:s', strtotime($row['bakLa
                 <input id="backName" name="backName" type="text" value="<?php echo $row['bakName']; ?>" size="75" required/>
                 <input id="bakID" name="bakID" class="hidden" value="<?php echo $row['bakID']; ?>"  />
                 <input id="sesID" name="sesID" class="hidden" value="<?php echo $_GET['sesID']; ?>"  />
+                <input id="cliID" name="cliID" class="hidden" value="<?php echo $row['cliID']; ?>" />
+                <input id="cmpID" name="cmpID" class="hidden" value="<?php echo $row['cmpID']; ?>" />
                 <input id="editBool" name="editBool" value="1" class="hidden" />
             </div>
         <div id="driveLocation">
@@ -221,7 +253,33 @@ if(!empty($row['bakLastDate'])){echo date('D d F Y H:i:s', strtotime($row['bakLa
         <div id="submit"><input type="submit" value="Save Backup Record"/></div><div id="cancel"><a href="/backup/">Cancel</a></div>
         
                 
-
+        <div id="cupboard-drive-panel">
+            <div id="cupbDriveSelect">
+            <h3>Tape Store Options</h3>
+            <select name="cupbDrive" id="cupbDrive">
+                <option value='' <?php if(!($backupDrive)){echo 'selected';}?>>Please Select A Drive</option>
+                <?php 
+                    while($driveList = $sth->fetch(PDO::FETCH_ASSOC)){
+                        if($backupDrive['cupbID']==$driveList['cupbID']){
+                            ?>
+                            <option value="<?php echo $driveList['cupbID'];?> " selected><?php echo 'ATS-'.$driveList['cupbID'].' | '.$driveList['cupbName'].' | '.$driveList['cliName'].' | '.$driveList['cmpName'];?></option>
+                        <?php }else{ ?>
+                        ?>
+                        <option value="<?php echo $driveList['cupbID'];?> "><?php echo 'ATS-'.$driveList['cupbID'].' | '.$driveList['cupbName'].' | '.$driveList['cliName'].' | '.$driveList['cmpName'];?></option>
+                   <?php }
+                    }
+                    
+                    
+            
+            ?>
+                        <option value="new">Create New Backup Drive</option>
+            </select>
+            </div>
+            <div id="addDrive">
+            <label for="newDrive"><h3>New Drive Name</h3></label>
+            <input id="newDrive" name="newDrive" />                     <!-- value="<?php echo $row['cliName'].' '.($count + 1); ?>" possible value -->
+            </div>
+        </div>
         
     </form>
     
