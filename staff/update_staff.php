@@ -1,7 +1,7 @@
 <?php
 
 require('includes/pdoconnection.php');
-require('class_staff.php');
+require('models/class_staff.php');
 $dbh = dbConn::getConnection();
 
 if(isset($_GET['engID'])){

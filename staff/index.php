@@ -2,7 +2,7 @@
 session_start();
 
 require('includes/pdoconnection.php');
-require('class_staff.php');
+require('models/class_staff.php');
 $dbh = dbConn::getConnection();
 
 $engineer = new staff($dbh,'eng'); //create new instance of staff class for engineers
