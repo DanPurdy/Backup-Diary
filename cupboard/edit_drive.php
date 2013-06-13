@@ -1,174 +1,30 @@
 <?php
 
 require_once 'includes/pdoconnection.php';
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
 
 $dbh = dbConn::getConnection();
 
+$drive = new cupboard($dbh);
 
 $driveID=$_GET['driveID'];
 
 if(isset($_POST['submit'])){
-    
-    
-    $cliID =    $_POST['clientID'];
-    $cmpID =    $_POST['composerID'];
-    
-    if(empty($_POST['cliN'])){
-        
-        $cliID = 1; 
-    
-        
-    }//if no ajax result found and user entered a name then insert name into relevant table
-        
-    elseif ($cliID==0 && !empty($_POST['cliN'])) {
-        try{
-            $fh = $dbh->prepare('INSERT INTO client (cliName) VALUES (:name)');
-    
-            $fh->bindParam(':name', $_POST['cliN'], PDO::PARAM_STR);
-            $fh->execute();
-            //Find the unique ID given to the record once inserted and set $..ID variable to insert into session
-            $cliID = $dbh->lastInsertID('cliID');
-        
-         }
-    catch (PDOException $e) {
-        print $e->getMessage();
-    }
-    
-    }
-    else{
-    //Do nothing if a search result has been selected
-    }//end if
-    
-    if(empty($_POST['compN'])){
-        
-        $cmpID = 1; 
-    
-    }
-    elseif ($cmpID==0 && !empty($_POST['compN'])) {
-        
-        try{
-            $fh = $dbh->prepare('INSERT INTO composer (cmpName) VALUES (:name)');
-    
-            $fh->bindParam(':name', $_POST['compN'], PDO::PARAM_STR);
-            $fh->execute();
-            $cmpID = $dbh->lastInsertID('cmpID');
-        
-         }
-    catch (PDOException $e) {
-        print $e->getMessage();
-    }
-    
-}else{
-    //Do nothing
-}
-try{
-    $st1=$dbh->prepare('UPDATE driveOwnerCli SET cliID=:clientID WHERE cupbID=:driveID;');
-    
-    $st1->bindParam(':clientID', $cliID, PDO::PARAM_INT);
-    $st1->bindParam(':driveID', $driveID, PDO::PARAM_INT);
-    
-    $st1->execute();
-}
-    catch (PDOException $e) {
-        print $e->getMessage();
-    }
-    
-    try{
-        $st1=$dbh->prepare('UPDATE driveOwnerCmp SET cmpID=:composerID WHERE cupbID=:driveID;');
-    
-        $st1->bindParam(':composerID', $cmpID, PDO::PARAM_INT);
-        $st1->bindParam(':driveID', $driveID, PDO::PARAM_INT);
-    
-        $st1->execute();
-}
-    catch (PDOException $e) {
-        print $e->getMessage();
-    }
 
-try{
-    $st1=$dbh->prepare('UPDATE cupboardDrive
-                        SET cupbName=:name
-                        WHERE cupbID=:cupbID;');
-    
-    $st1->bindParam(':name', $_POST['driveNameInput'],PDO::PARAM_STR);
-    $st1->bindParam(':cupbID',$driveID);
-    
-    $st1->execute();
-}
-    catch (PDOException $e) {
-        print $e->getMessage();
-    }
+    $drive->updateDrive($_POST, $dbh);
 
-        if(empty($_POST['noteID'])){
-    try{
-    $st1=$dbh->prepare('INSERT INTO cupboardDriveNotes (cupbID, cupbNote) VALUES (:cupbID,:notes);');
-    
-    $st1->bindParam(':notes', $_POST['driveNotes'],PDO::PARAM_STR);
-    $st1->bindParam(':cupbID',$driveID,PDO::PARAM_INT);
-    
-    $st1->execute();
+    //header('Location: /cupboard/new_drive.php');
 }
- catch (PDOException $e) {
-        print $e->getMessage();
-    }
-}else{
-        try{
-    $st1=$dbh->prepare('UPDATE cupboardDriveNotes
-                        SET cupbNote=:cupbNote
-                        WHERE cupbID=:cupbID;');
-    
-    $st1->bindParam(':cupbID',$driveID);
-    $st1->bindParam(':cupbNote', $_POST['driveNotes'],PDO::PARAM_STR);
-    
-    
-    $st1->execute();
-}
- catch (PDOException $e) {
-        print $e->getMessage();
-    }
 
-}
     
-    header('Location: /cupboard/new_drive.php');
-}
-    
-try{
-    $d=$dbh->prepare('SELECT cupboardDrive.*, client.*, composer.*
-                      FROM cupboardDrive
-                      LEFT JOIN driveOwnerCli ON (cupboardDrive.cupbID = driveOwnerCli.cupbID)
-                      LEFT JOIN driveOwnerCmp ON (cupboardDrive.cupbID = driveOwnerCmp.cupbID)
-                      LEFT JOIN client ON (driveOwnerCli.cliID=client.cliID)
-                      LEFT JOIN composer ON (driveOwnerCmp.cmpID=composer.cmpID)
-                      WHERE cupboardDrive.cupbID = :cupbID');
-    
-    $d->bindParam(':cupbID', $driveID,PDO::PARAM_INT);
-    
-    $d->execute();
-    
-    $result = $d->fetch(PDO::FETCH_ASSOC);
-    
-    $driveName=$result['cupbName'];
-    
-}
-catch (PDOException $e) {
-    print $e->getMessage();
-   }
-   
-   try{
-    $notes=$dbh->prepare('SELECT * FROM cupboardDriveNotes WHERE cupbID = :cupbID');
-    
-    $notes->bindParam(':cupbID', $driveID,PDO::PARAM_INT);
-    
-    $notes->execute();
-    
-    $noteResult = $notes->fetch(PDO::FETCH_ASSOC);
-    
-    
-    
-}
-catch (PDOException $e) {
-    print $e->getMessage();
-   }  
+$result=$drive->getDrive($driveID);
+
+$driveName=$result['cupbName'];
+
+$noteResult=$drive->getDriveNotes($driveID);
+
 $driveIDText=  htmlentities($driveID); 
 
 

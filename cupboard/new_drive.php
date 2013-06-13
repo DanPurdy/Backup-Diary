@@ -1,8 +1,9 @@
 <?php
 
 require_once 'includes/pdoconnection.php';
-require_once 'models/class_cupboard.php';
-require_once 'models/class_client.php';
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
 
 $dbh = dbConn::getConnection();
 $drive = new cupboard($dbh);
@@ -14,11 +15,7 @@ if(isset($_POST['submit'])){
     
     $driveList = $drive->listDrives();
     $count = $drive->count;
-    
-    
-
-    
-    
+   
 require_once ('header.php');
 ?>
 
