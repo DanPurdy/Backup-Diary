@@ -1,31 +1,15 @@
 <?php
 require('includes/pdoconnection.php');
-    $dbh = dbConn::getConnection();
-    
-   
-
-try{
-    $sth = $dbh->prepare("SELECT session.sesID, session.stdID, session.sessDate, session.startTime, session.endTime,session.ssNo, studio.stdName, engineer.engName, assistant.astName, client.cliName, composer.cmpName, fixer.fixName, project.prjName
-                            FROM session
-                            INNER JOIN studio ON session.stdID=studio.stdID
-                            INNER JOIN engineer ON session.engID=engineer.engID
-                            INNER JOIN assistant ON session.astID=assistant.astID
-                            INNER JOIN client ON session.cliID=client.cliID
-                            INNER JOIN project ON session.prjID=project.prjID
-                            INNER JOIN composer ON session.cmpID=composer.cmpID
-                            INNER JOIN fixer ON session.fixID=fixer.fixID
-                            WHERE WEEK(sessDate,1)= WEEK(current_date,1) AND YEAR(sessDate) = YEAR(current_date)
-                            ORDER BY sessDate,session.stdID ASC,startTime;" );
-    
-    $sth->execute();
-    
-    
-    
-       
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
 }
-catch (PDOException $e) {
-    print $e->getMessage();
-  }
+
+$dbh = dbConn::getConnection();
+
+$session= new session($dbh);
+
+$result=$session->listWeekSession(0);
+
 require('header.php');
 ?>
 
@@ -56,7 +40,7 @@ require('header.php');
     $j=0;
     $q=0;
     
-    while($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+    foreach($result as $row) {
         $date = strtotime($row['sessDate']);
         $initEng = explode(" ",$row['engName']); //split string into two seperate strings and seperate array values
         $initAst = explode(" ",$row['astName']);

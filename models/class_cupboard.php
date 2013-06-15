@@ -95,11 +95,11 @@ class cupboard{
             
             $this->addDriveNotes($this->driveID, $postdata['driveNotes']);
             
-            $this->cliID=client::checkClient($postdata, $dbh);
+            $this->cliID=checkRecord::checkID($postdata['clientID'],$postdata['cliN'],'cli', $dbh);
             
             $this->addDriveClient($this->driveID,$this->cliID);
             
-            $this->cmpID=composer::checkComposer($postdata, $dbh);   
+            $this->cmpID=checkRecord::checkID($postdata['composerID'],$postdata['compN'],'cmp', $dbh);  
             
             $this->addDriveComposer($this->driveID,$this->cmpID);
             

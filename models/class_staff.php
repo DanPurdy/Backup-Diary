@@ -7,7 +7,7 @@ class staff{
     private $tbl;  // table name from switch whitelist in __construct (determined by $role)
     private $result;
     
-    private function __construct($dbh, $role) {
+    public function __construct($dbh, $role) {
           $this->mydb = $dbh;                   //assign database handler to private variable mydb
           $this->role = $role;                  //assign user selected role to private variable role
           

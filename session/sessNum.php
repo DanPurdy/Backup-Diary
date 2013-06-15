@@ -1,19 +1,15 @@
 <?php
 
-require_once 'includes/pdoconnection.php';
-$dbh = dbConn::getConnection();
+require_once 'includes/pdoconnection.php';                              //autoload classes
 
-try{
-$sth = $dbh->prepare('UPDATE session SET ssNo=:ssNo
-        WHERE sesID=:sesID;' );
-
-
-$sth->bindParam(':ssNo', $_POST['ssNo'] , PDO::PARAM_INT);
-$sth->bindParam(':sesID', $_POST['sesID'] , PDO::PARAM_INT);
-
-
-$sth->execute();
-}catch (PDOException $e) {
-    print $e->getMessage();
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
 }
+
+$dbh = dbConn::getConnection();                                         //create a connection instance
+
+$session=new session($dbh); 
+
+$session->updateSessNo($_POST['ssNo'], $_POST['sesID']);
+
 ?>

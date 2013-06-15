@@ -118,7 +118,7 @@ $('#micNo').keyup(function(){
 
 $('#sessCont option').each(function() {
     if ($(this).text() == 'Parent') {
-        $('#sessCont').hide();
+        $('#continueSelect').hide();
     }
 });
 
