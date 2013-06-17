@@ -8,13 +8,37 @@ $dbh = dbConn::getConnection();
 
 $session= new session($dbh);
 
-$result=$session->listWeekSession(0);
+if(!isset($_GET['week'])){
+    $weekNum = 0;
+}else{
+    $weekNum= htmlentities($_GET['week']);
+}
+
+$result=$session->listWeekSession($weekNum);
 
 require('header.php');
 ?>
 
 <div id="subHead"><h1>Timetable</h1></div>
-<div id="timetableNext"><h3><a href="list_timetable_next.php">Next Week &raquo;</a></h3></div>
+<?php
+    if($weekNum==0){
+    
+        ?>    
+            <div id="timetableNext"><h3><a href="list_timetable.php?week=<?php echo $weekNum+1;?>">Next Week &raquo;</a></h3></div>
+            <div id="timetableCurr"><h3><a href="list_timetable.php?week=<?php echo $weekNum-1;?>">&laquo; Previous Week</a></h3></div>
+        <?php
+    }
+    elseif($weekNum>0)
+    {
+        ?><div id="timetableCurr"><h3><a href="list_timetable.php?week=<?php echo $weekNum-1;?>">&laquo; This Week</a></h3></div><?php
+    }
+    else
+    {
+        ?>    
+            <div id="timetableNext"><h3><a href="list_timetable.php?week=<?php echo $weekNum+1;?>">This Week &raquo;</a></h3></div>
+        <?php 
+    }
+?>
 <div class="newSessLink"><h3><a href="new_session.php">Add New Session </a></h3></div>
 
 <div id="timetable">
@@ -82,7 +106,7 @@ require('header.php');
                 <div class="fixer"><?php echo $row['fixName']?></div>
                 <div class="project"><?php echo $row['prjName']?></div>
                 <div class="editLink"><a href="edit_session.php?sesID=<?php echo $row['sesID'];?>">Edit</a></div>
-                <?php if($_SESSION['user']['usrGroup'] == 'admin'){ ?> <div class="deleteLink"><a href="delete_session.php?sesID=<?=$row['sesID'];?>">Delete</a></div> <?php }; ?>
+                <?php if($_SESSION['user']['usrGroup'] == 'admin' && $weekNum >= 0){ ?> <div class="deleteLink"><a href="delete_session.php?sesID=<?=$row['sesID'];?>">Delete</a></div> <?php }; ?>
                 </div>
                 
                     

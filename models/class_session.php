@@ -447,5 +447,72 @@ class session{
 
       
     }
+    
+    public function sessSearch($table, $field, $term){
+        
+        try{
+            $sth=$this->mydb->prepare("SELECT session.*, client.cliName, composer.cmpName, fixer.fixName, project.prjName, assistant.astName,engineer.engName,backup.*
+                        FROM session
+                        INNER JOIN studio ON session.stdID=studio.stdID
+                        INNER JOIN engineer ON session.engID=engineer.engID
+                        INNER JOIN assistant ON session.astID=assistant.astID
+                        INNER JOIN client ON session.cliID=client.cliID
+                        INNER JOIN project ON session.prjID=project.prjID
+                        INNER JOIN composer ON session.cmpID=composer.cmpID
+                        INNER JOIN fixer ON session.fixID=fixer.fixID
+                        INNER JOIN backup ON session.bakID=backup.bakID
+                        WHERE ".$table.".".$field." LIKE :term
+                        ORDER BY sessDate DESC;");
+    
+            $sth->bindParam(':term', $term);
+
+            $sth->execute();
+            
+            $result=$sth->fetchAll(PDO::FETCH_ASSOC);
+            
+            $this->count=$sth->rowCount();
+    
+        }
+        catch(PDOException $e) {
+            print $e->getMessage();
+        }
+        
+        return $result;
+    }
+    
+    public function sessSearchDate($table, $field, $term, $dateStart, $dateEnd){
+        
+        try{
+            $sth=$this->mydb->prepare("SELECT session.*, client.cliName, composer.cmpName, fixer.fixName, project.prjName, assistant.astName,engineer.engName,backup.*
+                        FROM session
+                        INNER JOIN studio ON session.stdID=studio.stdID
+                        INNER JOIN engineer ON session.engID=engineer.engID
+                        INNER JOIN assistant ON session.astID=assistant.astID
+                        INNER JOIN client ON session.cliID=client.cliID
+                        INNER JOIN project ON session.prjID=project.prjID
+                        INNER JOIN composer ON session.cmpID=composer.cmpID
+                        INNER JOIN fixer ON session.fixID=fixer.fixID
+                        INNER JOIN backup ON session.bakID=backup.bakID
+                        WHERE ".$table.".".$field." LIKE :term and (sessDate BETWEEN :dateS AND :dateE)
+                        ORDER BY sessDate DESC;");
+    
+            $sth->bindParam(':term', $term);
+            $sth->bindParam(':dateS', $dateStart, PDO::PARAM_STR);
+            $sth->bindParam(':dateE', $dateEnd, PDO::PARAM_STR);
+            
+
+            $sth->execute();
+            
+            $result=$sth->fetchAll(PDO::FETCH_ASSOC);
+            
+            $this->count=$sth->rowCount();
+    
+        }
+        catch(PDOException $e) {
+            print $e->getMessage();
+        }
+        
+        return $result;
+    }
 }
 ?>

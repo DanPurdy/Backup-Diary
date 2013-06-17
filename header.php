@@ -1,8 +1,9 @@
 <?php
-     session_start();
+    if(!isset($_SESSION)){session_start();
          
     header('Content-Type: text/html; charset=utf-8');
-    // check to see whether the user is logged in or not 
+    // check to see whether the user is logged in or not
+    }
     if(empty($_SESSION['user'])) 
     { 
         // If they are not,redirect them to the login page. 

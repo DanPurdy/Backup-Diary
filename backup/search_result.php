@@ -53,10 +53,9 @@ try{
                     <th scope="col">Session Date</th>
                     <th scope="col">SS #</th>
                     <th scope="col">Session Folder Name</th>
-                    <th scope="col">Client Name</th>
-                    <th scope="col">Bak Drive   </th>
-                    <th scope="col">Is Deleted</th>
-                    <th scope="col">Continued</th>
+                    <th scope="col">Client</th>
+                    <th scope="col">Backup</th>
+                    <th scope="col">Deleted</th>
                     <th scope="col"></th>
                 </tr>
            <?php while($row=$sth->fetch(PDO::FETCH_ASSOC)){ ?>
@@ -75,7 +74,6 @@ try{
                             <td>No</td>
                         <?php
                         } ?>
-                    <td><?=$row['bakMov'];?></td>
                     <?php if(empty($row['bakID']) || $row['bakID']==0){?>
                         <td><a href="new_backup.php?sesID=<?php echo $row['sesID'];?>">Add New Backup</a></td>
                    <?php }else{?>
