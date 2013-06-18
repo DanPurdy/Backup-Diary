@@ -61,6 +61,50 @@ class cupboard{
         return $this->result;
     }
     
+    public function getDriveBackup($bakID){
+        try{
+            
+            $sth = $this->mydb->prepare("SELECT * FROM cupboardDrive
+                                    LEFT JOIN driveContent ON cupboardDrive.cupbID = driveContent.cupbID
+                                    WHERE driveContent.bakID=:bakID;");
+            $sth->bindParam(':bakID', $bakID, PDO::PARAM_INT);
+            $sth->execute();
+
+            $backupDrive=$sth->fetch(PDO::FETCH_ASSOC);
+        }
+        catch(PDOException $e){
+            print $e->getMessage();
+        }
+        
+        return $backupDrive;
+    }
+    
+    public function getRelatedDrives($cliID, $cmpID){
+        try{
+            
+    
+            $sth=$this->mydb->prepare('SELECT cupboardDrive.*, client.*, composer.*
+                                        FROM cupboardDrive
+                                        LEFT JOIN driveOwnerCli ON (cupboardDrive.cupbID = driveOwnerCli.cupbID)
+                                        LEFT JOIN driveOwnerCmp ON (cupboardDrive.cupbID = driveOwnerCmp.cupbID)
+                                        LEFT JOIN client ON (driveOwnerCli.cliID=client.cliID)
+                                        LEFT JOIN composer ON (driveOwnerCmp.cmpID=composer.cmpID)
+                                        WHERE (driveOwnerCli.cliID = :client AND driveOwnerCli.cliID > 1)  OR (driveOwnerCmp.cmpID = :composer AND driveOwnerCmp.cmpID >1);');
+
+             $sth->bindParam(':client', $cliID, PDO::PARAM_INT);
+             $sth->bindParam(':composer', $cmpID, PDO::PARAM_INT);
+
+             $sth->execute();
+             
+             $result=$sth->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch(PDOException $e){
+            print $e->getMessage();
+        }
+        
+        return $result;
+    }
+    
     public function getDriveNotes($driveID){
         
         $this->driveID=$driveID;

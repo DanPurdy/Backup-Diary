@@ -449,6 +449,47 @@ class mic{
 
     }
     
+    public function getSessMic($bakID){
+        try{
+            $st1 = $this->mydb->prepare("SELECT * FROM sessmics
+                          WHERE sessmicsID = :bakID;");
+    
+            $st1->bindParam(':bakID', $bakID, PDO::PARAM_INT);
+
+            $st1->execute();
+
+
+            $count1 = $st1->rowCount();
+
+            $row1 = $st1->fetch(PDO::FETCH_ASSOC);
+            if($count1 > 0){
+
+                $micArray = array();
+
+                $micArray = unserialize($row1['sessmicList']);
+
+            }
+
+        }catch(PDOException $e){
+            print $e->getMessage();
+        }
+        if($count1 > 0){ ?> 
+            
+            <?php
+                foreach($micArray as $micID){?>
+                    <tr>
+                        <?php    
+                         $row=$this->getMicByID($micID);
+                         
+                         ?>
+                        <td><?= $row['micID']?></td>
+                        <td><?= $row['micMake']?></td>
+                        <td><?= $row['micModel']?></td>
+                    </tr>
+                      <?php
+                        }
+        }
+    }
 }
 
 ?>

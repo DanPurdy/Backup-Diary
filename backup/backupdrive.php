@@ -1,7 +1,13 @@
 <?php
+require('includes/pdoconnection.php');
 
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
 
-require_once 'functions/function_list.php';
+$dbh = dbConn::getConnection();
+
+$backup= new backup($dbh);
 
 $studio=$_GET['studio'];
 
@@ -18,7 +24,7 @@ require_once('header.php');
     <th scope="col">Sess Sheet</th>
     <th>&nbsp;</th>
   </tr>
-    <?php getNoRecord(); ?>
+    <?php $backup->getNoRecord(); ?>
 </table>
 </div>
 
@@ -33,11 +39,11 @@ require_once('header.php');
     
   </tr>
     <?php if($studio == 1){
-        getBakDrive(1);
+        $backup->getBakDrive(1);
     }elseif($studio == 2){
-        getBakDrive(4);
+        $backup->getBakDrive(4);
     }else{
-        getBakDrive(7);
+        $backup->getBakDrive(7);
     }
 ?>
 </table>
@@ -52,11 +58,11 @@ require_once('header.php');
     
   </tr>
     <?php if($studio == 1){
-        getBakDrive(2);
+        $backup->getBakDrive(2);
     }elseif($studio == 2){
-        getBakDrive(5);
+        $backup->getBakDrive(5);
     }else{
-        getBakDrive(8);
+        $backup->getBakDrive(8);
     }
 ?>
 </table>
@@ -70,11 +76,11 @@ require_once('header.php');
     
   </tr>
     <?php if($studio == 1){
-        getBakDrive(3);
+        $backup->getBakDrive(3);
     }elseif($studio == 2){
-        getBakDrive(6);
+        $backup->getBakDrive(6);
     }else{
-        getBakDrive(9);
+        $backup->getBakDrive(9);
     }
 ?>
 </table>

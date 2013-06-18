@@ -1,38 +1,18 @@
 <?php
 
-require_once 'includes/pdoconnection.php';
+require('includes/pdoconnection.php');
+
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
 
 $dbh = dbConn::getConnection();
+
+$session= new session($dbh);
     
 $backup = "%".$_POST['backupName']."%";
 
-try{
-    $sth=$dbh->prepare("SELECT client.cliName, project.prjName, assistant.astName,engineer.engName, session.sesID, session.ssNo, session.sessDate, session.stdID,bakdrive.bkdName, backup.*
-                        FROM session
-                        INNER JOIN studio ON session.stdID=studio.stdID
-                        INNER JOIN engineer ON session.engID=engineer.engID
-                        INNER JOIN assistant ON session.astID=assistant.astID
-                        INNER JOIN client ON session.cliID=client.cliID
-                        INNER JOIN project ON session.prjID=project.prjID
-                        INNER JOIN composer ON session.cmpID=composer.cmpID
-                        INNER JOIN fixer ON session.fixID=fixer.fixID
-                        LEFT JOIN backup ON session.bakID=backup.bakID
-                        LEFT JOIN bakdrive ON backup.bakLoc=bakdrive.bkdID
-                        WHERE backup.bakName LIKE :bakName
-                        ORDER BY session.sessDate DESC, backup.bakDeleted; ");
-    
-    $sth->bindParam(':bakName', $backup, PDO::PARAM_STR);
-
-  
-    
-     $sth->execute();
-     
-     
-    
-}
-  catch(PDOException $e) {
-    print $e->getMessage();
-  }
+$result=$session->sessSearch('backup', 'bakName', $backup);
   
   
   require_once ('header.php');
@@ -53,7 +33,7 @@ try{
                     <th scope="col">Continued</th>
                     <th scope="col"></th>
                 </tr>
-           <?php while($row=$sth->fetch(PDO::FETCH_ASSOC)){ ?>
+           <?php foreach($result as $row){ ?>
                 <tr>
                     <td><?=$row['sessDate'];?></td>
                     <td><?=$row['ssNo'];?></td>

@@ -1,44 +1,25 @@
 <?php
-
-
 session_start();
 $_SESSION['org_referer'] = htmlentities($_SERVER['HTTP_REFERER']);
-require_once 'includes/pdoconnection.php';
+require('includes/pdoconnection.php');
+
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
 
 $dbh = dbConn::getConnection();
 
+$backup= new backup($dbh);
 
-try{
-    $sth = $dbh->prepare("SELECT session.sesID, session.stdID, session.sessDate, session.startTime, session.endTime,session.ssNo, studio.stdName, engineer.engName, assistant.astName, client.cliName, composer.cmpName, fixer.fixName, project.prjName, session.bakID,backup.*
-                            FROM session
-                            INNER JOIN studio ON session.stdID=studio.stdID
-                            INNER JOIN engineer ON session.engID=engineer.engID
-                            INNER JOIN assistant ON session.astID=assistant.astID
-                            INNER JOIN client ON session.cliID=client.cliID
-                            INNER JOIN project ON session.prjID=project.prjID
-                            INNER JOIN composer ON session.cmpID=composer.cmpID
-                            INNER JOIN fixer ON session.fixID=fixer.fixID
-                            INNER JOIN backup ON session.bakID=backup.bakID
-                            WHERE (sessDate = CURRENT_DATE OR DATE_ADD(sessDate, INTERVAL 1 DAY)=CURRENT_DATE OR DATE_ADD(sessDate, INTERVAL -1 DAY)=CURRENT_DATE) AND session.stdID=:stdID
-                            ORDER BY session.sessDate, session.endTime;" );
-    $sth->bindParam(':stdID', $_GET['studio']);
-    
-    $sth->execute();
-    
-    
-    
-       
-}
-catch (PDOException $e) {
-    print $e->getMessage();
-  }
+
+$result=$backup->getCurrentBackup($_GET['studio']);
 
  require_once('header.php'); 
 ?>
 
 <h1>Current Backups in Studio <?php echo $_GET['studio'];?></h1>
 <div id="backupSess">
-    <?php while($row = $sth->fetch(PDO::FETCH_ASSOC)) { 
+    <?php foreach($result as $row) { 
         
         $date = strtotime($row['sessDate']);
         $initEng = explode(" ",$row['engName']); //split string into two seperate strings and seperate array values

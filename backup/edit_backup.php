@@ -1,76 +1,37 @@
 <?php
-
-  session_start();
-  
-  $referer = $_SERVER['HTTP_REFERER'];
+session_start();
+$referer = $_SERVER['HTTP_REFERER'];
 if($referer != '/backup/search_result.php'){
     $_SESSION['org_referer'] = htmlentities($_SERVER['HTTP_REFERER']);
 
 }
-require_once 'includes/pdoconnection.php';
-require_once 'functions/function_mics.php';
+
+require('includes/pdoconnection.php');
+
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
 
 $dbh = dbConn::getConnection();
 
-try{
-    $sth = $dbh->prepare("SELECT session.*, engineer.engName, assistant.astName, client.cliName, composer.cmpName, fixer.fixName, project.prjName, session.bakID,
-                            backup.*
-                            FROM session
-                            INNER JOIN studio ON session.stdID=studio.stdID
-                            INNER JOIN engineer ON session.engID=engineer.engID
-                            INNER JOIN assistant ON session.astID=assistant.astID
-                            INNER JOIN client ON session.cliID=client.cliID
-                            INNER JOIN project ON session.prjID=project.prjID
-                            INNER JOIN composer ON session.cmpID=composer.cmpID
-                            INNER JOIN fixer ON session.fixID=fixer.fixID
-                            INNER JOIN backup ON session.bakID=backup.bakID
-                            WHERE sesID = :sesID;" );
+$session= new session($dbh);
+$microphone= new mic($dbh);
+$backup= new backup($dbh);
+$cupboard = new cupboard($dbh);
     
-                            $sth->bindParam(':sesID', $_GET['sesID'] , PDO::PARAM_INT);
-    
-    $sth->execute();
-    
-    $row = $sth->fetch(PDO::FETCH_ASSOC);
-    
-    $bakID = $row['bakID'];
-    
-    if($row['bakCupboard'] == 1){
-        $st1 = $dbh->prepare("SELECT * FROM sessions.cupboardDrive
-                                LEFT JOIN driveContent ON cupboardDrive.cupbID = driveContent.cupbID
-                                WHERE driveContent.bakID=:bakID;");
-        $st1->bindParam(':bakID', $bakID, PDO::PARAM_INT);
-        $st1->execute();
-        
-        $backupDrive=$st1->fetch(PDO::FETCH_ASSOC);
-    }else{ 
-        $backupDrive=0;
-    }
-    
-    $sth=$dbh->prepare('SELECT cupboardDrive.*, client.*, composer.*
-                      FROM cupboardDrive
-                      LEFT JOIN driveOwnerCli ON (cupboardDrive.cupbID = driveOwnerCli.cupbID)
-                      LEFT JOIN driveOwnerCmp ON (cupboardDrive.cupbID = driveOwnerCmp.cupbID)
-                      LEFT JOIN client ON (driveOwnerCli.cliID=client.cliID)
-                      LEFT JOIN composer ON (driveOwnerCmp.cmpID=composer.cmpID)
-                      WHERE (driveOwnerCli.cliID = :client AND driveOwnerCli.cliID > 1)  OR (driveOwnerCmp.cmpID = :composer AND driveOwnerCmp.cmpID >1);');
-    
-   $sth->bindParam(':client', $row['cliID'], PDO::PARAM_INT);
-   $sth->bindParam(':composer', $row['cmpID'], PDO::PARAM_INT);
-   
-   $sth->execute();
-   
-   $count = $sth->rowcount();
-   
-   
-       
-}
-catch (PDOException $e) {
-    print $e->getMessage();
-  }
-  
+$row = $session->getSessByID($_GET['sesID']);
 
-  
- require_once('header.php');
+$bakID = $row['bakID'];
+
+if($row['bakCupboard'] == 1){
+    $backupDrive=$cupboard->getDriveBackup($bakID);
+}else{ 
+    $backupDrive=0;
+}
+
+$result=$cupboard->getRelatedDrives($row['cliID'], $row['cmpID']);
+    
+require_once('header.php');
  
 ?>
 
@@ -259,7 +220,7 @@ if(!empty($row['bakLastDate'])){echo date('D d F Y H:i:s', strtotime($row['bakLa
             <select name="cupbDrive" id="cupbDrive">
                 <option value='' <?php if(!($backupDrive)){echo 'selected';}?>>Please Select A Drive</option>
                 <?php 
-                    while($driveList = $sth->fetch(PDO::FETCH_ASSOC)){
+                    foreach($result as $driveList){
                         if($backupDrive['cupbID']==$driveList['cupbID']){
                             ?>
                             <option value="<?php echo $driveList['cupbID'];?> " selected><?php echo 'ATS-'.$driveList['cupbID'].' | '.$driveList['cupbName'].' | '.$driveList['cliName'].' | '.$driveList['cmpName'];?></option>
@@ -277,7 +238,7 @@ if(!empty($row['bakLastDate'])){echo date('D d F Y H:i:s', strtotime($row['bakLa
             </div>
             <div id="addDrive">
             <label for="newDrive"><h3>New Drive Name</h3></label>
-            <input id="newDrive" name="newDrive" />                     <!-- value="<?php echo $row['cliName'].' '.($count + 1); ?>" possible value -->
+            <input id="newDrive" name="newDrive" />
             </div>
         </div>
         
@@ -288,8 +249,15 @@ if(!empty($row['bakLastDate'])){echo date('D d F Y H:i:s', strtotime($row['bakLa
     <div class="backupDriveTitle">
          <h3>Microphones</h3>
     </div>
+    <table id="micList">
+                <tr>
+                    <th scope="col">Mic #</th>
+                    <th scope="col">Make</th>
+                    <th scope="col">Model</th>
+                </tr>
     <?php    
-        getSessMic($bakID);
+        $microphone->getSessMic($bakID);
     ?>
+    </table>
 </div>
 <?php  require_once('footer.php'); ?>

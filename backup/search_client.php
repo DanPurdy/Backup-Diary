@@ -2,40 +2,19 @@
 
 require_once 'includes/pdoconnection.php';
 
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
+
 $dbh = dbConn::getConnection();
+
+$backup= new backup($dbh);
     
 $client = "%".$_POST['clientName']."%";
 
-try{
-    $sth=$dbh->prepare("SELECT client.cliName, project.prjName, assistant.astName,engineer.engName, session.sesID, session.ssNo, session.sessDate, session.stdID,bakdrive.bkdName, backup.*
-                        FROM session
-                        INNER JOIN studio ON session.stdID=studio.stdID
-                        INNER JOIN engineer ON session.engID=engineer.engID
-                        INNER JOIN assistant ON session.astID=assistant.astID
-                        INNER JOIN client ON session.cliID=client.cliID
-                        INNER JOIN project ON session.prjID=project.prjID
-                        INNER JOIN composer ON session.cmpID=composer.cmpID
-                        INNER JOIN fixer ON session.fixID=fixer.fixID
-                        LEFT JOIN backup ON session.bakID=backup.bakID
-                        LEFT JOIN bakdrive ON backup.bakLoc=bakdrive.bkdID
-                        WHERE client.cliName LIKE :cliName OR composer.cmpName LIKE :cliName
-                        ORDER BY session.sessDate DESC, backup.bakDeleted; ");
-    
-    $sth->bindParam(':cliName', $client, PDO::PARAM_STR);
+$result = $backup->backupSearch($client);
 
-  
-    
-     $sth->execute();
-     
-     
-    
-}
-  catch(PDOException $e) {
-    print $e->getMessage();
-  }
-  
-  
-  require_once ('header.php');
+require_once ('header.php');
   
   ?>
 <div id="subHead"><h1>Backup Search Results</h1></div>
@@ -53,7 +32,7 @@ try{
                     <th scope="col">Continued</th>
                     <th scope="col"></th>
                 </tr>
-           <?php while($row=$sth->fetch(PDO::FETCH_ASSOC)){ ?>
+           <?php foreach($result as $row){ ?>
                 <tr>
                     <td><?=$row['sessDate'];?></td>
                     <td><?=$row['ssNo'];?></td>

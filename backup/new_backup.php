@@ -1,49 +1,23 @@
 <?php
 
-require_once 'includes/pdoconnection.php';
-require_once 'functions/function_mics.php';
+require('includes/pdoconnection.php');
+
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
 
 $dbh = dbConn::getConnection();
 
-try{
-    $sth = $dbh->prepare("SELECT session.*, studio.stdName, engineer.engName, assistant.astName, client.cliName, composer.cmpName, fixer.fixName, project.prjName
-                            FROM session
-                            INNER JOIN studio ON session.stdID=studio.stdID
-                            INNER JOIN engineer ON session.engID=engineer.engID
-                            INNER JOIN assistant ON session.astID=assistant.astID
-                            INNER JOIN client ON session.cliID=client.cliID
-                            INNER JOIN project ON session.prjID=project.prjID
-                            INNER JOIN composer ON session.cmpID=composer.cmpID
-                            INNER JOIN fixer ON session.fixID=fixer.fixID
-                            WHERE sesID = :sesID;" );
+$session= new session($dbh);
+$microphone= new mic($dbh);
+$backup= new backup($dbh);
+$cupboard = new cupboard($dbh);
+
+$row = $session->getSessByID($_GET['sesID']);
     
-                            $sth->bindParam(':sesID', $_GET['sesID'] , PDO::PARAM_INT);
+$result=$cupboard->getRelatedDrives($row['cliID'], $row['cmpID']);
     
-    $sth->execute();
-    
-    $row = $sth->fetch(PDO::FETCH_ASSOC);
-    
-     $st1=$dbh->prepare('SELECT cupboardDrive.*, client.*, composer.*
-                      FROM cupboardDrive
-                      LEFT JOIN driveOwnerCli ON (cupboardDrive.cupbID = driveOwnerCli.cupbID)
-                      LEFT JOIN driveOwnerCmp ON (cupboardDrive.cupbID = driveOwnerCmp.cupbID)
-                      LEFT JOIN client ON (driveOwnerCli.cliID=client.cliID)
-                      LEFT JOIN composer ON (driveOwnerCmp.cmpID=composer.cmpID)
-                      WHERE (driveOwnerCli.cliID = :client AND driveOwnerCli.cliID > 1)  OR (driveOwnerCmp.cmpID = :composer AND driveOwnerCmp.cmpID >1);');
-    
-   $st1->bindParam(':client', $row['cliID'], PDO::PARAM_INT);
-   $st1->bindParam(':composer', $row['cmpID'], PDO::PARAM_INT);
-   
-   $st1->execute();
-   
-   $count = $st1->rowcount();
-    
-       
-}
-catch (PDOException $e) {
-    print $e->getMessage();
-  }
- require_once('header.php');
+require_once('header.php');
 ?>
 
 <div id="subHead"><h1>Add New Backup</h1></div>
@@ -191,7 +165,7 @@ catch (PDOException $e) {
             <select name="cupbDrive" id="cupbDrive">
                 <option value='' <?php if(!($backupDrive)){echo 'selected';}?>>Please Select A Drive</option>
                 <?php 
-                    while($driveList = $st1->fetch(PDO::FETCH_ASSOC)){
+                    foreach($result as $driveList){
                         if($backupDrive['cupbID']==$driveList['cupbID']){
                             ?>
                             <option value="<?php echo $driveList['cupbID'];?> " selected><?php echo 'ATS-'.$driveList['cupbID'].' | '.$driveList['cupbName'].' | '.$driveList['cliName'].' | '.$driveList['cmpName'];?></option>
@@ -218,8 +192,15 @@ catch (PDOException $e) {
     <div class="backupDriveTitle">
          <h3>Microphones</h3>
     </div>
+    <table id="micList">
+                <tr>
+                    <th scope="col">Mic #</th>
+                    <th scope="col">Make</th>
+                    <th scope="col">Model</th>
+                </tr>
     <?php    
-        getSessMic($bakID);
+        $microphone->getSessMic($bakID);
     ?>
+    </table>
 </div>
 <?php  require_once('footer.php'); ?>

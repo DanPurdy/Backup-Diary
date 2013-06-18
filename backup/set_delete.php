@@ -1,25 +1,19 @@
 <?php
 session_start();
-require_once '../includes/pdoconnection.php';
+require('includes/pdoconnection.php');
+
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
 
 $dbh = dbConn::getConnection();
 
-$OK = false;
-$done = false;
+$backup= new backup($dbh);
+
 if (isset($_GET['backupID']) && !$_POST) {
-try {
-$sth=$dbh->prepare("UPDATE backup SET bakDeleted=1 WHERE bakID = :bakID;" );
     
-    $sth->bindParam(':bakID', $_GET['backupID']);
+    $backup->setBackupDeleted($_GET['backupID']);
 
-  $sth->execute();
-  
-  header('Location: '.$_SERVER['HTTP_REFERER']);
-  
-}
-catch (PDOException $e) {
-    print $e->getMessage();
-}
-
+header('Location: '.$_SERVER['HTTP_REFERER']);
 }
 ?>

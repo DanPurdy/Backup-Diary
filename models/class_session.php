@@ -46,7 +46,7 @@ class session{
     
     public function getSessByID($id){
         try { //get all session details from the session ID
-            $sth=$this->mydb->prepare("SELECT session.*, studio.stdName, engineer.engName, assistant.astName, client.cliName, composer.cmpName, fixer.fixName, project.prjName
+            $sth=$this->mydb->prepare("SELECT session.*, studio.stdName, engineer.engName, assistant.astName, client.cliName, composer.cmpName, fixer.fixName, project.prjName, backup.*
                             FROM session
                             INNER JOIN studio ON session.stdID=studio.stdID
                             INNER JOIN engineer ON session.engID=engineer.engID
@@ -55,6 +55,7 @@ class session{
                             INNER JOIN project ON session.prjID=project.prjID
                             INNER JOIN composer ON session.cmpID=composer.cmpID
                             INNER JOIN fixer ON session.fixID=fixer.fixID
+                            INNER JOIN backup ON session.bakID=backup.bakID
                             WHERE session.sesID = :sessID;" );
     
             $sth->bindParam(':sessID', $id, PDO::PARAM_INT);
