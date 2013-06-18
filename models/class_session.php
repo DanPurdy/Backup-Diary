@@ -69,6 +69,65 @@ class session{
         return $result;
     }
     
+    public function getPrevSess($prevSes){
+        try{
+            $sth = $this->mydb->prepare('SELECT sesID, sessDate FROM session WHERE bakID = :bakID ORDER BY sessDate ASC;');
+
+            $sth->bindParam(':bakID', $prevSes, PDO::PARAM_INT);
+
+            $sth->execute();
+
+            $row=$sth->fetch(PDO::FETCH_ASSOC);
+
+            $prevSes = $row['sesID'];
+        }
+        catch(PDOException $e){
+            print $e->getMessage();
+        }
+
+        return $prevSes;
+    }
+    
+    public function getTransferSessID($transferID){
+       
+            
+        $sth = $this->mydb->prepare('SELECT sesID FROM session WHERE bakID = :bakID ORDER BY sessDate ASC LIMIT 1');
+
+        $sth->bindParam(':bakID', $transferID, PDO::PARAM_INT);
+        $sth->execute();
+
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
+        $sesID = $result['sesID'];
+        
+        return $sesID;
+    }
+    
+    public function getUpcomingSessions(){
+        try{
+            $sth = $this->mydb->prepare("SELECT session.*, studio.stdName, engineer.engName, assistant.astName, client.cliName, composer.cmpName, fixer.fixName, project.prjName
+                                    FROM session
+                                    INNER JOIN studio ON session.stdID=studio.stdID
+                                    INNER JOIN engineer ON session.engID=engineer.engID
+                                    INNER JOIN assistant ON session.astID=assistant.astID
+                                    INNER JOIN client ON session.cliID=client.cliID
+                                    INNER JOIN project ON session.prjID=project.prjID
+                                    INNER JOIN composer ON session.cmpID=composer.cmpID
+                                    INNER JOIN fixer ON session.fixID=fixer.fixID
+                                    WHERE sessDate >= CURRENT_DATE() AND YEAR(sessDate)= YEAR(CURRENT_DATE())
+                                    ORDER BY sessDate,stdID;");
+
+            $sth->execute();
+            
+            $result=$sth->fetchAll(PDO::FETCH_ASSOC);
+        
+        }
+        catch (PDOException $e) {
+            print $e->getMessage();
+        }
+        
+        return $result;
+    }
+    
     public function getLinkedSess($bakID){
         try{
             $sth=$this->mydb->prepare("SELECT session.*, studio.stdName, engineer.engName, assistant.astName, client.cliName, composer.cmpName, fixer.fixName, project.prjName

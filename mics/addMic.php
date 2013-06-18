@@ -1,118 +1,34 @@
 <?php
 session_start();
 
-require_once 'includes/pdoconnection.php';
-require_once 'functions/functions.php';
+require('includes/pdoconnection.php');
+
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
 
 $dbh = dbConn::getConnection();
 
+$microphone=new mic($dbh);
 
-    $link =$_SERVER['HTTP_REFERER'];
-    $linkParts = explode('&', $link);
-    $link = $linkParts[0];
-    $message = $_GET['micNo'];
+$link =$_SERVER['HTTP_REFERER'];
+$linkParts = explode('&', $link);
+$link = $linkParts[0];
+$message = $_GET['micNo'];   
     
-    
-    
-try{
-    $st1 = $dbh->prepare('SELECT * FROM microphones WHERE micID = :mic;');
-    
-    $st1->bindParam(':mic', $_POST['micNo'], PDO::PARAM_INT);
-    
-    $st1->execute();
-            
-}catch(PDOException $e){
-    print $e->getMessage();
-    
-}
+$row=$microphone->getMicByID($_POST['micNo']);
 
-    $row = $st1->fetch(PDO::FETCH_ASSOC);
-    $resCount = $st1->rowCount();
+$resCount = $microphone->count;
 
 if($row['micSession'] == 0 && $resCount !=0 && $row['micRepair'] ==0){
- try{
-     $sth = $dbh->prepare('UPDATE microphones
-                           SET micSession=:bakID, micCupboard=0, micTransfer=NULL, usrID=:user
-                           WHERE micID = :mic;');
-    
-    $sth->bindParam(':mic', $_POST['micNo'], PDO::PARAM_INT);
-    $sth->bindParam(':bakID', $_POST['bakID'], PDO::PARAM_INT);
-    $sth->bindParam(':user', $_SESSION['user']['usrID'], PDO::PARAM_INT);
-    $sth->execute();
-   
 
-    $st1 = $dbh->prepare('SELECT * FROM sessmics WHERE sessmicsID = :bakID');
+    $row= $microphone->addMicSession($_POST['micNo'], $_SESSION['user']['usrID'], $_POST['bakID'], $_POST['sesID']);
     
-    $st1->bindParam(':bakID', $_POST['bakID'], PDO::PARAM_INT);
-    $st1->execute();
-    
-    
-    if($st1->rowCount() == 0){
-        
-        $micArray = array();
-        
-        $micArray[] = $_POST['micNo'];
-        
-        $mics = serialize($micArray);
-        
-       
-        $st2 = $dbh->prepare('INSERT INTO sessmics (sessmicsID, sessmicList) VALUES (:bakID, :mic);');
-        
-        $st2->bindParam(':bakID', $_POST['bakID'], PDO::PARAM_INT);
-        $st2->bindParam(':mic', $mics, PDO::PARAM_STR); 
-        
-        $st2->execute();
-        
-        micLog($_POST['micNo'], $_SESSION['user']['usrID'], $_POST['sesID'], 'session'); 
-        
-    } else{
-        
-        $row = $st1->fetch(PDO::FETCH_ASSOC);
-        
-        $micArray = unserialize($row['sessmicList']);
-        
-        
-        $nextMic = $_POST['micNo'];
-        
-        if(in_array($nextMic, $micArray)){
-           
-        }else{
-        
-        $micArray[]=$nextMic;
-        sort($micArray);
-        }
-        
-        
-        $mics= serialize($micArray);
-        
-        
-        $st2 = $dbh->prepare('UPDATE sessmics SET sessmicList=:mic WHERE sessmicsID = :bakID;');
-        
-        $st2->bindParam(':bakID', $_POST['bakID'], PDO::PARAM_INT);
-        $st2->bindParam(':mic', $mics, PDO::PARAM_STR);
-        
-        $st2->execute();
-        
-        
-        micLog($_POST['micNo'], $_SESSION['user']['usrID'], $_POST['sesID'], 'session');
-    }
-    
-    
-  
-    
-    
-    
-   
-}
-catch(PDOException $e){
-    print $e->getMessage();
-    
-}
-
-  
     header('Location: '.$link);     
 }elseif($row['micRepair'] == 1){
+    
     header('Location: '.$link.'&e=5&micNo='.$row['micID']);
+    
 }else{
     
     

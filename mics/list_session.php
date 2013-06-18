@@ -1,57 +1,24 @@
 <?php
 require('includes/pdoconnection.php');
-    $dbh = dbConn::getConnection();
+
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
+
+$dbh = dbConn::getConnection();
+
+$microphone=new mic($dbh);
+
     
-    session_start();
-    
-    $studio = $_GET['studio'];
+    $studio = htmlentities($_GET['studio']);
     
 if(empty($studio)){
-try{
-    $sth = $dbh->prepare("SELECT backup.*, microphones.*, session.*, client.cliName, composer.cmpName, users.username 
-                            FROM backup
-                            INNER JOIN session ON backup.bakID = session.bakID
-                            INNER JOIN microphones ON backup.bakID=microphones.micSession
-                            INNER JOIN client ON session.cliID=client.cliID
-                            INNER JOIN composer ON session.cmpID =composer.cmpID
-                            INNER JOIN users ON microphones.usrID = users.usrID
-                            WHERE micSession IS NOT NULL
-                            GROUP BY microphones.micID
-                            ORDER BY microphones.micID ASC;" );
     
-    $sth->execute();
+    $result=$microphone->listMicSession();
     
-    
-    
-  $count=$sth->rowCount();     
-}
-catch (PDOException $e) {
-    print $e->getMessage();
-  }
 }else{
-   try{
-    $sth = $dbh->prepare("SELECT backup.*, microphones.*, session.*, client.cliName, composer.cmpName, users.username 
-                            FROM backup
-                            INNER JOIN session ON backup.bakID = session.bakID
-                            INNER JOIN microphones ON backup.bakID=microphones.micSession
-                            INNER JOIN client ON session.cliID=client.cliID
-                            INNER JOIN composer ON session.cmpID =composer.cmpID
-                            INNER JOIN users ON microphones.usrID = users.usrID
-                            WHERE micSession IS NOT NULL AND stdID=:stdID
-                            GROUP BY microphones.micID
-                            ORDER BY microphones.micID ASC;" );
-    
-    $sth->bindParam(':stdID',$studio,PDO::PARAM_INT);
-    
-    $sth->execute();
-    
-    
-    
-  $count=$sth->rowCount();     
-}
-catch (PDOException $e) {
-    print $e->getMessage();
-  } 
+
+    $result=$microphone->listMicStudio($studio);
 }
 require('header.php');
 ?>
@@ -73,7 +40,7 @@ require('header.php');
                     <th scope="col">Taken By</th>
                     <th scope="col">Return Mic</th>
                 </tr>
-           <?php while($row=$sth->fetch(PDO::FETCH_ASSOC)){ ?>
+           <?php foreach($result as $row){ ?>
                 <tr>
                     <td><?=$row['micID'];?></td>
                     <td><?=$row['micMake'];?></td>
