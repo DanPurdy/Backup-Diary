@@ -30,7 +30,7 @@ class checkRecord{
             $id = 1; 
     
         
-        }//if no ajax result found and user entered a name then insert name into relevant table
+        }
         
         elseif ($id==0 && !empty($name)) {
             
@@ -44,7 +44,7 @@ class checkRecord{
                 
                 $id=$result[$role.'ID'];
                 
-            }else{
+            }else{//if no ajax result found and user entered a name then insert name into relevant table
             
                 $fh = $conn->prepare('INSERT INTO '.$tbl.' ('.$role.'Name) VALUES (:name)');
     

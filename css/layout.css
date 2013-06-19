@@ -1538,10 +1538,12 @@ input#repairMic{
 
 #micList{
 	position:relative;
-	top:40px;
+	top:15px;
+	height:70px;
+	line-height: 2em;
 	margin:auto;
-	margin-bottom:10px;
 	width:600px;
+	clear:both;
 }
 
 .micList-item{

@@ -75,7 +75,7 @@ class backup{
                             INNER JOIN fixer ON session.fixID=fixer.fixID
                             INNER JOIN backup ON session.bakID=backup.bakID
                             WHERE (sessDate = CURRENT_DATE OR DATE_ADD(sessDate, INTERVAL 1 DAY)=CURRENT_DATE OR DATE_ADD(sessDate, INTERVAL -1 DAY)=CURRENT_DATE) AND session.stdID=:stdID
-                            ORDER BY session.sessDate, session.endTime;" );
+                            ORDER BY session.sessDate, session.startTime;" );
             $sth->bindParam(':stdID', $stdID);
     
             $sth->execute();
