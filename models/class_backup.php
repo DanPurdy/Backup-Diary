@@ -355,6 +355,7 @@ class backup{
         }
         
         return $result;
+    
     }
 }
 ?>
