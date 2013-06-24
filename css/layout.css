@@ -1283,6 +1283,10 @@ tr.bakKeep {
 	margin-bottom:40px;
 }
 
+#astTable, #engTable{
+	margin-bottom:40px;
+}
+
 #engTable table, #astTable table{
 	font: 14px/30px Helvetica, Arial, Verdana, sans-serif;
 	font-variant: small-caps;
