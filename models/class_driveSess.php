@@ -82,9 +82,9 @@ class driveSess{
             
             $date=date("Y-m-d", strtotime($postdata['bakDate']));
         
-            $this->cliID=client::checkClient($postdata, $dbh);
+            $this->cliID=  checkRecord::checkID($postdata['clientID'],$postdata['cliN'],'cli', $dbh);
         
-            $this->cmpID=composer::checkComposer($postdata, $dbh);  
+            $this->cmpID=checkRecord::checkID($postdata['composerID'],$postdata['compN'],'cmp', $dbh);  
         
         
             $st1=$this->mydb->prepare('INSERT INTO legacySess (legacyName,bakDate,cliID,cmpID) VALUES (:name, :date, :clientID, :composerID);');
