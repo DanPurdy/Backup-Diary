@@ -1,29 +1,13 @@
-
 <?php
 require('includes/pdoconnection.php');
-
-$dbh = dbConn::getConnection();
-
-try{
-    $sth = $dbh->prepare("SELECT chanFault.*, users.username, channels.*
-                            FROM chanFault
-                            INNER JOIN users ON chanFault.userID = users.usrID
-                            INNER JOIN channels on chanFault.channelID = channels.channelID
-                            WHERE chanFault.channelID = :chID;
-                            ORDER BY chanFault.faultDate DESC" );
-    
-    $sth->bindParam(':chID', $_GET['chID'], PDO::PARAM_INT);
-    
-    $sth->execute();
-    
-    
-    
-  $count=$sth->rowCount();
-  $result=$sth->fetchAll();
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
 }
-catch (PDOException $e) {
-    print $e->getMessage();
-  }
+$dbh = dbConn::getConnection();
+$channel = new channel($dbh);
+
+$result=$channel->listDetailChanFault($_GET['chID']);
+
 
 require('header.php');
 
@@ -35,23 +19,24 @@ require('header.php');
     $i=0;
     foreach($result as $fault){
         if(empty($fault['faultOutcome'])){?>
-<form id="micFault-<?= $i ?>" action="updateChannelFault.php" method="post">
-            <div class="faultDetails">
-                <input type="text" name="chID" value="<?=htmlentities($_GET['chID']);?>" class="hidden"/>
-                <input type="text" name="faultID" value="<?=$fault['faultID']; ?>" class="hidden"/>
-                <div class="faultDesc"><label for="fault">Fault Description</label>
-                <textarea id="fault" name="fault" rows="3" cols="30"><?=$fault['faultDesc'];?></textarea>
-                </div>
-                <?php if($_SESSION['user']['username'] == 'alex' ||  $_SESSION['user']['username'] == 'dan'){?>
-                <div class="faultSolu">
-                <label for="solution">Fault Outcome</label>
-                <textarea id="solution" name="solution" rows="3" cols="30"><?=$fault['faultOutcome'];?></textarea>
-                </div>
-                <? } ?>
-                <div class="faultUser">Submitted by: <br /><?=$fault['username']." <br /> ".date('G:i',strtotime($fault['faultDate']))." |  ".date('d-M-y',strtotime($fault['faultDate']))?></div>
-                <div class="submitFault"><input type ="submit" class="submit" name="updateFault" value ="Save"/></div>
-            </div>
-        </form>
+<form id="micFault-<?php echo  $i ?>" action="updateChannelFault.php" method="post">
+    <div class="faultDetails">
+        <input type="text" name="chID" value="<?php echo htmlentities($_GET['chID']);?>" class="hidden"/>
+        <input type="text" name="faultID" value="<?php echo $fault['faultID']; ?>" class="hidden"/>
+        <div class="faultDesc">
+            <label for="fault">Fault Description</label>
+            <textarea id="fault" name="fault" rows="3" cols="30"><?php echo $fault['faultDesc'];?></textarea>
+        </div>
+        <?php if($_SESSION['user']['username'] == 'alex' ||  $_SESSION['user']['username'] == 'dan'){?>
+        <div class="faultSolu">
+            <label for="solution">Fault Outcome</label>
+            <textarea id="solution" name="solution" rows="3" cols="30"><?php echo $fault['faultOutcome'];?></textarea>
+        </div>
+        <? } ?>
+        <div class="faultUser">Submitted by: <br /><?php echo $fault['username']." <br /> ".date('G:i',strtotime($fault['faultDate']))." |  ".date('d-M-y',strtotime($fault['faultDate']))?></div>
+        <div class="submitFault"><input type ="submit" class="submit" name="updateFault" value ="Save"/></div>
+    </div>
+</form>
     
    <?php
    $i++;
@@ -71,12 +56,12 @@ require('header.php');
     foreach($result as $fault){
         if(!empty($fault['faultOutcome'])){?>
             <tr>
-                <td><?=$fault['faultDesc'];?></td>
+                <td><?php echo $fault['faultDesc'];?></td>
                 
                 
-                <td><?=$fault['faultOutcome'];?></td>
+                <td><?php echo $fault['faultOutcome'];?></td>
               
-                <td><?=$fault['username']." | ".date('G:i',strtotime($fault['faultDate']))." | ".date('d-M-y',strtotime($fault['faultDate']))?></td>
+                <td><?php echo $fault['username']." | ".date('G:i',strtotime($fault['faultDate']))." | ".date('d-M-y',strtotime($fault['faultDate']))?></td>
             
             </tr>
     
@@ -86,7 +71,7 @@ require('header.php');
     ?>
     </table>
 </div>
-<div class="returnLink"><a href="<?=$_SERVER['HTTP_REFERER'];?>">&laquo; Back</a></div>
+<div class="returnLink"><a href="<?php echo $_SERVER['HTTP_REFERER'];?>">&laquo; Back</a></div>
 <?php
 require_once ('footer.php');
 

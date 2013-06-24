@@ -2,33 +2,22 @@
 <?php
 require('includes/pdoconnection.php');
 
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
+
 $dbh = dbConn::getConnection();
 
-try{
-    $sth = $dbh->prepare("SELECT micFault.*, users.username, microphones.* 
-                            FROM micFault
-                            INNER JOIN users ON micFault.userID = users.usrID
-                            INNER JOIN microphones on micFault.micID = microphones.micID
-                            WHERE micFault.micID = :micID;
-                            ORDER BY micFault.faultDate DESC" );
-    
-    $sth->bindParam(':micID', $_GET['micID'], PDO::PARAM_INT);
-    
-    $sth->execute();
-    
-    
-    
-  $count=$sth->rowCount();
-  $result=$sth->fetchAll();
-}
-catch (PDOException $e) {
-    print $e->getMessage();
-  }
+$microphone=new mic($dbh);
+
+$mic=  htmlentities($_GET['micID']);
+
+$result = $microphone->listMicFault($mic);
 
 require('header.php');
 
 ?>
-<div id="subHead"><h1>Faults For Microphone #<?php echo htmlentities($_GET['micID'])." | ".$result[0]['micMake']." ".$result[0]['micModel'];?></h1></div>
+<div id="subHead"><h1>Faults For Microphone #<?php echo $mic." - ".$result[0]['micMake']." ".$result[0]['micModel'];?></h1></div>
 <div class="backupDriveTitle"><h3>Current Faults</h3></div>
 <form id="micFault" action="updateFault.php" method="post">
     <?php

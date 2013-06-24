@@ -1,47 +1,15 @@
 <?php
-
 session_start();
-
 require('includes/pdoconnection.php');
-    $dbh = dbConn::getConnection();
-    
-     $fault =$_POST['faultID'];
-     
-     if (isset($_POST['faultID'])&& !empty($_POST['solution'])) {
-     
-     
-     try{
-    $sth=$dbh->prepare("UPDATE chanFault SET faultDesc = :fault, faultOutcome = :outcome WHERE faultID = :faultID;" );
-    
-    $sth->bindParam(':fault', $_POST['fault'], PDO::PARAM_STR);
-    $sth->bindParam(':outcome', $_POST['solution'], PDO::PARAM_STR);
-    $sth->bindParam(':faultID', $fault, PDO::PARAM_INT);
-    
-  $sth->execute();
-        
-}catch (PDOException $e){
-    print $e ->getMessage();
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
 
- }
- }else{
-    if (isset($_POST['faultID'])) {
-     
-     $fault =$_POST['faultID'];
-     try{
-    $sth=$dbh->prepare("UPDATE chanFault SET faultDesc = :fault WHERE faultID = :faultID;" );
-    
-    $sth->bindParam(':fault', $_POST['fault'], PDO::PARAM_STR);
-    $sth->bindParam(':faultID', $fault, PDO::PARAM_INT);
-    
-  $sth->execute();
-        
-}catch (PDOException $e){
-    print $e ->getMessage();
+$dbh = dbConn::getConnection();
+$channel = new channel($dbh);
 
-  
-        }
-    }
- }
- header('Location: '.$_SERVER['HTTP_REFERER'] );
+$channel->updateChanFault($_POST);
+
+header('Location: '.$_SERVER['HTTP_REFERER'] );
 ?>
 

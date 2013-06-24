@@ -2,7 +2,15 @@
 
 session_start();
 $_SESSION['org_referer'] = htmlentities($_SERVER['HTTP_REFERER']);
-require_once 'functions/function_list.php';
+require('includes/pdoconnection.php');
+
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
+
+$dbh = dbConn::getConnection();
+
+$backup= new backup($dbh);
 
 $studio=$_GET['studio'];
 
@@ -19,11 +27,11 @@ require_once('../header.php');
     
   </tr>
     <?php if($studio == 1){
-        getDelDrive(1);
+       $backup->getDelDrive(1);
     }elseif($studio == 2){
-        getDelDrive(4);
+        $backup->getDelDrive(4);
     }else{
-        getDelDrive(7);
+        $backup->getDelDrive(7);
     }
 ?>
   </table>
@@ -37,11 +45,11 @@ require_once('../header.php');
     
   </tr>
     <?php if($studio == 1){
-        getDelDrive(2);
+        $backup->getDelDrive(2);
     }elseif($studio == 2){
-        getDelDrive(5);
+        $backup->getDelDrive(5);
     }else{
-        getDelDrive(8);
+        $backup->getDelDrive(8);
     }
 ?>
 </table>
@@ -55,11 +63,11 @@ require_once('../header.php');
     
   </tr>
     <?php if($studio == 1){
-        getDelDrive(3);
+        $backup->getDelDrive(3);
     }elseif($studio == 2){
-        getDelDrive(6);
+        $backup->getDelDrive(6);
     }else{
-        getDelDrive(9);
+        $backup->getDelDrive(9);
     }
 ?>
     </table>
@@ -75,7 +83,7 @@ require_once('../header.php');
     <th scope="col">Sess Sheet</th>
     <th>&nbsp;</th>
   </tr>
-    <?php getNoRecord(); ?>
+    <?php $backup->getNoRecord(); ?>
 </table>
 </div>
 <?php  require_once('../footer.php'); ?>

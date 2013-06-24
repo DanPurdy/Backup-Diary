@@ -169,7 +169,7 @@ nav ul li.main{
 	float:left;
 	border-top:0px !important;
 	border-bottom:0px !important;
-	border:1px solid #ffffff;
+	border:0px;
 	text-align:center;
 	width:120px;
 	height:30px;
@@ -469,8 +469,7 @@ input.userInput, input.paswInput, input.emalInput{
 
 #searchCli input#clisearch, #searchCmp input#composersearch, #searchSS input#searchSSNo, #searchBakName input#baksearch{
 	float:left;
-	
-	margin:30px 10px 0 0;
+	margin:20px 10px 10px 0;
 	padding: 5px;
 }
 
@@ -489,10 +488,10 @@ input.userInput, input.paswInput, input.emalInput{
 	padding: 5px;
 }
 
-#searchCli input.submit, #searchCmp input.submit, #searchBakName input.submit{
+#searchCli input.submit, #searchCmp input.submit, #searchBakName input.submit, #searchEng input.submit, #searchAst input.submit, #searchStd input.submit{
 	position:relative;
 	width:100px;
-	bottom:-45px;
+	bottom:-10px;
 }
 
 #searchSS input.submit{
@@ -500,12 +499,6 @@ input.userInput, input.paswInput, input.emalInput{
 	top:110px;
 	width:100px;
 	right:155px;
-}
-
-#searchEng input.submit, #searchAst input.submit, #searchStd input.submit{
-	position:relative;
-	width:100px;
-	bottom:-5px;
 }
 
 #dateStart, #dateEnd{
@@ -1223,14 +1216,14 @@ tr.bakKeep {
 #resultTable th{
 	padding: 0 0.5em;
 	text-align: left;
-	border-right:1px dotted #ffffff;
-	border-bottom:1px dotted #ffffff;
+	border-right:1px solid #ffffff;
+	border-bottom:1px solid #ffffff;
 	}
 
 #resultTable td{
-	border-bottom: 1px solid #CCC;
-	border-right:1px dotted #CCC;
-	padding: 0 0.5em;
+	border-bottom:1px solid #CCC;
+	border-right:1px solid #CCC;
+	padding: 2px 8px;
 	}
 
 #resultTable td:first-child{
@@ -1245,7 +1238,7 @@ tr.bakKeep {
 }
 
 #resultTable td:nth-child(3){
-	width:250px;
+	width:320px;
 }
 
 #resultTable td:nth-child(4){
@@ -1254,20 +1247,17 @@ tr.bakKeep {
 }
 
 #resultTable td:nth-child(5){
-	width:60px;
+	width:35px;
 	text-align:center;
 }
 
 #resultTable td:nth-child(6){
-	width:60px;
+	width:35px;
 	text-align:center;
 }
-#resultTable td:nth-child(7){
-	width:50px;
-	text-align:center;
-}
+
 #resultTable td:last-child{
-	width:120px;
+	width:100px;
 	text-align:center;
 }
 
@@ -1277,12 +1267,15 @@ tr.bakKeep {
 	position:relative;
 	float:right;
 	right:150px;
+	margin-bottom:50px;
 }
 
 #engTable{
 	position:relative;
 	float:left;
 	left:150px;
+	margin-bottom:50px;
+
 }
 
 #engTable table, #astTable table{
@@ -1545,14 +1538,12 @@ input#repairMic{
 
 #micList{
 	position:relative;
-	top:40px;
+	top:15px;
+	height:70px;
+	line-height: 2em;
 	margin:auto;
-	height:100px;
-	margin-bottom:10px;
-}
-
-#micList.prev{
-	left:170px;
+	width:600px;
+	clear:both;
 }
 
 .micList-item{

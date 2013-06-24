@@ -1,24 +1,20 @@
 <?php
 
 require('includes/pdoconnection.php');
-    $dbh = dbConn::getConnection();
-    
-     if (isset($_POST['faultID'])) {
-     
-     $fault =$_POST['faultID'];
-     try{
-    $sth=$dbh->prepare("UPDATE micFault SET faultDesc = :fault, faultOutcome = :outcome WHERE faultID = :faultID;" );
-    
-    $sth->bindParam(':fault', $_POST['fault'], PDO::PARAM_STR);
-    $sth->bindParam(':outcome', $_POST['solution'], PDO::PARAM_STR);
-    $sth->bindParam(':faultID', $fault, PDO::PARAM_INT);
-    
-  $sth->execute();
-        
-}catch (PDOException $e){
-    print $e ->getMessage();
 
- }
- }
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
+
+$dbh = dbConn::getConnection();
+
+$microphone=new mic($dbh);
+    
+if (isset($_POST['faultID'])) {
+
+   $fault =$_POST['faultID'];
+
+   $microphone->updateFault($_POST['fault'], $_POST['solution'], $fault);
+}
  header('Location: '.$_SERVER['HTTP_REFERER'] );
 ?>

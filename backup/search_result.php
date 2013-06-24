@@ -2,45 +2,20 @@
 
 require_once 'includes/pdoconnection.php';
 
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
+
 $dbh = dbConn::getConnection();
 
+$session=new session($dbh);
 
-    
-    $dateOne = date('Y-m-d',  strtotime($_POST['dateStart']));
-    $dateTwo = date('Y-m-d',  strtotime($_POST['dateEnd']));
-    
-try{
-    $sth=$dbh->prepare("SELECT client.cliName, project.prjName, assistant.astName,engineer.engName, session.sesID, session.ssNo, session.sessDate, session.stdID,bakdrive.bkdName, backup.*
-                        FROM session
-                        INNER JOIN studio ON session.stdID=studio.stdID
-                        INNER JOIN engineer ON session.engID=engineer.engID
-                        INNER JOIN assistant ON session.astID=assistant.astID
-                        INNER JOIN client ON session.cliID=client.cliID
-                        INNER JOIN project ON session.prjID=project.prjID
-                        INNER JOIN composer ON session.cmpID=composer.cmpID
-                        INNER JOIN fixer ON session.fixID=fixer.fixID
-                        LEFT JOIN backup ON session.bakID=backup.bakID
-                        LEFT JOIN bakdrive ON backup.bakLoc=bakdrive.bkdID
-                        WHERE session.stdID = :stdID AND sessDate BETWEEN :date1 AND :date2
-                        ORDER BY session.sessDate DESC, backup.bakDeleted; ");
-    
-    $sth->bindParam(':stdID', $_POST['studio'], PDO::PARAM_INT);
-    $sth->bindParam(':date1', $dateOne, PDO::PARAM_INT);
-    $sth->bindParam(':date2', $dateTwo, PDO::PARAM_INT);
-  
-    
-     $sth->execute();
-     
-     
-    
-}
-  catch(PDOException $e) {
-    print $e->getMessage();
-    
-   
-  }
-  
-   require_once('header.php');
+$dateOne = date('Y-m-d',  strtotime($_POST['dateStart']));
+$dateTwo = date('Y-m-d',  strtotime($_POST['dateEnd']));
+
+$result = $session->sessSearchDate('session', 'stdID', $_POST['studio'], $dateOne, $dateTwo);
+
+require_once('header.php');
    
    ?>
 
@@ -53,13 +28,12 @@ try{
                     <th scope="col">Session Date</th>
                     <th scope="col">SS #</th>
                     <th scope="col">Session Folder Name</th>
-                    <th scope="col">Client Name</th>
-                    <th scope="col">Bak Drive   </th>
-                    <th scope="col">Is Deleted</th>
-                    <th scope="col">Continued</th>
+                    <th scope="col">Client</th>
+                    <th scope="col">Backup</th>
+                    <th scope="col">Deleted</th>
                     <th scope="col"></th>
                 </tr>
-           <?php while($row=$sth->fetch(PDO::FETCH_ASSOC)){ ?>
+           <?php foreach($result as $row){ ?>
                 <tr>
                     <td><?=$row['sessDate'];?></td>
                     <td><?=$row['ssNo'];?></td>
@@ -75,7 +49,6 @@ try{
                             <td>No</td>
                         <?php
                         } ?>
-                    <td><?=$row['bakMov'];?></td>
                     <?php if(empty($row['bakID']) || $row['bakID']==0){?>
                         <td><a href="new_backup.php?sesID=<?php echo $row['sesID'];?>">Add New Backup</a></td>
                    <?php }else{?>

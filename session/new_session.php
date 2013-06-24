@@ -2,33 +2,30 @@
 
 
 require_once 'includes/pdoconnection.php';
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
 
 $dbh = dbConn::getConnection();
 
-    $_SESSION['org_referer'] = htmlentities($_SERVER['HTTP_REFERER']);
+$session=new session($dbh);
+$backup=new backup($dbh);
 
-$today=date("Y-m-d");
-
-
-
-  try{
-     $sth = $dbh->prepare('SELECT session.*, engineer.engName,assistant.astName, client.cliName, project.prjName
-                          FROM session
-                          INNER JOIN engineer ON session.engID=engineer.engID
-                          INNER JOIN assistant ON session.astID=assistant.astID
-                          INNER JOIN client ON session.cliID=client.cliID
-                          INNER JOIN project ON session.prjID=project.prjID
-                          WHERE sessDate >= DATE_ADD(sessDate, INTERVAL - 14 DAY) AND YEAR(sessdate) = YEAR(CURRENT_DATE)
-                          ORDER BY stdID ASC,sessDate DESC;');
+if($_POST){
+    if($_POST['sessCont']!=0 OR !empty($_POST['sessCont'])){
+        $bakID = $_POST['sessCont'];
+    }else{
+        
+        $bakID = $backup->initBackup(); 
+    }
     
-    $sth->execute();
-    
-    
-}catch(PDOException $e){
-    print $e->getMessage();
+    $session->addNewSession($_POST,$bakID, $dbh);
     
 }
 
+$today=date("Y-m-d");
+
+$result=$session->getContSess();
 require_once ('header.php');
 ?>
 
@@ -37,7 +34,7 @@ require_once ('header.php');
 <div id="subHead"><h1>Add New Session</h1></div>
         
         
-        <form id="newSession" method="post" action="insert_session.php" enctype="multipart/form-data">
+        <form id="newSession" method="post" action="new_session.php" enctype="multipart/form-data">
             <div id="sessDet">
                 <div class="backupTitle"><h3>Session Details</h3></div>
             <div id="studioSelect">
@@ -70,7 +67,7 @@ require_once ('header.php');
                     <select name="sessCont" id="sessCont">
                         <option value="0">N/A</option>
                         <?php 
-                        while ($row = $sth->fetch(PDO::FETCH_ASSOC)){
+                        foreach($result as $row){
                         $initEng = explode(" ",$row['engName']); //split string into two seperate strings and seperate array values
                         $initAst = explode(" ",$row['astName']);
                         ?>

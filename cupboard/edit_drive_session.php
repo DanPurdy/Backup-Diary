@@ -1,112 +1,27 @@
 <?php
 
 require_once 'includes/pdoconnection.php';
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
 
 $dbh = dbConn::getConnection();
+
+$drive=new driveSess($dbh);
 
 $driveID= htmlentities($_GET['driveID']);
 $sesID= htmlentities($_GET['sesID']);
 
 if(isset($_POST['submit'])){
     
-    
-    $cliID =    $_POST['clientID'];
-    $cmpID =    $_POST['composerID'];
-    
-    if(empty($_POST['cliN'])){
-        
-        $cliID = 1; 
-    
-        
-    }//if no ajax result found and user entered a name then insert name into relevant table
-        
-    elseif ($cliID==0 && !empty($_POST['cliN'])) {
-        try{
-            $fh = $dbh->prepare('INSERT INTO client (cliName) VALUES (:name)');
-    
-            $fh->bindParam(':name', $_POST['cliN'], PDO::PARAM_STR);
-            $fh->execute();
-            //Find the unique ID given to the record once inserted and set $..ID variable to insert into session
-            $cliID = $dbh->lastInsertID('cliID');
-        
-         }
-    catch (PDOException $e) {
-        print $e->getMessage();
-    }
-    
-    }
-    else{
-    //Do nothing if a search result has been selected
-    }//end if
-    
-    if(empty($_POST['compN'])){
-        
-        $cmpID = 1; 
-    
-    }
-    elseif ($cmpID==0 && !empty($_POST['compN'])) {
-        
-        try{
-            $fh = $dbh->prepare('INSERT INTO composer (cmpName) VALUES (:name)');
-    
-            $fh->bindParam(':name', $_POST['compN'], PDO::PARAM_STR);
-            $fh->execute();
-            $cmpID = $dbh->lastInsertID('cmpID');
-        
-         }
-    catch (PDOException $e) {
-        print $e->getMessage();
-    }
-    
-}else{
-    //Do nothing
-}
 
-$date=date("Y-m-d", strtotime($_POST['bakDate']));
-try{
-    $st1=$dbh->prepare('UPDATE legacySess 
-        SET legacyName=:name, bakDate=:date, cliID=:clientID, cmpID=:composerID
-        WHERE legacyID=:legacyID;');
-    
-    $st1->bindParam(':name', $_POST['driveNameInput'],PDO::PARAM_STR);
-    $st1->bindParam(':date',$date);
-    $st1->bindParam(':clientID', $cliID, PDO::PARAM_INT);
-    $st1->bindParam(':composerID', $cmpID, PDO::PARAM_INT);
-    $st1->bindParam(':legacyID', $_POST['sessID'], PDO::PARAM_INT);
-    
-    $st1->execute();
-}
-    catch (PDOException $e) {
-        print $e->getMessage();
-    }
+    $drive->updateLegacySess($_POST, $dbh);
+
     
     header('Location: /cupboard/view_drive.php?driveID='.$_POST['driveID']);
 }
 
-
-
-try{
-    
-    $res=$dbh->prepare('SELECT * FROM legacySess
-                        LEFT JOIN client ON (legacySess.cliID=client.cliID)
-                        LEFT JOIN composer ON (legacySess.cmpID=composer.cmpID)
-                        INNER JOIN legacyDriveSess ON (legacySess.legacyID=legacyDriveSess.legacyID) 
-                        WHERE legacySess.legacyID=:sessID');
-    
-    $res->bindParam(':sessID',$sesID,PDO::PARAM_INT);
-    
-    $res->execute();
-    
-    $result=$res->fetch(PDO::FETCH_BOTH);
-}
-catch (PDOException $e) {
-        print $e->getMessage();
-    }
-    
-
-catch (PDOException $e) {
-    print $e->getMessage();
-   }  
+$result=$drive->getLegacySess($sesID);
 
 $date = strtotime($result['bakDate']);
 

@@ -1,24 +1,15 @@
 <?php
 require('includes/pdoconnection.php');
-    $dbh = dbConn::getConnection();
 
-try{
-    $sth = $dbh->prepare("SELECT microphones.*, users.username 
-                            FROM microphones
-                            INNER JOIN users ON microphones.usrID = users.usrID
-                            WHERE micRepair > 0
-                            GROUP BY microphones.micID
-                            ORDER BY microphones.micID ASC;" );
-    
-    $sth->execute();
-    
-    
-    
-  $count=$sth->rowCount();     
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
 }
-catch (PDOException $e) {
-    print $e->getMessage();
-  }
+
+$dbh = dbConn::getConnection();
+
+$microphone=new mic($dbh);
+
+$result = $microphone->listMicRepair();
 
 require('header.php');
 ?>
@@ -41,7 +32,7 @@ require('header.php');
                     <?php if($_SESSION['user']['usrGroup'] == 'admin'){ ?><th scope="col">Mic Faults</th>
                     <th scope="col">Return to Cupboard</th><?php } ?>
                 </tr>
-           <?php while($row=$sth->fetch(PDO::FETCH_ASSOC)){ ?>
+           <?php foreach($result as $row){ ?>
                 <tr>
                     <td><?=$row['micID'];?></td>
                     <td><?=$row['micMake'];?></td>

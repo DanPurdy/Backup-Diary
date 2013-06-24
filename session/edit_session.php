@@ -3,97 +3,41 @@
 session_start();
 
 $referer = $_SERVER['HTTP_REFERER'];
-if($referer != '/search/search_std.php'){
+if($referer != '/search/search_std.php'){                               //if linked from search session page then forward to session index
     $_SESSION['org_referer'] = htmlentities($_SERVER['HTTP_REFERER']);
 
 }else{
     $_SESSION['org_referer'] = '/session/';
 }
-require_once 'includes/pdoconnection.php';
+require_once 'includes/pdoconnection.php';                              //autoload classes
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
 
-$dbh = dbConn::getConnection();
+$dbh = dbConn::getConnection();                                         //create a connection instance
 
-$OK = false;
-$done = false;
+$session=new session($dbh);                                             //new session object pass the connection object to it
 
+if (isset($_GET['sesID']) && !$_POST) {                                 //if referrer isn't POST then get all the session details from the session ID in the URL
 
-
-if (isset($_GET['sesID']) && !$_POST) {
-try {
-$sth=$dbh->prepare("SELECT session.*, studio.stdName, engineer.engName, assistant.astName, client.cliName, composer.cmpName, fixer.fixName, project.prjName
-                            FROM session
-                            INNER JOIN studio ON session.stdID=studio.stdID
-                            INNER JOIN engineer ON session.engID=engineer.engID
-                            INNER JOIN assistant ON session.astID=assistant.astID
-                            INNER JOIN client ON session.cliID=client.cliID
-                            INNER JOIN project ON session.prjID=project.prjID
-                            INNER JOIN composer ON session.cmpID=composer.cmpID
-                            INNER JOIN fixer ON session.fixID=fixer.fixID
-                            WHERE session.sesID = :sessID;" );
+    $row=$session->getSessByID($_GET['sesID']);                         //get session details from session ID
     
-    $sth->bindParam(':sessID', $_GET['sesID']);
-
-  $sth->execute();
+    $studioSel = $row['stdID'];                                         //store which studio the session is in
+    $sessDate = $row['sessDate'];                                       //store the session date
   
-  $row = $sth->fetch(PDO::FETCH_ASSOC);
-  $studioSel = $row['stdID'];
+    $bakID = $row['bakID'];                                             //store the backup ID from this session
+}   
+                                                                        //find all the session details with the same backup ID (which means linked sessions as they are linked by backup ID)
+$result=$session->getLinkedSess($bakID);
+    
+$count=$session->count;                                                 //get a count to see how many sessions are linked to this sessions backup ID
+
+$initEng = explode(" ",$result['engName']);                             //split string into two seperate strings and seperate array values i.e Jeremy Murphy becomes [1,['Jeremy']][2,['Murphy']]
+$initAst = explode(" ",$result['astName']);
   
-  $bakID = $row['bakID'];
-}
-catch (PDOException $e) {
-    print $e->getMessage();
-}
-}
+$continue = $session->getContSessByStudio($studioSel, $sessDate);       //returns a list of all sessions in the same studio in the past 3 months (for the purpose of linking the session to a previous one)
 
-try {
-    $st1=$dbh->prepare("SELECT session.*, studio.stdName, engineer.engName, assistant.astName, client.cliName, composer.cmpName, fixer.fixName, project.prjName
-                            FROM session
-                            INNER JOIN studio ON session.stdID=studio.stdID
-                            INNER JOIN engineer ON session.engID=engineer.engID
-                            INNER JOIN assistant ON session.astID=assistant.astID
-                            INNER JOIN client ON session.cliID=client.cliID
-                            INNER JOIN project ON session.prjID=project.prjID
-                            INNER JOIN composer ON session.cmpID=composer.cmpID
-                            INNER JOIN fixer ON session.fixID=fixer.fixID
-                            WHERE session.bakID = :bakID
-                            ORDER BY sessDate ASC;" );
-    
-    $st1->bindParam(':bakID', $bakID, PDO::PARAM_INT);
-
-  $st1->execute();
-    $count=$st1->rowCount();
-    $result=$st1->fetch(PDO::FETCH_ASSOC);
-  
-  
-
-
-}
-catch (PDOException $e) {
-    print $e->getMessage();
-}
-
-  try{
-     $st2 = $dbh->prepare('SELECT session.*, engineer.engName,assistant.astName, client.cliName, project.prjName
-                          FROM session
-                          INNER JOIN engineer ON session.engID=engineer.engID
-                          INNER JOIN assistant ON session.astID=assistant.astID
-                          INNER JOIN client ON session.cliID=client.cliID
-                          INNER JOIN project ON session.prjID=project.prjID
-                          WHERE sessDate >= DATE_ADD(sessDate, INTERVAL - 14 DAY) AND YEAR(sessdate) = YEAR(CURRENT_DATE) AND stdID=:stdID
-                          ORDER BY stdID ASC,sessDate ASC;');
-     
-     
-     $st2->bindParam(':stdID',  $studioSel, PDO::PARAM_INT);
-    
-    $st2->execute();
-    
-    
-}catch(PDOException $e){
-    print $e->getMessage();
-    
-}
-
-$today=date("Y-m-d");
+$today=date("Y-m-d");                                                   //format todays date
 
 require_once 'header.php'
 ?>
@@ -117,7 +61,7 @@ require_once 'header.php'
             <div id="sessDet">
                 <div class="backupTitle"><h3>Session Details</h3></div>
             <div id="studioSelect">
-               <?php switch($row['stdID']) 
+               <?php switch($row['stdID'])                                                                  //switch to display the correct studio from the results 
 { 
                 case "1": $checkone = "checked"; break; 
                 case "2": $checktwo = "checked"; break; 
@@ -136,12 +80,12 @@ require_once 'header.php'
                 
             <div id="timeSelect">
                 <h3>Session Times</h3>
-                <label for="starttime">Start Time: </label><input id="starttime" name="starttime" type="time" value="<?php echo substr($row['startTime'],0,5); ?>"/> -
+                <label for="starttime">Start Time: </label><input id="starttime" name="starttime" type="time" value="<?php echo substr($row['startTime'],0,5); ?>"/> -  <!-- strip the start and end times down to just hours and minutes -->
                 <input id="endtime" name="endtime" type="time" value="<?php echo substr($row['endTime'],0,5); ?>"/><label for="endtime"> End Time</label>
             </div>
                 <div id="ssSelect">
                 <h3>Session Sheet Number</h3>
-                <input type ="number" name="sessionNumber" min="7000" max="100000" value="<?php if($row['ssNo'] >=7000){echo $row['ssNo'];}else{};  ?>" />
+                <input type ="number" name="sessionNumber" min="7000" max="100000" value="<?php if($row['ssNo'] >=7000){echo $row['ssNo'];};  ?>" />
                 
             </div>
                 <div id="continueSelect">
@@ -149,33 +93,35 @@ require_once 'header.php'
                     <input id="backupID" name="backupID" value="<?php echo $row['bakID'];?>" class="hidden" />
                     <select name="sessCont" id="sessCont">
                         <?php 
-                        $initEng = explode(" ",$result['engName']); //split string into two seperate strings and seperate array values
-                        $initAst = explode(" ",$result['astName']);
                         
-                        if($count ==1 && $result['sesID'] == $row['sesID']){ 
-                            echo '<option value="'.$result['bakID'].'" selected>N/A</option>'; 
+
+                        
+                        if($count ==1 && $result['sesID'] == $row['sesID']){                    // if theres only one session with the backup ID and that sessions ID == the session id of the record you are looking at then...
+                            echo '<option value="'.$result['bakID'].'" selected>N/A</option>';  // there is no session linking going on so N/A value is selected and the records backup is assigned to the N/A option for logic purposes on updating the session
                             
-                            }else{ 
-                                if($result['sesID']!=$row['sesID']) {
-                                    echo '<option value ="0">N/A</option><option value="'.$result['bakID'].'" selected >'.$result['stdID'].' | '.date('d-m-Y', strtotime($result['sessDate']))." | ".substr($initEng[0],0,1).substr($initEng[1],0,1).substr($initAst[0],0,1).substr($initAst[1],0,1)." | ".$result['cliName'].' | '.$result['prjName'].'</option>'; 
+                        }else{ 
+                            if($result['sesID']!=$row['sesID']) {                               // if the session ID's dont match and the count is greater than 1 then a session is linked so output the first session and select it in the list
+                                echo '<option value ="0">N/A</option>
+                                      <option value="'.$result['bakID'].'" selected >'.$result['stdID'].' | '.date('d-m-Y', strtotime($result['sessDate']))." | ".substr($initEng[0],0,1).substr($initEng[1],0,1).substr($initAst[0],0,1).substr($initAst[1],0,1)." | ".$result['cliName'].' | '.$result['prjName'].'</option>'; 
                                     
-                                    }else{ 
-                                        echo '<option value="'.$result['bakID'].'" selected>Parent</option>'; 
+                            }else{ 
+                                echo '<option value="'.$result['bakID'].'" selected>Parent</option>'; //if the session is the parent session (first of the linked sessions to happen in time) then set it as the parent. jQuery will hide this select box from the edit page until all sessions have been unlinked. Preserves integrity.
                                         
-                                        }
-                                  }
+                            }
+                        }
+
                         
                         
                         
-                        while ($row2 = $st2->fetch(PDO::FETCH_ASSOC)){
+                        foreach($continue as $row2){
                             
                         $initEng = explode(" ",$row2['engName']); //split string into two seperate strings and seperate array values
                         $initAst = explode(" ",$row2['astName']);
                         
                         
-                        if($result['bakID']==$row2['bakID']){ ?>
+                        if($result['bakID']==$row2['bakID']){ ?> <!-- hides this currently open record from the linking results -->
                         
-                        <?php }else{
+                        <?php }else{ // list all other records. substr used to get First letter of each name from Engineer and assistants i.e. Jeremy Murphy becomes JM
                         ?>
                         <option value="<?= $row2['bakID']?>"><?=$row2['stdID']." | ".date('d-m-Y', strtotime($row2['sessDate']))." | ".substr($initEng[0],0,1).substr($initEng[1],0,1).substr($initAst[0],0,1).substr($initAst[1],0,1)." | ".$row2['cliName']." | ".$row2['prjName']?></option>
                         

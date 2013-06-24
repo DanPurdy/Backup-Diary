@@ -1,31 +1,16 @@
 <?php
 require('includes/pdoconnection.php');
-    $dbh = dbConn::getConnection();
 
-try{
-    $sth = $dbh->prepare("SELECT channels.*
-                            FROM channels
-                            WHERE stdID = :stdID AND ((channels.channelID)%100) !=0
-                            ORDER BY channels.currentPos ASC;" );
-    
-    $sth->bindParam(':stdID', $_GET['studio']);
-    
-    $sth->execute();
-    
-    $st1 = $dbh->prepare("SELECT channels.*, chanFault.*
-                            FROM channels
-                            INNER JOIN chanFault ON channels.channelID=chanFault.channelID
-                            WHERE stdID = :stdID AND ((channels.channelID)%100) !=0 AND ISNULL(chanFault.faultOutcome)
-                            ORDER BY channels.currentPos ASC;" );
-    
-    $st1->bindParam(':stdID', $_GET['studio']);
-    
-    $st1->execute();
-        
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
 }
-catch (PDOException $e) {
-    print $e->getMessage();
-  }
+
+$dbh = dbConn::getConnection();
+$channel = new channel($dbh);
+
+$chanList = $channel->listChannels($_GET['studio']);
+
+$faultList = $channel->listActiveChanFaults($_GET['studio']);
 
 require('header.php');
 ?>
@@ -39,7 +24,7 @@ require('header.php');
                     <th scope="col">Current Position</th>
                     <th scope="col">Channel ID</th>
                 </tr>
-           <?php while($row=$sth->fetch(PDO::FETCH_ASSOC)){ ?>
+           <?php foreach($chanList as $row){ ?>
                 
                 
                 <tr>
@@ -118,7 +103,7 @@ require('header.php');
                     <th scope="col">Fault</th>
                     <?php if($_SESSION['user']['usrGroup'] == 'admin'){?><th scope="col">View Faults</th> <? } ?>
                 </tr>
-           <?php while($row=$st1->fetch(PDO::FETCH_ASSOC)){ ?>
+           <?php foreach($faultList as $row){ ?>
                 
                 
                 <tr>

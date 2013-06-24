@@ -1,12 +1,12 @@
 <?php
-     session_start();
-         // This tells the web browser that your content is encoded using UTF-8 
-    // and that it should submit content back to you using UTF-8 
+    if(!isset($_SESSION)){session_start();
+         
     header('Content-Type: text/html; charset=utf-8');
-    // check to see whether the user is logged in or not 
+    // check to see whether the user is logged in or not
+    }
     if(empty($_SESSION['user'])) 
     { 
-        // If they are not, we redirect them to the login page. 
+        // If they are not,redirect them to the login page. 
         header("Location: /login.php"); 
          
         die("Redirecting to /login.php"); 
