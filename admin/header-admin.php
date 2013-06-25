@@ -1,8 +1,9 @@
 <?php
-     session_start();
-         // This tells the web browser that your content is encoded using UTF-8 
-    // and that it should submit content back to you using UTF-8 
+    if(!isset($_SESSION)){session_start();
+         
     header('Content-Type: text/html; charset=utf-8');
+    // check to see whether the user is logged in or not
+    }
     // check to see whether the user is logged in or not 
     if(empty($_SESSION['user'])) 
     { 
@@ -97,6 +98,19 @@
                                     
                                 
                                 </ul>
+                            </li>
+                            <li class="main">
+                                <?php if ($_SESSION['user']['usrGroup']=='admin'){?><a href="/admin/"><h3>Admin</h3></a>
+                                <ul>
+                                   
+                                    
+                                    <li><a href="/admin/memberlist.php">Manage Users</a></li>
+                                    <li><a href="/admin/register.php">Register User</a></li>
+                                    
+                                    <?php } ?>
+                                
+                                </ul>
+                            
                             </li>
                         </ul>
                    </div>  

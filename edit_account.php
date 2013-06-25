@@ -1,9 +1,17 @@
 <?php 
-    require('includes/pdoconnection.php');
-    $dbh = dbConn::getConnection();
+ session_start();
+require('includes/pdoconnection.php');
+
+$dbh = dbConn::getConnection();
+
+
+
+function __autoload($class_name) {
+    include 'models/class_'.$class_name . '.php';
+}
     
-    session_start();
-     
+$users=new user($dbh);
+
     // At the top of the page we check to see whether the user is logged in or not 
     if(empty($_SESSION['user'])) 
     { 
@@ -30,115 +38,23 @@
         // If the user is not changing their E-Mail address this check is not needed. 
         if($_POST['email'] != $_SESSION['user']['email']) 
         { 
-            // Define our SQL query 
-            $query = " 
-                SELECT 
-                    1 
-                FROM users 
-                WHERE 
-                    email = :email 
-            "; 
-             
-            // Define our query parameter values 
-            $query_params = array( 
-                ':email' => $_POST['email'] 
-            ); 
-             
-            try 
-            { 
-                // Execute the query 
-                $stmt = $dbh->prepare($query); 
-                $result = $stmt->execute($query_params); 
-            } 
-            catch(PDOException $ex) 
-            { 
-                // Note: On a production website, you should not output $ex->getMessage(). 
-                // It may provide an attacker with helpful information about your code.  
-                die("Failed to run query: " . $ex->getMessage()); 
-            } 
-             
-            // Retrieve results (if any) 
-            $row = $stmt->fetch(); 
-            if($row) 
-            { 
-                die("This E-Mail address is already in use"); 
-            } 
+           $ok=$users->updateEmail($_POST['email'], $_SESSION['user']['usrID']);
+           if($ok)
+           {
+                $_SESSION['user']['email'] = $_POST['email'];
+           }
         } 
          
         // If the user entered a new password, we need to hash it and generate a fresh salt 
         // for good measure. 
         if(!empty($_POST['password'])) 
         { 
-            $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647)); 
-            $password = hash('sha256', $_POST['password'] . $salt); 
-            for($round = 0; $round < 65536; $round++) 
-            { 
-                $password = hash('sha256', $password . $salt); 
-            } 
-        } 
-        else 
-        { 
-            // If the user did not enter a new password we will not update their old one. 
-            $password = null; 
-            $salt = null; 
-        } 
-         
-        // Initial query parameter values 
-        $query_params = array( 
-            ':email' => $_POST['email'], 
-            ':user_id' => $_SESSION['user']['usrID'], 
-        ); 
-         
-        // If the user is changing their password, then we need parameter values 
-        // for the new password hash and salt too. 
-        if($password !== null) 
-        { 
-            $query_params[':password'] = $password; 
-            $query_params[':salt'] = $salt; 
-        } 
-         
-        // Note how this is only first half of the necessary update query.  We will dynamically 
-        // construct the rest of it depending on whether or not the user is changing 
-        // their password. 
-        $query = " 
-            UPDATE users 
-            SET 
-                email = :email 
-        "; 
-         
-        // If the user is changing their password, then we extend the SQL query 
-        // to include the password and salt columns and parameter tokens too. 
-        if($password !== null) 
-        { 
-            $query .= " 
-                , password = :password 
-                , salt = :salt 
-            "; 
-        } 
-         
-        // Finally we finish the update query by specifying that we only wish 
-        // to update the one record with for the current user. 
-        $query .= " 
-            WHERE 
-                usrID = :user_id 
-        "; 
-         
-        try 
-        { 
-            // Execute the query 
-            $stmt = $dbh->prepare($query); 
-            $result = $stmt->execute($query_params); 
-        } 
-        catch(PDOException $ex) 
-        { 
-            // Note: On a production website, you should not output $ex->getMessage(). 
-            // It may provide an attacker with helpful information about your code.  
-            die("Failed to run query: " . $ex->getMessage()); 
+            $users->updatePassword($_POST['password'], $_SESSION['user']['usrID']);
         } 
          
         // Now that the user's E-Mail address has changed, the data stored in the $_SESSION 
         // array is stale; we need to update it so that it is accurate. 
-        $_SESSION['user']['email'] = $_POST['email']; 
+         
          
         // This redirects the user back to the members-only page after they register 
         header("Location: /index.php"); 
@@ -151,7 +67,8 @@
      require("header.php"); 
 ?> 
 <div id="subHead"><h1>Edit Account</h1></div>
-<form action="edit_account.php" id="editaccount" method="post"> 
+<form action="edit_account.php" id="editaccount" method="post">
+    <div id="editUser">
     <div class="backupDriveTitle"><h3>Username:</h3></div>
     <h3><?php echo htmlentities($_SESSION['user']['username'], ENT_QUOTES, 'UTF-8'); ?></h3> 
     <br /><br /> 
@@ -163,6 +80,7 @@
     <i>(leave blank if you're not changing your password)</i> 
     <br /><br /> 
     <input type="submit" class="submit" value="Update Account" /> 
+    </div>
 </form>
 
 <?php require('footer.php'); ?>

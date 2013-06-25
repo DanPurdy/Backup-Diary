@@ -93,6 +93,23 @@
                                 
                                 </ul>
                             </li>
+                            
+                                <?php if ($_SESSION['user']['usrGroup']=='admin'){?>
+                                <li class="main">
+                                    <a href="/admin/"><h3>Admin</h3></a>
+                                <ul>
+                                   
+                                    
+                                    <li><a href="/admin/memberlist.php">Manage Users</a></li>
+                                    <li><a href="/admin/register.php">Register User</a></li>
+                                    
+                                    
+                                
+                                </ul>
+                            </li>
+                            
+                            <?php } ?>
+                                
                         </ul>
                    </div>  
             

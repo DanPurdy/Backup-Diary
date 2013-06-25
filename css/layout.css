@@ -80,7 +80,7 @@ textarea{resize: none}
 }
 
 #mainHead{
-	text-align: left;
+	text-align: center;
 	width:250px;
 	height:35px;
 	margin:auto;
@@ -159,19 +159,21 @@ textarea{resize: none}
 nav{
 	position:relative;
 	margin:auto;
-	width:550px;
+	width:650px;
 	height:40px;
 	padding:10px;
 	top:65px;
+	white-space: nowrap;
 }
 
+nav ul{width:100%;}
+
 nav ul li.main{
-	float:left;
+	display:inline-block;
 	border-top:0px !important;
 	border-bottom:0px !important;
 	border:0px;
-	text-align:center;
-	width:120px;
+	margin-left:25px;
 	height:30px;
 }
 
@@ -180,7 +182,7 @@ li.main ul{
 	opacity:0;
 	position:absolute;
 	margin-top:3px;
-	margin-left:-1px;
+	margin-left:-30px;
 	border-top:0 !important;
 	border:1px solid #ffffff;
 	border-style:solid;
@@ -207,8 +209,6 @@ li.main ul li a{
 	display:block;
 }
 
-
-
 #accCont{
 	float:right;
 	right:150px;
@@ -228,31 +228,98 @@ li.main ul li a{
 
 /* ---------------- Login.php / register.php -------------------------- */
 
-#login, #register, #editaccount{
+#login, #editUser{
 	width:200px;
 	margin:auto;
 	margin-bottom:100px;
 	border:1px solid #ffffff;
 	padding:30px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 }
-#login{
+
+.usrGroups, #manageUser{
+	float:left;
+	border:1px solid #ffffff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+#manageUser{	
+	width:200px;
+	height:465px;
+	padding:30px;
+	margin-left: 200px;
+	margin-bottom:100px;
+}
+.usrGroups{
+	width:250px;
+	padding:10px 30px 10px 30px;
+	margin-bottom:20px;
+	margin-left:20px;
+}
+
+  input.roleSelect {
+	padding:3px;
+	margin:4px 4px 4px 5px;
+}
+
+#login, #editUser{
 	margin-top:90px;
 	margin-bottom:40px;
-}
-#register, #editaccount{
-	margin-top:90px;
 }
 input.userInput, input.paswInput, input.emalInput{
 	width:180px;
 	margin:5px;
 	padding:5px;
 }
-#login input.submit, #register input.submit, #editaccount input.submit{
+#login input.submit{
 	position:relative;
 	width:100px;
 	left:50px;
 	margin-top:10px;
 }
+
+#editaccount input[type=submit], #register input[type=submit]{
+	position:relative;
+	width:150px;
+	margin-left:25px;
+	top:20px;
+	padding:4px;
+	display: block;
+	border-color: #ffffff;
+	outline-color: #ffffff;
+	background-color:#ffffff;
+	border-radius:5px;
+}
+
+#memberList table{
+	position:relative;
+	margin:auto;
+	width:550px;
+	font-size: 14px;
+	text-align:left;
+	clear:both;
+	margin-bottom:80px;
+}
+
+#memberList th{
+ 	
+ 	border-bottom: 1px dotted #ffffff;
+ 	border-right:1px dotted #ffffff;
+ 	padding-left:3px;
+ 	font-weight: bold;
+	text-transform: capitalize;
+	font-variant: small-caps;
+}
+#memberList td{
+	padding:5px;
+	text-align: center;
+	border-bottom:1px dotted #ffffff;
+	border-right:1px dotted #ffffff;
+}
+
 
  
 /* ---------------- Main Menu/Index -------------------- */
