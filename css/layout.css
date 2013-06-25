@@ -291,6 +291,8 @@ input.userInput, input.paswInput, input.emalInput{
 	border-color: #ffffff;
 	outline-color: #ffffff;
 	background-color:#ffffff;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
 	border-radius:5px;
 }
 
