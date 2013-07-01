@@ -385,6 +385,10 @@ input.userInput, input.paswInput, input.emalInput{
 	font-size: 16px;
 }
 
+#sessCont{
+	min-width: 400px;
+}
+
 #staffSel{
 	position:relative;
 	top:150px;

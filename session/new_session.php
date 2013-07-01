@@ -39,7 +39,7 @@ require_once ('header.php');
                 <div class="backupTitle"><h3>Session Details</h3></div>
             <div id="studioSelect">
                 <div class="sessionTitle"><h3>Select Studio</h3></div>
-                <input type="radio" value="1" name="studio" class="radio" checked/>Studio One<br />
+                <input type="radio" value="1" name="studio" class="radio"/>Studio One<br />
                 <input type="radio" value="2" name="studio" class="radio"/>Studio Two<br />
                 <input type="radio" value="3" name="studio" class="radio"/>Studio Three<br />
             </div>
@@ -66,18 +66,7 @@ require_once ('header.php');
                     <h3>Session Continuation</h3>
                     <select name="sessCont" id="sessCont">
                         <option value="0">N/A</option>
-                        <?php 
-                        foreach($result as $row){
-                        $initEng = explode(" ",$row['engName']); //split string into two seperate strings and seperate array values
-                        $initAst = explode(" ",$row['astName']);
-                        ?>
-                        <option value="<?= $row['bakID']?>"><?= $row['stdID']." | ".date('d-m-Y', strtotime($row['sessDate']))." | ".substr($initEng[0],0,1).substr($initEng[1],0,1).substr($initAst[0],0,1).substr($initAst[1],0,1)." | ".$row['cliName']." | ".$row['prjName']?></option>
                         
-                            
-                            <?php   }
-                        
-                        
-                        ?>
                         
                     </select>
                 </div>

@@ -390,6 +390,54 @@ class session{
         return $result;
     }
     
+    
+    public function getContSessAjax($studio){
+        try{
+            $sth = $this->mydb->prepare('SELECT session.*, engineer.engName,assistant.astName, client.cliName, project.prjName
+                                        FROM session
+                                        INNER JOIN engineer ON session.engID=engineer.engID
+                                        INNER JOIN assistant ON session.astID=assistant.astID
+                                        INNER JOIN client ON session.cliID=client.cliID
+                                        INNER JOIN project ON session.prjID=project.prjID
+                                        WHERE sessDate >= DATE_ADD(CURRENT_DATE, INTERVAL - 3 MONTH) AND YEAR(sessdate) = YEAR(CURRENT_DATE) AND stdID=:stdID
+                                        GROUP BY session.bakID
+                                        ORDER BY stdID ASC,sessDate DESC;');
+     
+     
+            $sth->bindParam(':stdID',  $studio, PDO::PARAM_INT);
+    
+            $sth->execute();
+            
+            $data = array();
+            
+            while ($row = $sth->fetch(PDO::FETCH_OBJ))
+            {
+                
+                $initEng = explode(" ",$row->engName); //split string into two seperate strings and seperate array values
+                $initAst = explode(" ",$row->astName);
+                
+                $data[] = array(
+                    "bakID" => $row->bakID ,
+                    "stdID" => $row->stdID,
+                    "client" => $row->cliName,
+                    "project" => $row->prjName,
+                    "date" => date('d-m-Y', strtotime($row->sessDate)),
+                    "staff" => substr($initEng[0],0,1).substr($initEng[1],0,1).substr($initAst[0],0,1).substr($initAst[1],0,1),
+                    "studio" => $row->stdID
+                    
+                );
+            }
+            $result=json_encode($data);
+            flush();
+    
+        }catch(PDOException $e){
+            print $e->getMessage();
+    
+        }
+        return $result;
+        
+    }
+    
     public function getScreen($studio){
         $i=0;
 
