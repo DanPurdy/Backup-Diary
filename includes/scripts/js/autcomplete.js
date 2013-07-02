@@ -10,27 +10,27 @@ $(document).ready(function () {
 
     function engineer(message) {
         $("#engineerID").val(message);
-    };
+    }
 
     function assistant(message) {
         $("#assistantID").val(message);
-    };
+    }
 
     function client(message) {
         $("#clientID").val(message);
-    };
+    }
 
     function composer(message) {
         $("#composerID").val(message);
-    };
+    }
 
     function project(message) {
         $("#projectID").val(message);
-    };
+    }
 
     function fixer(message) {
         $("#fixerID").val(message);
-    };
+    }
 
 
     // Autcomplete functions for each search box
