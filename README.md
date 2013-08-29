@@ -1,4 +1,4 @@
-#Backup-Diary
+#Studio Backup System
 ============
 
 Started as an exercise to Learn PHP and evolved into a full featured backup and management system currently in use in a Recording Studio.
