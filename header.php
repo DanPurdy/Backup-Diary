@@ -23,15 +23,17 @@
         <LINK REL=StyleSheet HREF="/css/layout.css" TYPE="text/css" media="all">
         <LINK REL=StyleSheet HREF="/css/print.css" TYPE="text/css" media="print">
         <script type="text/javascript" src="/includes/jquery/js/jquery-1.8.3.min.js"></script>
-	<script type="text/javascript" src="/includes/jquery/js/jquery-ui-1.9.2.custom.min.js"></script>
-	<script type="text/javascript" src="/includes/scripts/js/autcomplete.js"></script>
-	<link rel="stylesheet" href="/includes/jquery/css/smoothness/jquery-ui-1.9.2.custom.min.css" TYPE="text/css"/>
-	<style type="text/css"><!--
+        <script type="text/javascript" src="/includes/jquery/js/jquery-ui-1.9.2.custom.min.js"></script>
+        <script type="text/javascript" src="/includes/scripts/js/autcomplete.js"></script>
+        <script src="/includes/scripts/js/scripts.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="/includes/jquery/css/smoothness/jquery-ui-1.9.2.custom.min.css" TYPE="text/css"/>
+        <style type="text/css"><!--
 	
 	        /* style the auto-complete response */
 	        li.ui-menu-item { font-size:12px !important; }
 	
-	--></style>
+        --></style>
+    
         <title>Angel Recording Studios</title>
         
     </head>
