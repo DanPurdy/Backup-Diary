@@ -1,140 +1,134 @@
+html{
+  max-height: 768px;
+}
 body {													/*Background Image + Position*/
-	background-image: url(Reception%20Screen%20New.jpg);
-	background-repeat: no-repeat;
-	background-position: top center;
+  background-image: url(Background.jpg);
+  color: #ffffff;
+  font-family: Helvetica;
+  text-align: left;
+  text-shadow: black 0.12em 0.12em 0.12em;
 }
-DIV.s1time												/*CSS setup of each box on the page*/
-{
-  FONT-WEIGHT: bolder;
-  FONT-SIZE: 30px;
-  position:absolute;
-  Left: 370px;
-  Top: 165px;
-  COLOR: #ffffff;
-  FONT-FAMILY: Helvetica;
-  TEXT-ALIGN: left;
-  text-shadow: black 0.12em 0.12em 0.12em;
-  }
- 
-DIV.s1client
-{
-  FONT-WEIGHT: bolder;
-  FONT-SIZE: 30px;
-  position:absolute;
-  Left: 370px;
-  Top: 219px;
-  COLOR: #ffffff;
-  FONT-FAMILY: Helvetica;
-  TEXT-ALIGN: left;
-  text-shadow: black 0.12em 0.12em 0.12em;
-  }
-  
-DIV.s1project
-{
-  FONT-WEIGHT: bolder;
-  FONT-SIZE: 30px;
-  position:absolute;
-  Left: 370px;
-  Top: 272px;
-  COLOR: #ffffff;
-  FONT-FAMILY: Helvetica;
-  TEXT-ALIGN: left;
-  text-shadow: black 0.12em 0.12em 0.12em;
-  }
 
-DIV.s2time
-{
-  FONT-WEIGHT: bolder;
-  FONT-SIZE: 30px;
+h2{
+  font-size: 4em;
+  -webkit-margin-before: 20px;
+  -webkit-margin-after: 0;
+  font-weight: bolder;
+  width: 95%;
+
+}
+
+h3{
+  font-size: 1.2em;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+}
+
+.wrapper{
+  width: 100%;
+  font-size: 30px;
+}
+
+.title-area{
   position:absolute;
-  Left: 370px;
-  Top: 368px;
-  COLOR: #ffffff;
-  FONT-FAMILY: Helvetica;
-  TEXT-ALIGN: left;
-  text-shadow: black 0.12em 0.12em 0.12em;
-  }
- 
-DIV.s2client
-{
-  FONT-WEIGHT: bolder;
-  FONT-SIZE: 30px;
+  width:28%;
+  top:75px;
+  right:50px;
+}
+
+.title-area h2:last-child{
+  float:left;
+  font-size: 1.5em;
+  -webkit-margin-before: 0;
+  padding-left:10px;
+}
+
+img{
   position:absolute;
-  Left: 370px;
-  Top: 421px;
-  COLOR: #ffffff;
-  FONT-FAMILY: Helvetica;
-  TEXT-ALIGN: left;
-  text-shadow: black 0.12em 0.12em 0.12em;
-  }
+  top:35px;
+  right:25px;
+}
+.sess-details{
+  position: relative;
+  width:60%;
+  left:20px;
+  margin: 70px 0;
+  min-height: 175px;
+  border-bottom: 1px solid #fff; 
+}
+
+.studio-title-1, .studio-title-2, .studio-title-3{
+  float:left;
+  font-weight: bolder;
+  text-align: center;
+  font-weight: lighter;
+  line-height: 2em;
+  height: 175px;
+  width: 18%;
+  border-right:1px solid #fff;
+}
+
+
+.s1time, .s2time, .s3time{
+  float: left;
+  font-weight: lighter;
+  width: 79%;
+  border-bottom: 1px solid #fff;
+  font-size: 1.5em;
+  padding-left:15px; 
   
-DIV.s2project
+}
+.s1client, .s1project, .s2client, .s2project, .s3client, .s3project{
+  float: left;
+  font-size: 1em;
+  text-align: left;
+  width:78%;
+  padding: 15px 0 10px 20px;
+  font-weight: bolder;
+}
+
+.DateTime
 {
-  FONT-WEIGHT: bolder;
-  FONT-SIZE: 30px;
+  font-size: 1.3em;
   position:absolute;
-  Left: 370px;
-  Top: 475px;
-  COLOR: #ffffff;
-  FONT-FAMILY: Helvetica;
-  TEXT-ALIGN: left;
-  text-shadow: black 0.12em 0.12em 0.12em;
-  }
-  
- DIV.s3time
-{
-  FONT-WEIGHT: bolder;
-  FONT-SIZE: 30px;
-  position:absolute;
-  Left: 370px;
-  Top: 565px;
-  COLOR: #ffffff;
-  FONT-FAMILY: Helvetica;
-  TEXT-ALIGN: left;
-  text-shadow: black 0.12em 0.12em 0.12em;
-  }
- 
-DIV.s3client
-{
-  FONT-WEIGHT: bolder;
-  FONT-SIZE: 30px;
-  position:absolute;
-  Left: 370px;
-  Top: 619px;
-  COLOR: #ffffff;
-  FONT-FAMILY: Helvetica;
-  TEXT-ALIGN: left;
-  text-shadow: black 0.12em 0.12em 0.12em;
-  }
-  
-DIV.s3project
-{
-  FONT-WEIGHT: bolder;
-  FONT-SIZE: 30px;
-  position:absolute;
-  Left: 370px;
-  Top: 672px;
-  COLOR: #ffffff;
-  FONT-FAMILY: Helvetica;
-  TEXT-ALIGN: left;
-  text-shadow: black 0.12em 0.12em 0.12em;
-  }
+  right: 60px;
+  bottom:20px;
+}
+
+.day{
+  text-align: center;
+}
+
+#clock {
+  position: fixed;
+  padding:0;
+  bottom:160px;
+  right:85px;
+  width: 350px;
+  height: 350px;
+  background: url(clockface.png);
+  list-style: none;
+}
+
+#sec, #min, #hour {
+  position: absolute;
+  width: 20px;
+  height: 400px;
+  top: 0px;
+  left: 191px;
+}
+
+#sec {
+  background: url(sechand.png);
+  z-index: 3;
+}
    
-DIV.wrapper {									/*Css Wrapper to constrain site to 1280 with auto height*/
-width:1268px; 
-margin:0 auto; 
-text-align:center; 
+#min {
+  background: url(minhand.png);
+  z-index: 2;
 }
-
- DIV.DateTime
-{
-  FONT-WEIGHT: bolder;
-  FONT-SIZE: 36px;
-  position:absolute;
-  Right: 40px;
-  Bottom:30px;
-  COLOR: #ffffff;
-  FONT-FAMILY: Helvetica;
-  TEXT-ALIGN: left;
-  text-shadow: black 0.12em 0.12em 0.12em;
+   
+#hour {
+  background: url(hourhand.png);
+  z-index: 1;
 }
