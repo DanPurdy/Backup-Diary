@@ -4,7 +4,7 @@ html{
 body {													/*Background Image + Position*/
   background-image: url(Background.jpg);
   color: #ffffff;
-  font-family: Helvetica;
+  font-family: helvetica, sans-serif;
   text-align: left;
   text-shadow: black 0.12em 0.12em 0.12em;
 }
@@ -33,10 +33,10 @@ h3{
   position:absolute;
   width:30%;
   top:75px;
-  right:40px;
+  right:60px;
 }
 
-.title-area h2:last-child{
+.title-area h2{
   float:left;
   font-size: 1.5em;
   -webkit-margin-before: 0;
@@ -91,7 +91,7 @@ img{
 {
   font-size: 1.3em;
   position:absolute;
-  right: 60px;
+  right: 40px;
   bottom:20px;
 }
 
