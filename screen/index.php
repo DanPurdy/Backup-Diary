@@ -62,7 +62,6 @@ $session=new session($dbh);
                 ?>
             </div>
         </div>
-        <img class="logo" src="assets/angelLogo.png" height="130"/>
     </div>
 </body>
 </html>

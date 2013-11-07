@@ -33,14 +33,14 @@ h3{
   position:absolute;
   width:30%;
   top:75px;
-  right:60px;
+  right:50px;
 }
 
 .title-area h2{
   float:left;
   font-size: 1.5em;
   -webkit-margin-before: 0;
-  padding-left:10px;
+  padding-left:44px;
 }
 
 img{
