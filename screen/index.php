@@ -24,8 +24,9 @@ $session=new session($dbh);
 
 <body>
     <div class="wrapper">
+        <img src="assets/angelLogo.png" height="200">
         <div class="title-area">
-            <h3>Welcome To </h3><h2>Angel Studios</h2>
+            <h3>Welcome To</h3><h2>Angel Studios</h2>
             
         </div>
 
@@ -58,7 +59,7 @@ $session=new session($dbh);
 
             <div class="date">
                 <?php
-                    print date('jS F Y');
+                    print date('jS M Y');
                 ?>
             </div>
         </div>

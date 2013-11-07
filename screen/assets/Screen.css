@@ -1,10 +1,22 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('Roboto/Roboto-Roboto-Light.ttf')  format('truetype'); /* Safari, Android, iOS */
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('Roboto/Roboto-bold.ttf')  format('truetype'); /* Safari, Android, iOS */
+  font-weight: bold;
+}
+
 html{
   max-height: 768px;
 }
 body {													/*Background Image + Position*/
   background-image: url(Background.jpg);
   color: #ffffff;
-  font-family: helvetica, sans-serif;
+  font-family: 'Roboto', serif;
   text-align: left;
   text-shadow: black 0.12em 0.12em 0.12em;
 }
@@ -13,7 +25,7 @@ h2{
   font-size: 4em;
   -webkit-margin-before: 20px;
   -webkit-margin-after: 0;
-  font-weight: bolder;
+  font-weight: bold;
   width: 95%;
 
 }
@@ -32,20 +44,19 @@ h3{
 .title-area{
   position:absolute;
   width:30%;
-  top:75px;
-  right:50px;
+  bottom:20px;
+  right:30px;
 }
 
 .title-area h2{
   float:left;
   font-size: 1.5em;
   -webkit-margin-before: 0;
-  padding-left:44px;
 }
 
 img{
   position:absolute;
-  top:35px;
+  bottom:20px;
   right:25px;
 }
 .sess-details{
@@ -59,9 +70,8 @@ img{
 
 .studio-title-1, .studio-title-2, .studio-title-3{
   float:left;
-  font-weight: bolder;
   text-align: center;
-  font-weight: lighter;
+  font-weight: 300;
   line-height: 2em;
   height: 175px;
   width: 18%;
@@ -71,11 +81,11 @@ img{
 
 .s1time, .s2time, .s3time{
   float: left;
-  font-weight: lighter;
+  font-weight: 300;
   width: 79%;
   border-bottom: 1px solid #fff;
   font-size: 1.5em;
-  padding-left:15px; 
+  padding-left:20px; 
   
 }
 .s1client, .s1project, .s2client, .s2project, .s3client, .s3project{
@@ -83,26 +93,24 @@ img{
   font-size: 1em;
   text-align: left;
   width:78%;
-  padding: 15px 0 10px 20px;
-  font-weight: bolder;
+  padding: 10px 0 10px 20px;
+  font-weight: bold;
 }
 
 .DateTime
 {
-  font-size: 1.3em;
+  font-size: 1.1em;
   position:absolute;
-  right: 40px;
-  bottom:20px;
-}
-
-.day{
+  right: 140px;
+  top:410px;
   text-align: center;
+
 }
 
 #clock {
   position: fixed;
   padding:0;
-  bottom:160px;
+  top:14px;
   right:85px;
   width: 350px;
   height: 350px;
