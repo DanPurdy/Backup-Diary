@@ -69,9 +69,9 @@ require_once 'header.php'
 }  ?>
                 
                 <div class="sessionTitle"><h3>Studio</h3></div>
-                <input type="radio" value="1" name="studio" <?=$checkone?>/>Studio One<br />
-                <input type="radio" value="2" name="studio" <?=$checktwo?>/>Studio Two<br />
-                <input type="radio" value="3" name="studio" <?=$checkthree?>/>Studio Three<br />
+                <input type="radio" value="1" name="studio" class="radio" <?=$checkone?>/>Studio One<br />
+                <input type="radio" value="2" name="studio" class="radio" <?=$checktwo?>/>Studio Two<br />
+                <input type="radio" value="3" name="studio" class="radio" <?=$checkthree?>/>Studio Three<br />
             </div>
             <div id="dateSelect">
                 <h3>Session Date</h3>

@@ -10,8 +10,11 @@ $dbh = dbConn::getConnection();
 
 $session=new session($dbh);
 
-$result=$session->getContSessAjax($_REQUEST['term']);
-        
+if($_REQUEST['term']){
+	$result=$session->getContSessAjax($_REQUEST['term']);
+}elseif($_REQUEST['Id']){
+	$result=$session->getSessByBakID($_REQUEST['Id']);
+}    
 echo $result;
 
 ?>

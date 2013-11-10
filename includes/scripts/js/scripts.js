@@ -135,11 +135,11 @@ $(document).ready(function () {
             }
         });
         
-        
-        $(".radio").change(function(){        // Whenever a different studio is selected in new session page, use Ajax call to populate session continuation drop down box
+        var jsonObj;
+        $(".radio").click(function(){        // Whenever a different studio is selected in new session page, use Ajax call to populate session continuation drop down box
             
             var url="/session/get_cont_sess.php";
-            var val=$(".radio:checked").val();  // Ge the value of the currently selected radio box (studio number)
+            var val=$(".radio:checked").val();  // Get the value of the currently selected radio box (studio number)
             
             $.ajax({                            //Start and Ajax call
                 type:"POST",
@@ -149,19 +149,87 @@ $(document).ready(function () {
                 
                 success: function(data){        //If the query is succesful then pass the data received to the function
                     var select = $("#sessCont").empty();        //empty the contents of the select box/initialise it
-                    var jsonObj = $.parseJSON(data);            //parse the received JSON to give you a a javascript object for each result
+                    jsonObj = $.parseJSON(data);            //parse the received JSON to give you a a javascript object for each result
                     select.append('<option value="0">N/A</option>');     //append the default value to the top of the select box
                     $.each(jsonObj, function(){                         //for each javascript objec (each result from the ajax call)
                         
                         var project=this.project;                       //if project returns empty(null) then set project to be an 'empty' string
+                        var composer = this.composer;
                         if(project === null){
                             project=' ';
-                       }
+                        }
+                        if(this.composer === null){
+                            composer=' ';
+                        }else{
+                            composer+=' | ';
+                        }
                     
-                        select.append('<option value='+ this.bakID +'>'+ this.studio + ' | ' + this.date + ' | ' + this.staff + ' | ' + this.client +' | '+ project +'</option>'); // append the values correctly to a option for each result
+                        select.append('<option value='+ this.bakID +'>'+ this.date + ' | ' + this.staff + ' | ' + this.client +' | '+ composer + project +'</option>'); // append the values correctly to a option for each result
                     });
                  }
             });
+        });
+
+        var fillSessForm=function(selected){
+                    $('#engsearch').val(selected.engineer);
+                    $('#engineerID').val(selected.engineerID);
+                    $('#astsearch').val(selected.assistant);
+                    $('#assistantID').val(selected.assistantID);
+
+                    $('#clisearch').val(selected.client);
+                    $('#clientID').val(selected.clientID);
+                    $('#composersearch').val(selected.composer);
+                    $('#composerID').val(selected.composerID);
+                    $('#fixsearch').val(selected.fixer);
+                    $('#fixerID').val(selected.fixerID);
+                    $('#projsearch').val(selected.project);
+                    $('#projectID').val(selected.projectID);
+                };
+
+        $("#sessCont").change(function(event) {
+            
+            var that = this,
+                result,
+                selected;
+
+            if(jsonObj){
+                result = $.grep(jsonObj, function(session) {
+                    return session.bakID == $(that).val();
+                });
+
+                selected = result[0];
+
+                fillSessForm(selected);
+            }else{
+
+                var url ="/session/get_cont_sess.php";
+                var bakID=$(that).val();
+
+
+
+                $.ajax({                            //Start and Ajax call
+                type:"POST",
+                url: url,
+                data: { Id: bakID },            //send the studio value as a parameter to the php page, can be accessed with $_REQUEST or $_GET
+                datatype: "json",
+
+                    success: function(data){
+                        result = $.parseJSON(data);
+                        if(result !== null){
+                            selected = result[0];
+
+                            fillSessForm(selected);
+                        }
+
+
+
+                    }
+
+                });
+
+                
+            }
+
         });
 
     }); // end of document ready function

@@ -393,12 +393,14 @@ class session{
     
     public function getContSessAjax($studio){
         try{
-            $sth = $this->mydb->prepare('SELECT session.*, engineer.engName,assistant.astName, client.cliName, project.prjName
+            $sth = $this->mydb->prepare('SELECT session.*, engineer.*,assistant.*, client.*, project.*, fixer.*, composer.*
                                         FROM session
                                         INNER JOIN engineer ON session.engID=engineer.engID
                                         INNER JOIN assistant ON session.astID=assistant.astID
                                         INNER JOIN client ON session.cliID=client.cliID
                                         INNER JOIN project ON session.prjID=project.prjID
+                                        INNER JOIN fixer ON session.fixID=fixer.fixID
+                                        INNER JOIN composer ON session.cmpID=composer.cmpID
                                         WHERE sessDate >= DATE_ADD(CURRENT_DATE, INTERVAL - 3 MONTH) AND YEAR(sessdate) = YEAR(CURRENT_DATE) AND stdID=:stdID
                                         GROUP BY session.bakID
                                         ORDER BY stdID ASC,sessDate DESC;');
@@ -419,9 +421,19 @@ class session{
                 $data[] = array(
                     "bakID" => $row->bakID ,
                     "stdID" => $row->stdID,
+                    "clientID" => $row->cliID,
                     "client" => $row->cliName,
+                    "fixerID" => $row->fixID,
+                    "fixer" => $row->fixName,
+                    "composerID" => $row->cmpID,
+                    "composer" => $row->cmpName,
+                    "projectID" => $row->prjID,
                     "project" => $row->prjName,
                     "date" => date('d-m-Y', strtotime($row->sessDate)),
+                    "engineerID" => $row->engID,
+                    "engineer" => $row->engName,
+                    "assistantID" => $row->astID,
+                    "assistant" => $row->astName,
                     "staff" => substr($initEng[0],0,1).substr($initEng[1],0,1).substr($initAst[0],0,1).substr($initAst[1],0,1),
                     "studio" => $row->stdID
                     
@@ -436,6 +448,55 @@ class session{
         }
         return $result;
         
+    }
+
+    public function getSessByBakID($bakId){
+        try{
+            $sth = $this->mydb->prepare('SELECT session.*, engineer.*,assistant.*, client.*, project.*, fixer.*, composer.*
+                                        FROM session
+                                        INNER JOIN engineer ON session.engID=engineer.engID
+                                        INNER JOIN assistant ON session.astID=assistant.astID
+                                        INNER JOIN client ON session.cliID=client.cliID
+                                        INNER JOIN project ON session.prjID=project.prjID
+                                        INNER JOIN fixer ON session.fixID=fixer.fixID
+                                        INNER JOIN composer ON session.cmpID=composer.cmpID
+                                        WHERE bakID = :bakId
+                                        ORDER BY sessDate DESC;');
+
+            $sth->bindParam(':bakId',  $bakId, PDO::PARAM_INT);
+    
+            $sth->execute();
+
+            $data = array();
+            
+            while ($row = $sth->fetch(PDO::FETCH_OBJ))
+            {
+                
+                $data[] = array(
+                    
+                    "clientID" => $row->cliID,
+                    "client" => $row->cliName,
+                    "fixerID" => $row->fixID,
+                    "fixer" => $row->fixName,
+                    "composerID" => $row->cmpID,
+                    "composer" => $row->cmpName,
+                    "projectID" => $row->prjID,
+                    "project" => $row->prjName,
+                    "engineerID" => $row->engID,
+                    "engineer" => $row->engName,
+                    "assistantID" => $row->astID,
+                    "assistant" => $row->astName
+                    
+                );
+            }
+            $result=json_encode($data);
+            flush();
+    
+        }catch(PDOException $e){
+            print $e->getMessage();
+    
+        }
+        return $result;
     }
     
     public function getScreen($studio){

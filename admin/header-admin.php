@@ -32,6 +32,7 @@
         <script type="text/javascript" src="/includes/jquery/js/jquery-1.8.3.min.js"></script>
 	<script type="text/javascript" src="/includes/jquery/js/jquery-ui-1.9.2.custom.min.js"></script>
 	<script type="text/javascript" src="/includes/scripts/js/autcomplete.js"></script>
+    <script src="/includes/scripts/js/scripts.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="/includes/jquery/css/smoothness/jquery-ui-1.9.2.custom.min.css" TYPE="text/css"/>
 	<style type="text/css"><!--
 	
