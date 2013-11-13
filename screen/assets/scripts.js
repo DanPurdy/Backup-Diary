@@ -49,7 +49,6 @@ $(function() {
                         $('.wrapper').append(data);
                   }
             });
-            console.log('checked');
             setTimeout(getScreen, 15*60*1000);
       };
       
