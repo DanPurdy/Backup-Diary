@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Roboto';
-  src: url('Roboto/Roboto-Roboto-Light.ttf')  format('truetype'); /* Safari, Android, iOS */
+  src: url('Roboto/Roboto-Light.ttf')  format('truetype'); /* Safari, Android, iOS */
   font-weight: 300;
 }
 
@@ -101,7 +101,7 @@ img{
 {
   font-size: 1.1em;
   position:absolute;
-  right: 140px;
+  right: 120px;
   top:410px;
   text-align: center;
 

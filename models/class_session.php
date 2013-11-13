@@ -509,9 +509,11 @@ class session{
                                             INNER JOIN project ON session.prjID=project.prjID
                                             INNER JOIN composer ON session.cmpID=composer.cmpID
                                             INNER JOIN fixer ON session.fixID=fixer.fixID
-                                            WHERE date(sessDate) = date(NOW()) AND stdID = $studio ORDER BY startTime ASC");
+                                            WHERE date(sessDate) = date(NOW()) AND stdID = :studio ORDER BY startTime ASC");
 
             //select all relevant information about a session record from record table for  the day.
+
+            $sth->bindParam(':studio', $studio);
 
             $sth->bindColumn('startTime', $startTime);  
             $sth->bindColumn('endTime', $endTime);
@@ -548,71 +550,73 @@ class session{
         }
         //assign the current time in unix timestamp format to the now variable
         $now = time() + $dst; //add the time offset if daylight savings is active to allow the start and end times to be calculated correctly.
-  
+        $result;
         if(!empty($sT[0])){                                            //if studio numbers first array result is empty there are no sessions so do nothing
             if(!empty($sT[1])){                                         //if studio numbers first result is present but second isnt there is only one session
                 if ($now < (strtotime($tSs[1])-(60*60*1.5))){           // if second session start time is 1.5 hours away then it should be displayed
             
-                    print '<div class ="s'.$studio.'time">'.substr($sT[0],0,5).' - '.substr($eT[0],0,5).'</div>'; // print session times and remove the last :00 with substr
-                    if(empty($cmp[0])){                                                 //if composer field is empty then print the client instead
-                        print '<div class ="s'.$studio.'client">'.$cli[0].'</div>';
+                    $result.= '<div class ="s'.$studio.'time">'.substr($sT[0],0,5).' - '.substr($eT[0],0,5).'</div>'; // return session times and remove the last :00 with substr
+                    if(empty($cmp[0])){                                                 //if composer field is empty then return the client instead
+                        $result.= '<div class ="s'.$studio.'client">'.$cli[0].'</div>';
                 
                     }
                     else{
-                        print '<div class ="s'.$studio.'client">'.$cmp[0].'</div>';
+                        $result.= '<div class ="s'.$studio.'client">'.$cmp[0].'</div>';
                 
                     }
             
-                    if(empty($fix[0])){                                                 //if fixer field is empty then print project instead
-                        print '<div class ="s'.$studio.'project">'.$prj[0].'</div>';
+                    if(empty($fix[0])){                                                 //if fixer field is empty then return project instead
+                        $result.= '<div class ="s'.$studio.'project">'.$prj[0].'</div>';
                     } 
                     else {
-                        print '<div class ="s'.$studio.'project">'.$fix[0].'</div>';
+                        $result.= '<div class ="s'.$studio.'project">'.$fix[0].'</div>';
                     }
             
                 }
                 else
                 {
-                    print '<div class ="s'.$studio.'time">'.substr($sT[1],0,5).' - '.substr($eT[1],0,5).'</div>';
+                    $result.= '<div class ="s'.$studio.'time">'.substr($sT[1],0,5).' - '.substr($eT[1],0,5).'</div>';
             
                     if(empty($cmp[1])){
-                        print '<div class ="s'.$studio.'client">'.$cli[1].'</div>';
+                        $result.= '<div class ="s'.$studio.'client">'.$cli[1].'</div>';
                 
                     }
                     else{
-                        print '<div class ="s'.$studio.'client">'.$cmp[1].'</div>';
+                        $result.= '<div class ="s'.$studio.'client">'.$cmp[1].'</div>';
                 
                     }
             
                     if(empty($fix[1])){
-                        print '<div class ="s'.$studio.'project">'.$prj[1].'</div>';
+                        $result.= '<div class ="s'.$studio.'project">'.$prj[1].'</div>';
                     } 
                     else {
-                        print '<div class ="s'.$studio.'project">'.$fix[1].'</div>';
+                        $result.= '<div class ="s'.$studio.'project">'.$fix[1].'</div>';
                     }
                 }
             }
             else
             {
-                print '<div class ="s'.$studio.'time">'.substr($sT[0],0,5).' - '.substr($eT[0],0,5).'</div>';
+                $result.= '<div class ="s'.$studio.'time">'.substr($sT[0],0,5).' - '.substr($eT[0],0,5).'</div>';
                 
                 if(empty($cmp[0])){
-                    print '<div class ="s'.$studio.'client">'.$cli[0].'</div>';
+                    $result.= '<div class ="s'.$studio.'client">'.$cli[0].'</div>';
                 
                 }
                 else{
-                    print '<div class ="s'.$studio.'client">'.$cmp[0].'</div>';
+                    $result.= '<div class ="s'.$studio.'client">'.$cmp[0].'</div>';
                 
                 }
             
                 if(empty($fix[0])){
-                    print '<div class ="s'.$studio.'project">'.$prj[0].'</div>';
+                    $result.= '<div class ="s'.$studio.'project">'.$prj[0].'</div>';
                 } 
                 else {
-                    print '<div class ="s'.$studio.'project">'.$fix[0].'</div>';
+                    $result.= '<div class ="s'.$studio.'project">'.$fix[0].'</div>';
                 }
             }
         }
+
+        return $result;
 
       
     }
