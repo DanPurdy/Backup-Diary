@@ -550,7 +550,7 @@ class session{
         }
         //assign the current time in unix timestamp format to the now variable
         $now = time() + $dst; //add the time offset if daylight savings is active to allow the start and end times to be calculated correctly.
-        $result;
+        $result='';
         if(!empty($sT[0])){                                            //if studio numbers first array result is empty there are no sessions so do nothing
             if(!empty($sT[1])){                                         //if studio numbers first result is present but second isnt there is only one session
                 if ($now < (strtotime($tSs[1])-(60*60*1.5))){           // if second session start time is 1.5 hours away then it should be displayed

@@ -11,7 +11,7 @@ $dbh = dbConn::getConnection();
 $session=new session($dbh);
 
 	$q=1;
-	$result;
+	$result='';
 	while($q<4){
 		$result.='<div class="sess-details"><div class="studio-title-'.$q.'">Studio<h2>'.$q.'</h2></div>'.$session->getScreen($q).'</div>';
 		$q++;
