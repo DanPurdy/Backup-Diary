@@ -57,7 +57,4 @@ $(function() {
       getMin();
       getScreen();
       
-      
-      
- 
 });

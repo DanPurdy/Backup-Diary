@@ -1,12 +1,12 @@
 @font-face {
   font-family: 'Roboto';
-  src: url('Roboto/Roboto-Light.ttf')  format('truetype'); /* Safari, Android, iOS */
+  src: url('/includes/fonts/Roboto/Roboto-Light.ttf')  format('truetype'); /* Safari, Android, iOS */
   font-weight: 300;
 }
 
 @font-face {
   font-family: 'Roboto';
-  src: url('Roboto/Roboto-bold.ttf')  format('truetype'); /* Safari, Android, iOS */
+  src: url('/includes/fonts/Roboto/Roboto-bold.ttf')  format('truetype'); /* Safari, Android, iOS */
   font-weight: bold;
 }
 
@@ -14,7 +14,7 @@ html{
   max-height: 768px;
 }
 body {													/*Background Image + Position*/
-  background-image: url(Background.jpg);
+  background-image: url(/img/screen/Background.jpg);
   color: #ffffff;
   font-family: 'Roboto', serif;
   text-align: left;
@@ -114,7 +114,7 @@ img{
   right:85px;
   width: 350px;
   height: 350px;
-  background: url(clockface.png);
+  background: url(/img/screen/clockface.png);
   list-style: none;
 }
 
@@ -127,16 +127,16 @@ img{
 }
 
 #sec {
-  background: url(sechand.png);
+  background: url(/img/screen/sechand.png);
   z-index: 3;
 }
    
 #min {
-  background: url(minhand.png);
+  background: url(/img/screen/minhand.png);
   z-index: 2;
 }
    
 #hour {
-  background: url(hourhand.png);
+  background: url(/img/screen/hourhand.png);
   z-index: 1;
 }

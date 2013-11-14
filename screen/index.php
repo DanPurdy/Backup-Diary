@@ -1,29 +1,17 @@
-<?php
-
-require_once 'includes/pdoconnection.php';
-function __autoload($class_name) {
-    include 'models/class_'.$class_name . '.php';
-}
-
-$dbh = dbConn::getConnection();
-
-$session=new session($dbh);
-
-?>
 <!doctype>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Reception Screen - V3</title>
-    <LINK REL=StyleSheet HREF="/screen/assets/Screen.css" TYPE="text/css"/>
+    <LINK REL=StyleSheet HREF="/css/screen.css" TYPE="text/css"/>
     <script src="/includes/jquery/js/jquery-1.8.3.min.js" type="text/javascript"></script>
-    <script src="assets/scripts.js" type="text/javascript"></script>
+    <script src="/includes/scripts/js/screen.js" type="text/javascript"></script>
 </head>
 
 
 <body>
     <div class="wrapper">
-        <img src="assets/angelLogo.png" height="200">
+        <img src="/img/screen/angelLogo.png" height="200">
         <div class="title-area">
             <h3>Welcome To</h3><h2>Angel Studios</h2>
             
