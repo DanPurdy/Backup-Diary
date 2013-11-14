@@ -45,8 +45,8 @@ $(function() {
                   datatype: "json",
 
                   success: function(data){
-
-                        $('.wrapper').append(data);
+                        $('.sess-details').remove(); //remove previous details
+                        $('.wrapper').append(data); //append the new details
                   }
             });
             setTimeout(getScreen, 15*60*1000);
