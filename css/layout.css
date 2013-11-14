@@ -1246,10 +1246,10 @@ input.userInput, input.paswInput, input.emalInput{
 .ReqBackupRecords td{
 
 	border-bottom: 1px solid #CCC;
-	padding: 0 5px;
+	padding: 2px 5px;
 }
 .ReqBackupRecords td:nth-child(2){
-	width:150px;
+	width:175px;
 	overflow: hidden;
 }
 .ReqBackupRecords td:nth-child(3){
@@ -1260,7 +1260,11 @@ input.userInput, input.paswInput, input.emalInput{
 	border:1px solid #000000;
 	background-color: #ff0000;
 	color: #ddffff;
-	}
+}
+
+.ReqBackupRecords td:nth-child(5){
+	text-align: center;
+}
 
 .backupDrive a:link, .ReqBackupRecords a:link{
 	color: #ffff33;

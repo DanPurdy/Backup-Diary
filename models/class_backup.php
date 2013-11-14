@@ -250,6 +250,8 @@ class backup{
     }
     
     public function getNoRecord(){
+
+        
         try{
             $sth=$this->mydb->prepare("SELECT client.cliName, project.prjName, assistant.astName,session.sesID, session.ssNo, session.sessDate, session.stdID, backup.*
                                 FROM session
@@ -261,10 +263,8 @@ class backup{
                                 INNER JOIN composer ON session.cmpID=composer.cmpID
                                 INNER JOIN fixer ON session.fixID=fixer.fixID
                                 LEFT JOIN backup ON session.bakID=backup.bakID
-                                WHERE session.stdID = :stdID AND (backup.bakLastDate <= sessDate OR ISNULL(backup.bakName)) AND sessDate < CURRENT_DATE()
+                                WHERE (backup.bakLastDate <= sessDate OR ISNULL(backup.bakName)) AND sessDate < CURRENT_DATE()
                                 ORDER BY session.stdID,sessDate DESC; ");
-
-            $sth->bindParam(':stdID', $_GET['studio'], PDO::PARAM_INT);
 
             $sth->execute();
      
@@ -274,20 +274,11 @@ class backup{
         catch(PDOException $e) {
             print $e->getMessage();
         }
+        
+        $result=$sth->fetchAll(PDO::FETCH_ASSOC);
 
-  
-        while($row=$sth->fetch(PDO::FETCH_ASSOC)){?>
-            <tr>
-              <td><?echo date('d-m-Y',strtotime($row['sessDate']));?></td>
-                     <td> <?= $row['cliName'];?></td>
-                      <td><?= $row['prjName'];?></td>
-                      <td><?= $row['astName'];?></td>
-                      <td><?= $row['ssNo'];?></td>
 
-            <td class="link"><?php if(empty($row['bakDate'])){ ?><a href="new_backup.php?sesID=<?php echo $row['sesID'];?>">Add new backup entry</a><?php }else{?><a href="edit_backup.php?sesID=<?php echo $row['sesID'];?>">View/Edit Backup</a></td><?php } ?>
-            </tr>
-          <?php 
-        }
+        return $result;
     
     }
     

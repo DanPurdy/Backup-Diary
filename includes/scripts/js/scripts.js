@@ -109,6 +109,14 @@ $(document).ready(function () {
             }
         });
 
+        $('.deleteLink').click(function(e){
+            $this=$(this);
+            $this.parent().css('background', 'red');
+            if (!confirm('Are you sure you want to delete this session? It cannot be undone.')){
+                e.preventDefault();
+                $this.parent().css('background','none');
+            }
+        });
 
         $(".Eassigned").each(function () {              // annoying alert box to stop people submitting microphones when an error has flagged (it would clear the error otherwise and people wouldn't necessarily pay attention to it
             alert("This mic is already assigned to a session Please follow the link to correct this.");
