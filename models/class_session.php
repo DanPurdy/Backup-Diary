@@ -44,9 +44,14 @@ class session{
         return $this->result;
     }
     
-    public function getSessByID($id){
+    public function getSessByID($id, $ajax){
+
+        if (!isset($ajax)){
+            $ajax = false;
+        }
+
         try { //get all session details from the session ID
-            $sth=$this->mydb->prepare("SELECT session.*, studio.stdName, engineer.engName, assistant.astName, client.cliName, composer.cmpName, fixer.fixName, project.prjName, backup.*
+            $sth=$this->mydb->prepare("SELECT session.*, studio.stdName, engineer.engName, assistant.astName, client.*, composer.*, fixer.*, project.*, backup.*
                             FROM session
                             INNER JOIN studio ON session.stdID=studio.stdID
                             INNER JOIN engineer ON session.engID=engineer.engID
@@ -67,7 +72,14 @@ class session{
         catch(PDOException $e){
             print $e->getMessage();
         }
-        return $result;
+
+        if(!$ajax){
+            return $result;
+        }else{
+            return json_encode($result);
+        }
+
+
     }
     
     public function getPrevSess($prevSes){
@@ -332,6 +344,68 @@ class session{
             $sth->execute();
         }
         catch (PDOException $e) {
+            print $e->getMessage();
+        } 
+    }
+
+    public function updateDetailsBackup($postdata, $dbh){
+        
+        $this->mydb->beginTransaction();
+
+        $sesID = $postdata['sessionID'];
+        
+        
+        try{
+            
+            if(!empty($postdata['projN'])){
+
+                $this->prjID=checkRecord::checkID($postdata['projectID'],$postdata['projN'],'prj', $dbh);
+
+            }else{
+                if($postdata['projectID'] > 0){
+                    $this->prjID=$postdata['projectID'];
+                }else{
+                    $this->prjID=1;
+                }
+            }
+
+            if(!empty($postdata['fixN'])){
+
+                $this->fixID=checkRecord::checkID($postdata['fixerID'],$postdata['fixN'],'fix', $dbh);
+            }else{
+                if($postdata['fixerID'] > 0){
+                    $this->fixID=$postdata['fixerID'];
+                }else{
+                    $this->fixID=1;
+                }
+            }
+
+            if(!empty($postdata['compN'])){
+
+                $this->cmpID=checkRecord::checkID($postdata['composerID'],$postdata['compN'],'cmp', $dbh);
+            }else{
+                if($postdata['composerID'] > 0){
+                    $this->cmpID=$postdata['composerID'];
+                }else{
+                    $this->cmpID=1;
+                }
+            }
+
+            $sth = $this->mydb->prepare('UPDATE session SET prjID=:prjID, fixID=:fixID, cmpID=:cmpID
+                                         WHERE sesID=:sesID;' );
+
+            $sth->bindParam(':prjID', $this->prjID , PDO::PARAM_INT);
+            $sth->bindParam(':fixID', $this->fixID , PDO::PARAM_INT);
+            $sth->bindParam(':cmpID', $this->cmpID , PDO::PARAM_INT);
+            $sth->bindParam(':sesID', $sesID, PDO::PARAM_INT);
+
+            $sth->execute();
+            
+            
+            $this->mydb->commit();
+        }
+        catch(PDOException $e){
+            $this->mydb->rollback();
             print $e->getMessage();
         } 
     }

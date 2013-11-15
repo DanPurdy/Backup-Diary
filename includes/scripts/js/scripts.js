@@ -89,6 +89,55 @@ $(document).ready(function () {
             return false;
         });
 
+        $('#sessionEdit').submit(function(){
+            var url = "/session/sessUpdateAjax.php",
+            that = this,
+            formDetails = $("#sessionEdit").serialize(),
+            fixInput = $('#fixsearch'),
+            cmpInput = $('#composersearch'),
+            prjInput = $('#projsearch'),
+            frmActive = fixInput.length+cmpInput.length+prjInput.length;
+
+            console.log(formDetails);
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: formDetails,
+                // serializes the form's elements.
+                success: function(data){
+
+                    var result = $.parseJSON(data);
+                    
+                    if(fixInput.length>0 && result.fixName !== null){
+                        fixInput.remove();
+                        frmActive--;
+                        $('.fixer').prepend(result.fixName);
+                    }
+
+                    if(cmpInput.length>0 && result.cmpName !== null){
+                        cmpInput.remove();
+                        frmActive--;
+                        $('.composer').prepend(result.cmpName);
+                    }
+
+                    if(prjInput.length>0 && result.prjName !== null){
+                        prjInput.remove();
+                        frmActive--;
+                        $('.project').prepend(result.prjName);
+                    }
+
+                    console.log(frmActive);
+                    if(frmActive === 0){
+                        $('#bakSessEdit').remove();
+                        
+                    }
+
+
+                }
+            });
+            return false;
+        });
+
         $("#savedMics").hide();
         $("#showMics").show();
 
