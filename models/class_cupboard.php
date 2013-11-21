@@ -91,18 +91,48 @@ class cupboard{
                                         LEFT JOIN composer ON (driveOwnerCmp.cmpID=composer.cmpID)
                                         WHERE (driveOwnerCli.cliID = :client AND driveOwnerCli.cliID > 1)  OR (driveOwnerCmp.cmpID = :composer AND driveOwnerCmp.cmpID >1);');
 
-             $sth->bindParam(':client', $cliID, PDO::PARAM_INT);
-             $sth->bindParam(':composer', $cmpID, PDO::PARAM_INT);
+            $sth->bindParam(':client', $cliID, PDO::PARAM_INT);
+            $sth->bindParam(':composer', $cmpID, PDO::PARAM_INT);
 
-             $sth->execute();
+            $sth->execute();
              
-             $result=$sth->fetchAll(PDO::FETCH_ASSOC);
+            $result=$sth->fetchAll(PDO::FETCH_ASSOC);
         }
         catch(PDOException $e){
             print $e->getMessage();
         }
         
         return $result;
+    }
+    //for use with sessUpdateAjax.php
+    //returns and updates the list of drives to be added to to the backup drive field in new and edit_backup.php
+    //allows user to select a drive linked to a composer if they added it via the ajax form on the backup record.
+    public function getComposerDrive($cmpID){
+        try{
+
+            $sth=$this->mydb->prepare('SELECT cupboardDrive.*, client.*, composer.* 
+                                        FROM cupboardDrive 
+                                        LEFT JOIN driveOwnerCli ON (cupboardDrive.cupbID = driveOwnerCli.cupbID)
+                                        LEFT JOIN driveOwnerCmp ON (cupboardDrive.cupbID = driveOwnerCmp.cupbID)
+                                        LEFT JOIN client ON (driveOwnerCli.cliID=client.cliID)
+                                        LEFT JOIN composer ON (driveOwnerCmp.cmpID=composer.cmpID)
+                                        WHERE (driveOwnerCmp.cmpID = :composer AND driveOwnerCmp.cmpID >1);');
+
+            $sth->bindParam(':composer', $cmpID, PDO::PARAM_INT);
+
+            $sth->execute();
+
+            $result=$sth->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+
+        }
+        catch(PDOException $e){
+            print $e->getMessage();
+        }
+
+        return json_encode($result);
     }
     
     public function getDriveNotes($driveID){

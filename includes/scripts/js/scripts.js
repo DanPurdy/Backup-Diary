@@ -89,6 +89,33 @@ $(document).ready(function () {
             return false;
         });
 
+        var updateTapeList = function(selComp){
+            $.ajax({
+                    type: "POST",
+                    url: "/session/sessUpdateAjax.php",
+                    data: 'tapeOwner='+selComp,
+
+                    success: function(data){
+
+                        var jsonObj = $.parseJSON(data);
+
+                        console.log(jsonObj);
+
+                        $.each(jsonObj, function(index, value){
+                            var seperator = ' | ';
+                            var text = '<option value="'+value.cupbID+'">';
+                                text += 'ATS-'+value.cupbID+seperator;
+                                text += value.cupbName+seperator;
+                                text += value.cliName+seperator;
+                                text += value.cmpName;
+                                text += '</option>';
+
+                                $('#cupbDrive').prepend(text);
+                        });
+                    }
+                });
+        };
+
         $('#sessionEdit').submit(function(){
             var url = "/session/sessUpdateAjax.php",
             that = this,
@@ -98,7 +125,7 @@ $(document).ready(function () {
             prjInput = $('#projsearch'),
             frmActive = fixInput.length+cmpInput.length+prjInput.length;
 
-            console.log(formDetails);
+            
             $.ajax({
                 type: "POST",
                 url: url,
@@ -107,7 +134,6 @@ $(document).ready(function () {
                 success: function(data){
 
                     var result = $.parseJSON(data);
-                    
                     if(fixInput.length>0 && result.fixName !== null){
                         fixInput.remove();
                         frmActive--;
@@ -117,7 +143,14 @@ $(document).ready(function () {
                     if(cmpInput.length>0 && result.cmpName !== null){
                         cmpInput.remove();
                         frmActive--;
+
+                        console.log(result);
+
                         $('.composer').prepend(result.cmpName);
+                        
+                        if(result.cliName !== result.cmpName){
+                            updateTapeList(result.cmpID);
+                        }
                     }
 
                     if(prjInput.length>0 && result.prjName !== null){
@@ -126,7 +159,6 @@ $(document).ready(function () {
                         $('.project').prepend(result.prjName);
                     }
 
-                    console.log(frmActive);
                     if(frmActive === 0){
                         $('#bakSessEdit').remove();
                         
@@ -232,7 +264,6 @@ $(document).ready(function () {
                     $('#engineerID').val(selected.engineerID);
                     $('#astsearch').val(selected.assistant);
                     $('#assistantID').val(selected.assistantID);
-
                     $('#clisearch').val(selected.client);
                     $('#clientID').val(selected.clientID);
                     $('#composersearch').val(selected.composer);
