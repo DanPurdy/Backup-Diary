@@ -9,7 +9,7 @@ $(function() {
             var   date        = new Date(),
                   seconds     = date.getSeconds(),
                   mins        = date.getMinutes(),
-                  hours       = date.getHours,
+                  hours       = date.getHours(),
                   sdegree     = seconds * 6,
                   mdegree     = mins *6,
                   hdegree     = hours * 30 + (mins/2),
