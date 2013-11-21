@@ -24,15 +24,11 @@
             </ul>
         <div class ="DateTime">
             <div class="day">
-                <?php
-                    print date('l');
-                ?>
+            
             </div>
 
             <div class="date">
-                <?php
-                    print date('jS M Y');
-                ?>
+                
             </div>
         </div>
     </div>
