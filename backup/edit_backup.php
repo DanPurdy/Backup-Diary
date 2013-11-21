@@ -114,14 +114,14 @@ session_start();
                             echo $row['prjName'];
                             echo '<input id="projectID" name="projectID" value="'.$row['prjID'].'" class="hidden" />';
                         }else{ 
-                            echo '<input id="projsearch" name="projN" type="text" placeholder="project" />
+                            echo '<input id="projsearch" name="projN" type="text" placeholder="Project" />
                             <input id="projectID" name="projectID" value="0" class="hidden" />';
                         }
                     ?>
                 </div>
                 <?php
                     if($missingDets > 0){
-                        echo '<input type="submit" id="bakSessEdit" name="bakSessEdit" value="Save"/>';
+                        echo '<input type="submit" id="bakSessEdit" name="bakSessEdit" value="Update Details"/>';
                     } 
                 ?>
             </form>

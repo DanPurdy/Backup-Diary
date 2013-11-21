@@ -91,29 +91,27 @@ $(document).ready(function () {
 
         var updateTapeList = function(selComp){
             $.ajax({
-                    type: "POST",
-                    url: "/session/sessUpdateAjax.php",
-                    data: 'tapeOwner='+selComp,
+                type: "POST",
+                url: "/session/sessUpdateAjax.php",
+                data: 'tapeOwner='+selComp,
 
-                    success: function(data){
+                success: function(data){
 
-                        var jsonObj = $.parseJSON(data);
+                    var jsonObj = $.parseJSON(data);
 
-                        console.log(jsonObj);
+                    $.each(jsonObj, function(index, value){
+                        var seperator = ' | ';
+                        var text = '<option value="'+value.cupbID+'">';
+                            text += 'ATS-'+value.cupbID+seperator;
+                            text += value.cupbName+seperator;
+                            text += value.cliName+seperator;
+                            text += value.cmpName;
+                            text += '</option>';
 
-                        $.each(jsonObj, function(index, value){
-                            var seperator = ' | ';
-                            var text = '<option value="'+value.cupbID+'">';
-                                text += 'ATS-'+value.cupbID+seperator;
-                                text += value.cupbName+seperator;
-                                text += value.cliName+seperator;
-                                text += value.cmpName;
-                                text += '</option>';
-
-                                $('#cupbDrive').prepend(text);
-                        });
-                    }
-                });
+                        $('#cupbDrive').prepend(text);
+                    });
+                }
+            });
         };
 
         $('#sessionEdit').submit(function(){
@@ -143,8 +141,6 @@ $(document).ready(function () {
                     if(cmpInput.length>0 && result.cmpName !== null){
                         cmpInput.remove();
                         frmActive--;
-
-                        console.log(result);
 
                         $('.composer').prepend(result.cmpName);
                         
