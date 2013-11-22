@@ -14,7 +14,7 @@ if($_POST){
     $microphone->createMic($_POST['micNo'], $_POST['make'], $_POST['model']);
 }
 require_once ('header.php');
-print_r($_POST);
+
 ?>
 
 <form id="newMic" action="new_mic.php" method="post">

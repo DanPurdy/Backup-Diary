@@ -2,7 +2,7 @@
     if(!isset($_SESSION)){session_start();
          
     header('Content-Type: text/html; charset=utf-8');
-    // check to see whether the user is logged in or not
+    
     }
     // check to see whether the user is logged in or not 
     if(empty($_SESSION['user'])) 
@@ -104,7 +104,7 @@
                                 <?php if ($_SESSION['user']['usrGroup']=='admin'){?><a href="/admin/"><h3>Admin</h3></a>
                                 <ul>
                                    
-                                    
+                                    <li><a href="/mics/new_mic.php">Add New Microphone</a></li>
                                     <li><a href="/admin/memberlist.php">Manage Users</a></li>
                                     <li><a href="/admin/register.php">Register User</a></li>
                                     

@@ -101,7 +101,7 @@
                                     <a href="/admin/"><h3>Admin</h3></a>
                                 <ul>
                                    
-                                    
+                                    <li><a href="/mics/new_mic.php">Add New Microphone</a></li>
                                     <li><a href="/admin/memberlist.php">Manage Users</a></li>
                                     <li><a href="/admin/register.php">Register User</a></li>
                                     
