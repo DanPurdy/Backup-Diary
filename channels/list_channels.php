@@ -8,9 +8,19 @@ function __autoload($class_name) {
 $dbh = dbConn::getConnection();
 $channel = new channel($dbh);
 
-$chanList = $channel->listChannels($_GET['studio']);
+$studio = (int)$_GET['studio'];
 
-$faultList = $channel->listActiveChanFaults($_GET['studio']);
+
+
+$chanList = $channel->listChannels($studio);
+
+if($studio===3){
+    $studioLimit=61;
+}else{
+    $studioLimit=60;
+}
+
+$faultList = $channel->listActiveChanFaults($studio);
 
 require('header.php');
 ?>
@@ -43,7 +53,7 @@ require('header.php');
         <div class="channelSelect"><h3>Channel</h3>
             <input type="text" name="stdID" value="<?= htmlentities($_GET['studio']);?>" class="hidden"/>
         <select name="channel">
-            <?php for($i=1; $i<=60; $i++){
+            <?php for($i=1; $i<=$studioLimit; $i++){
                 ?>
             <option value="<?=$i ?>"><?=$i ?></option>
             <?php 
@@ -68,7 +78,7 @@ require('header.php');
         <div class="selectPush"></div>
         <div class="channelSelect"><h3>Channel One</h3>
         <select name="channelOne">
-            <?php for($i=1; $i<=60; $i++){
+            <?php for($i=1; $i<=$studioLimit; $i++){
                 ?>
             <option value="<?=$i ?>"><?=$i ?></option>
             <?php 
@@ -78,7 +88,7 @@ require('header.php');
         </div>
         <div class="channelSelect "><h3>Channel Two</h3>
         <select name="channelTwo">
-            <?php for($i=1; $i<=60; $i++){
+            <?php for($i=1; $i<=$studioLimit; $i++){
                 ?>
             <option value="<?=$i ?>"><?=$i ?></option>
             <?php 
