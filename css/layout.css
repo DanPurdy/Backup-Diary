@@ -748,12 +748,12 @@ input.userInput, input.paswInput, input.emalInput{
 	top:5px;
 	right:8px;
 }
-#timetable .editLink{
+#timetable .editLink, #timetable .micOutLink{
 	position:absolute;
 	right:5px;
 	bottom:2px;
 }
-#timetable .deleteLink{
+#timetable .deleteLink, #timetable .micInLink{
 	position:absolute;
 	right:5px;
 	bottom:25px;

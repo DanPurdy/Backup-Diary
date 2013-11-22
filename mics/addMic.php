@@ -35,4 +35,5 @@ if($row['micSession'] == 0 && $resCount !=0 && $row['micRepair'] ==0){
     header('Location: '.$link.'&e=1&micNo='.$row['micID'].'&prevSes='.$row['micSession'] );
     
     
-}     ?>
+}     
+?>

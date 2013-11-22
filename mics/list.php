@@ -14,8 +14,12 @@ $result = $microphone->listMic();
 
 require('header.php');
 ?>
-    <div id="subHead"><h1>Angel Microphones</h1></div>
-    <div class="backupDriveTitle"><h3><?=$_POST['clientName'];?>All Microphones</h3></div>
+    <div id="subHead">
+        <h1>Angel Microphones</h1>
+    </div>
+    <div class="backupDriveTitle">
+        <h3><?=$_POST['clientName'];?>All Microphones</h3>
+    </div>
 
     <div id="micResults">
         <table id="resultTable">
@@ -28,7 +32,8 @@ require('header.php');
                 <th scope="col">Out For Repair</th>
                 <th scope="col">Last Activity</th>
             </tr>
-       <?php foreach($result as $row){ ?>
+    <?php
+        foreach($result as $row){ ?>
             <tr>
                 <td><?=$row['micID'];?></td>
                 <td><?=$row['micMake'];?></td>
@@ -39,10 +44,17 @@ require('header.php');
                 <td><?php if(!empty($row['username'])){ echo $row['username']." ".date('h:i a  - d/m/y', strtotime($row['micTime'])); } ?></td>
 
               </tr>
-              <?php } ?>
+    <?php 
+        }//foreach (line 36) 
+
+    ?>
         </table>
-                    </div>
-<div class="returnLink"><a href="<?=$_SERVER['HTTP_REFERER'];?>">&laquo; Back</a></div>
+    </div>
+<div class="returnLink">
+    <a href="<?=$_SERVER['HTTP_REFERER'];?>">&laquo; Back</a>
+</div>
 
 
-<?php require_once('footer.php'); ?>
+<?php 
+    require_once('footer.php'); 
+?>

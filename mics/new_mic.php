@@ -18,9 +18,15 @@ print_r($_POST);
 ?>
 
 <form id="newMic" action="new_mic.php" method="post">
-    <label for="micNumber">Angel ID: </label><input type="number" id="micNumber" max="3000" min="1000" name="micNo" required/>
-    <label for="make">Make: </label><input type="text" id="make" size="20" name="make" required />
-    <label for="model">Model: </label><input type="text" id="model" size="20" name="model" required />
+    <label for="micNumber">Angel ID: </label>
+    <input type="number" id="micNumber" max="3000" min="1000" name="micNo" required/>
+    
+    <label for="make">Make: </label>
+    <input type="text" id="make" size="20" name="make" required />
+    
+    <label for="model">Model: </label>
+    <input type="text" id="model" size="20" name="model" required />
+    
     <input type="submit" value="Add Mic">
     
     
