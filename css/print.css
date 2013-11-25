@@ -29,14 +29,19 @@ table a{
 	text-decoration: none;
 	text-transform: none;
 }
+th{
+	border-color: #000 !important;
+}
 tr{ 
   	position:relative;
-  	page-break-inside:avoid; 
+  	page-break-inside:avoid;
+  	border-color:#000 !important;
  }
 
 td{ 
   	position:relative;
-  	page-break-inside:avoid; 
+  	page-break-inside:avoid;
+  	border-color: #000 !important;
   }
 
 
