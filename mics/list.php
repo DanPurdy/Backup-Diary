@@ -18,7 +18,7 @@ require('header.php');
         <h1>Angel Microphones</h1>
     </div>
     <div class="backupDriveTitle">
-        <h3><?=$_POST['clientName'];?>All Microphones</h3>
+        <h3><?php echo $_POST['clientName'];?>All Microphones</h3>
     </div>
 
     <div id="micResults">
@@ -35,9 +35,11 @@ require('header.php');
     <?php
         foreach($result as $row){ ?>
             <tr>
-                <td><?=$row['micID'];?></td>
-                <td><?=$row['micMake'];?></td>
-                <td><?=$row['micModel'];?></td>
+                <td>
+                    <a href="mic_history.php?micID=<?php echo $row['micID'];?>"><?php echo $row['micID'];?></a>
+                </td>
+                <td><?php echo $row['micMake'];?></td>
+                <td><?php echo $row['micModel'];?></td>
                 <td><?php if($row['micCupboard'] == 1){echo "&gt;&lt;";} ?></td>
                 <td><?php if($row['micSession'] !=0){echo "&gt;&lt;";} ?></td>
                 <td><?php if($row['micRepair'] == 1){echo "&gt;&lt;";} ?></td>
@@ -51,7 +53,7 @@ require('header.php');
         </table>
     </div>
 <div class="returnLink">
-    <a href="<?=$_SERVER['HTTP_REFERER'];?>">&laquo; Back</a>
+    <a href="<?php echo $_SERVER['HTTP_REFERER'];?>">&laquo; Back</a>
 </div>
 
 

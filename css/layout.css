@@ -1651,6 +1651,46 @@ input#repairMic{
 	padding:5px;
 }
 
+/* ---------------- Mic History --------------------------- */
+
+.historyTable{
+	font: 1.2em Helvetica, Arial, Verdana, sans-serif;
+	font-variant: small-caps;
+	text-transform: capitalize;
+	border-collapse: collapse;
+	margin-top:40px;
+	margin-bottom:30px;
+	width: 950px;
+}
+
+.historyTable th{
+	text-align: center;
+	padding: 3px 0.5em;
+	border-right:1px solid #c4c2c3;
+	border-bottom:2px solid #ffffff;
+
+}
+.historyTable th:nth-child(4){
+	width:40px;
+	border-right:5px solid #ffffff;
+}
+
+.historyTable td{
+	text-align: center;
+	border-bottom: 2px solid #fff;
+	border-right:1px solid #c4c2c3;
+	padding: 3px 0.5em;
+	line-height: 1.5em;
+	}
+
+.historyTable td:nth-child(2){
+	width:80px;
+}
+
+.historyTable td:nth-child(4){
+	width:40px;
+	border-right:5px solid #ffffff;
+}
 /* ---------------- Mic Faults ---------------------------- */
 
 .faultDetails{

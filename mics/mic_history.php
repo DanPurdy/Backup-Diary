@@ -9,22 +9,29 @@ $dbh = dbConn::getConnection();
 
 $mics=new mic($dbh);
 
-$history = $mics->getMicHistory(1009);
+$micID = $_GET['micID'];
+$history = $mics->getMicHistory($micID);
 require_once ('header.php');
 ?>
+<div class="returnLink">
+    <a href="/mics/list.php"> &laquo Back to Mic List</a>
+</div>
+<div id="subHead">
+    <h1>History for microphone <?php echo $micID; ?></h1>
+</div>
 
-<table>
+
+<table class='historyTable'>
 	<tr>
-		<th>State</th>
-		<th>Session Date</th>
-		<th>Session Times</th>
-		<th>Engineer</th>
-		<th>Assistant</th>
-		<th>Client</th>
-		<th>Composer</th>
-		<th>Project</th>
-		<th>Logged By</th>
-		<th>Log Time</th>
+		<th scope="col">State</th>
+		<th scope="col">Log Time</th>
+		<th scope="col">Logged By</th>
+		<th scope="col">Studio</th>
+		<th scope="col">Session Date</th>
+		<th scope="col">Client</th>
+		<th scope="col">Composer</th>
+		<th scope="col">Project</th>
+		
 	</tr>
 <?php
 
@@ -32,15 +39,17 @@ foreach($history as $record=>$value){ ?>
 
 	<tr>
 		<td><?php echo $value->logState;?></td>
+		<td>
+			<?php echo date('d-m-y H:i:s', strtoTime($value->micLogTime));?>
+		</td>
+		<td><?php echo $value->username;?></td>
+		<td><?php echo $value->stdID;?></td>
 		<td><?php echo date('d-m-y', strtotime($value->sessDate));?></td>
-		<td><?php echo $value->startTime.' - '.$value->endTime;?></td>
-		<td><?php echo $value->engName;?></td>
-		<td><?php echo $value->astName;?></td>
 		<td><?php echo $value->cliName;?></td>
 		<td><?php echo $value->cmpName;?></td>
 		<td><?php echo $value->prjName;?></td>
-		<td><?php echo $value->username;?></td>
-		<td><?php echo $value->micLogTime;?></td>
+		
+		
 	</tr>
 <?php
 	}
