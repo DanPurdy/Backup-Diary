@@ -486,9 +486,38 @@ class mic{
                         <td><?= $row['micMake']?></td>
                         <td><?= $row['micModel']?></td>
                     </tr>
-                      <?php
-                        }
+      <?php
+            }
         }
+    }
+
+    public function getMicHistory($micID){
+        try{
+            $sth = $this->mydb->prepare("SELECT micLog.*, session.*,engineer.engName, assistant.astName, client.cliName, composer.cmpName, project.prjName, users.username 
+                FROM micLog
+                INNER JOIN session ON micLog.sesID = session.sesID
+                INNER JOIN users ON micLog.usrID = users.usrID
+                INNER JOIN engineer ON session.engID = engineer.engID
+                INNER JOIN assistant ON session.astID = assistant.astID
+                INNER JOIN client ON session.cliID = client.cliID
+                LEFT JOIN composer ON session.cmpID = composer.cmpID
+                LEFT JOIN project ON session.prjID = project.prjID
+                WHERE micID= :micID
+                ORDER BY micLog.micLogTime DESC;");
+
+            $sth->bindParam(':micID', $micID, PDO::PARAM_INT);
+
+            $sth->execute();
+
+            $result = $sth->fetchAll(PDO::FETCH_OBJ);
+
+        }
+        catch(PDOException $e){
+            print $e->getMessage();
+        }
+
+        return $result;
+        
     }
 }
 
