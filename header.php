@@ -34,13 +34,13 @@
 	
         --></style>
     
-        <title>Angel Studios Backup System</title>
+        <title>Angel Recording Studios</title>
         
     </head>
     <body>
         <div id="wrapper">
             <div id="header">
-                <div id="mainHead"><h1><a href="/"></a></h1></div>
+                <div id="mainHead"><h1><a href="/">Angel Backup Diary</a></h1></div>
                 <div id="accCont">
                     <div class="backupDriveTitle"><h3>Logged in as:  <?php echo htmlentities($_SESSION['user']['username'], ENT_QUOTES, 'UTF-8'); ?></h3></div>
                     <div id="loginEdit"><a href="/edit_account.php">Edit Account</a></div>

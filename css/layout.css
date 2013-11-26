@@ -81,11 +81,9 @@ textarea{resize: none}
 
 #mainHead{
 	text-align: center;
-	width:450px;
-	height:100px;
+	width:250px;
+	height:35px;
 	margin:auto;
-	display: block;
-	background-image: url(/img/bg/mainLogo.jpg);
 }
 
 #header{
@@ -164,7 +162,7 @@ nav{
 	width:650px;
 	height:40px;
 	padding:10px;
-	
+	top:65px;
 	white-space: nowrap;
 }
 
@@ -214,7 +212,7 @@ li.main ul li a{
 #accCont{
 	float:right;
 	right:150px;
-	margin: -30px 40px 0 10px;
+	margin:40px 40px 0 10px;
 	padding:10px;
 }
 
