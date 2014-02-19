@@ -24,15 +24,17 @@ if($row['micSession'] == 0 && $resCount !=0 && $row['micRepair'] ==0){
 
     $row= $microphone->addMicSession($_POST['micNo'], $_SESSION['user']['usrID'], $_POST['bakID'], $_POST['sesID']);
     
-    header('Location: '.$link);     
+    header('Location: '.$link);
+    die();     
 }elseif($row['micRepair'] == 1){
     
     header('Location: '.$link.'&e=5&micNo='.$row['micID']);
-    
+    die();
 }else{
-    
-    
+
     header('Location: '.$link.'&e=1&micNo='.$row['micID'].'&prevSes='.$row['micSession'] );
+
+    die();
     
     
 }     

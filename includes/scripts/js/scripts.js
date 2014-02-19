@@ -174,13 +174,15 @@ $(document).ready(function () {
         });
 
 
-        $('.micEntryNo').keyup(function () {                 //when 4 digits are entered into the mic form submit the form (each microphone is referenced by a 4 digit number so this allows quick entry into the system
-            var mic = 0;
-
-            mic = parseFloat(this.value);
+        $('.micEntryNo').keyup(function(event) {                 //when 4 digits are entered into the mic form submit the form (each microphone is referenced by a 4 digit number so this allows quick entry into the system
             
+            var mic = 0;
+            mic = parseFloat(this.value);
+            event.stopPropagation();
+
             if (mic >=1000 && mic <= 1350) {
                 $('#submitMic').click();
+                $('.micEntryNo').val('');
             }
         });
 
