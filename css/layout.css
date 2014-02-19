@@ -1425,7 +1425,7 @@ tr.bakKeep {
 /* -=-=-=-=-=-=-=-= edit Microphones =-=-=-=-=-=-=-=-=-=-=-=-=-=- */
 
 
-#micNo{
+.micEntryNo{
 	width:300px;
 	font-size: 40px;
 	padding:20px;
@@ -1620,6 +1620,36 @@ input#repairMic{
 
 .filterMic:last-child{
 	border-right:1px dotted #ffffff;
+}
+.micCheckControls{
+	text-align: center;
+}
+.micCheckNo{
+	display:inline-block;
+	width:300px;
+	font-size: 40px;
+	padding:20px;
+	text-align: center;
+	margin:10px;
+	outline:none;
+}
+.micCheckLast, .micCheckRemain{
+	display:inline-block;
+	width:300px;
+	border:1px solid #fff;
+	font-size: 40px;
+	padding:20px;
+	text-align: center;
+	margin:10px;
+}
+
+.micCheckWarn{
+	font-size:1.6em;
+	width:860px;
+	padding:30px;
+	border:3px solid red;
+	margin:0 auto;
+	text-align: center;
 }
 
 #micList{

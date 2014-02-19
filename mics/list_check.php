@@ -15,10 +15,19 @@ $result = $microphone->listMic();
 require('header.php');
 ?>
     <div id="subHead">
-        <h1>Angel Microphones</h1>
+        <h1>Microphones Check</h1>
     </div>
     <div class="backupDriveTitle">
-        <h3><?php echo $_POST['clientName'];?>All Microphones</h3>
+        <h3>Remaining Microphones</h3>
+    </div>
+    
+    <div class="micCheckControls">
+        <div class="micCheckWarn">
+            <p>Please check microphones are in their correct box before scanning!</p>
+        </div>
+        <div class="micCheckLast">Previous: <span></span></div>
+        <div class="micCheckRemain">Remaining: <span>242</span></div>
+        <input type='number' id='micNo' class='micCheckNo' min='1000' max='1350'>​
     </div>
 
     <div id="micResults">
@@ -28,13 +37,13 @@ require('header.php');
                 <th scope="col">Make</th>
                 <th scope="col">Model</th>
                 <th scope="col">In Cupboard</th>
-                <th scope="col">In Session</th>
+                <th scope="col">In Studio</th>
                 <th scope="col">Out For Repair</th>
                 <th scope="col">Last Activity</th>
             </tr>
     <?php
         foreach($result as $row){ ?>
-            <tr>
+            <tr class= <?php echo $row['micID'];?>>
                 <td>
                     <a href="mic_history.php?micID=<?php echo $row['micID'];?>"><?php echo $row['micID'];?></a>
                 </td>

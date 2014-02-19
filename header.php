@@ -76,6 +76,7 @@
                                    
                                     <?php if ($_SESSION['user']['usrGroup']!='office' && $_SESSION['user']['usrGroup']!='default'){?><li><a href="/mics/">In / Out</a></li><?}?>
                                     <li><a href="/mics/list.php">Mic List</a></li>
+                                    <li><a href="/mics/list_check.php">Mic Check</a></li>
                                     <li><a href="/mics/list_session.php">Mics In Session</a></li>
                                     <li><a href="/mics/list_repair.php">Repair List</a></li>
                                     

@@ -14,7 +14,8 @@ class mic{
     
     public function listMic(){
         try{
-            $sth = $this->mydb->prepare("SELECT microphones.*, users.username FROM microphones
+            $sth = $this->mydb->prepare("SELECT microphones.*, session.stdID, users.username FROM microphones
+                                LEFT JOIN session ON microphones.micSession=session.bakID
                                 LEFT JOIN users ON microphones.usrID=users.usrID
                                 ORDER BY 'micID';" );
     

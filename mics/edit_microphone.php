@@ -160,7 +160,7 @@
 		 	<div class="backupDriveTitle"><h1>Assign Microphones</h1></div>
 			<input type="number" name="bakID" class="hidden" value="<?php echo $bakMicID ?>"  />
 			<input type="number" name="sesID" class="hidden" value="<?php echo$sesID ?>"  />
-			<input type="number" id="micNo" name="micNo" min="1000" max="1350" />
+			<input type="number" id="micNo" class="micEntryNo" name="micNo" min="1000" max="1350" />
 			<input type="submit" id="submitMic" class="hidden"/>
 	
 
@@ -210,7 +210,7 @@
 			</div>
 			<input type="number" name="bakID" class="hidden" value="<?php echo $bakMicID ?>" />
 			<input type="number" name="sesID" class="hidden" value="<?php echo$sesID ?>" />
-			<input type="number" id="micNo" name="micNo" min="1000" max="1350" />
+			<input type="number" id="micNo" class="micEntryNo" name="micNo" min="1000" max="1350" />
 			<input type="submit" id="submitMic" name="returnMic_button" value="Return" class="hidden" />
 			<div class="backupDriveTitle">
 				<h1>Transfer Mics</h1>

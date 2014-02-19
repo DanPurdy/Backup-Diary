@@ -174,9 +174,32 @@ $(document).ready(function () {
         });
 
 
-        $('#micNo').keyup(function () {                 //when 4 digits are entered into the mic form submit the form (each microphone is referenced by a 4 digit number so this allows quick entry into the system
-            if (this.value.length == 4) {
+        $('.micEntryNo').keyup(function () {                 //when 4 digits are entered into the mic form submit the form (each microphone is referenced by a 4 digit number so this allows quick entry into the system
+            var mic = 0;
+
+            mic = parseFloat(this.value);
+            
+            if (mic >=1000 && mic <= 1350) {
                 $('#submitMic').click();
+            }
+        });
+
+        $('.micCheckNo').keyup(function(){
+            var mic = 0;
+
+            mic = parseFloat(this.value);
+            
+            if (mic >=1000 && mic <= 1350) {
+
+                $micElem = $('.'+mic);
+                if($micElem.length == 1){
+                    $micElem.remove();
+                    $('.micCheckRemain span').text( parseFloat($('.micCheckRemain span').text())-1);
+                    
+                }
+                $('.micCheckLast span').text(mic);
+                $('.micCheckNo').val('');
+                
             }
         });
 
