@@ -21,6 +21,7 @@ if($bakID != $prevBak && $bakID !=0){
     $backup->cleanBackup($prevBak);
 
     header('Location: /session/');
+    die();
 
 }elseif($bakID ==0 && $prevBak !=0){
     $id=$backup->initBackup();
@@ -28,9 +29,11 @@ if($bakID != $prevBak && $bakID !=0){
     $session->updateSession($_POST, $id, $dbh);
 
     header('Location: /session/');
+    die();
 }else{
     $session->updateSession($_POST, $prevBak, $dbh);
 
     header('Location: /session/');
+    die();
 }
 ?>
