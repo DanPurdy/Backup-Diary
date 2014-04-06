@@ -13,3 +13,5 @@ msd/
 
 nbproject/
 .sass-cache/
+.bundle/
+vendor/bundle
